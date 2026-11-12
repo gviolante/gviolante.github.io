@@ -47,7 +47,8 @@ export function createServer(root = outputRoot) {
       response.writeHead(200, { 'Content-Type': mimeTypes[path.extname(filename)] || 'application/octet-stream' });
       response.end(request.method === 'HEAD' ? undefined : body);
     } catch {
-      const body = await readFile(path.join(root, '404.html')).catch(() => Buffer.from('Página não encontrada.'));
+      const portuguese = /^\/(?:pt|projetos)(?:\/|\?|$)/.test(request.url);
+      const body = await readFile(path.join(root, portuguese ? 'pt/404.html' : '404.html')).catch(() => Buffer.from('Page not found.'));
       response.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
       response.end(request.method === 'HEAD' ? undefined : body);
     }

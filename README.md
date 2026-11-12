@@ -1,98 +1,98 @@
 # Gabriel Violante — portfólio
 
-Portfólio local centrado em inteligência artificial aplicada a problemas reais. A capa destaca Gabriel Violante com uma descrição breve, inspirada na hierarquia da abertura do Ninito. Inclui catálogo com filtros, duas páginas de projeto, publicações, trajetória e contato.
+Portfólio bilíngue centrado em IA e problemas reais. A página segue **Home → About → Projects → Papers → Skills → Contact**, com pixel-art, currículo, artigos, histórico acadêmico e temas claro/escuro.
 
 ## Executar
 
-Requer Node.js 22.8 ou superior. Não há pacotes externos para instalar.
+Requer Node.js 22.8 ou superior. Não há dependências externas para o site.
 
 ```bash
-npm run dev
+npm run dev      # http://localhost:4321; reconstrói ao editar src/ ou public/
+npm run check    # Build + testes Node
+npm run build    # Gera dist/
+npm run preview  # Build + servidor, sem observar alterações
 ```
 
-Acesse `http://localhost:4321`. Alterações em `src/` e `public/` geram novamente o site; recarregue a página no navegador para vê-las.
+Recarregue a página após editar. Outra porta: `PORT=4322 npm run dev`.
 
-```bash
-npm run check    # Gera o site e executa os testes
-npm run build    # Gera somente a pasta dist/
-npm run preview  # Gera o site e inicia o servidor, sem observar alterações
-```
-
-Para usar outra porta: `PORT=4322 npm run dev`.
-
-Se o ambiente bloquear o servidor Node, depois de executar a construção também é possível servir os arquivos estáticos:
-
-```bash
-python3 -m http.server 4321 --bind 127.0.0.1 --directory dist
-```
-
-Sempre sirva `dist/`, nunca a raiz do projeto: os documentos pessoais estão fora da saída pública.
+**Sirva somente `dist/`, nunca a raiz do projeto.** Os documentos pessoais não fazem parte da saída pública.
 
 ## Organização
 
 ```text
-src/
-  data/projects.js    Perfil, projetos, publicações e experiências
-  templates.js        Componentes e páginas HTML
-  styles.css          Estilos e adaptações para telas menores
-  client.js           Menu, filtros e cópia de e-mail
-  theme.js            Tema claro, escuro ou automático, com preferência salva
-public/
-  assets/images/      Diagramas SVG e imagem do Enem Runner
-  assets/papers/      Somente os dois artigos selecionados
-scripts/
-  build.mjs           Geração das páginas estáticas
-  serve.mjs           Servidor local restrito à saída pública
-tests/
-  site.test.mjs       Links, âncoras, conteúdo e limites da publicação
-  theme.test.mjs      Preferência de tema e casos de armazenamento indisponível
-  browser.html       Verificações de comportamento e responsividade
-dist/                 Saída gerada; não editar diretamente
+src/data/content.js       Narrativa, interface e traduções
+src/data/projects.js      Perfil, projetos, publicações e estudos de caso
+src/data/documents.json   Dados selecionados para os PDFs públicos
+src/templates.js          Componentes e páginas HTML
+src/styles.css            Estilos, temas e responsividade
+src/client.js             Menu, seção ativa, idioma e cópia de e-mail
+src/theme.js              Sistema/Claro/Escuro e persistência
+public/assets/images/     Imagens e ilustrações selecionadas
+public/assets/papers/     Artigos selecionados (cópias locais)
+public/assets/documents/  Currículo e resumo acadêmico públicos, EN/PT
+scripts/build.mjs         Geração estática
+scripts/serve.mjs         Servidor restrito à saída pública
+scripts/generate-documents.py  Geração editorial opcional dos PDFs
 ```
 
-O conteúdo é transformado em HTML durante a construção. O navegador recebe páginas prontas e usa JavaScript apenas para menu, filtros e cópia de e-mail. Sem JavaScript, os projetos e links continuam disponíveis.
+Conteúdo e traduções ficam em `src/data/`; apresentação em `src/`; ferramentas em `scripts/`. A construção não lê `personalContext/`. Os artigos abrem PDFs oficiais externos da SBC. As fontes e os cuidados de redação estão em `CONTEXTO_PROJETO.md`.
 
-Para editar um projeto, altere sua entrada em `src/data/projects.js`. Cada projeto ganha uma página automaticamente. As seções de apresentação estão em `src/templates.js`; o visual está em `src/styles.css`.
+## Rotas e idioma
 
-Astro era a recomendação inicial, mas o registro npm não estava acessível neste ambiente. Esta versão usa JavaScript nativo e funções de apresentação simples para permitir execução e validação imediatas. Reavaliar a migração para Astro antes de ampliar muito o catálogo; não há implementação de Astro ou TypeScript neste momento.
+| Inglês | Português | Conteúdo |
+| --- | --- | --- |
+| `/` | `/pt/` | Página principal |
+| `/projects/` | `/projetos/` | Catálogo |
+| `/projects/tinyflow-edgenids/` | `/projetos/tinyflow-edgenids/` | Estudo de pesquisa |
+| `/projects/enem-runner/` | `/projetos/enem-runner/` | Estudo do jogo |
+| `/404.html` | `/pt/404.html` | Página de erro |
 
-## Rotas
+Inglês é o padrão. O controle PT/EN abre a página equivalente e preserva a seção atual quando JavaScript está disponível. Texto, links, downloads e troca de idioma funcionam sem JavaScript. A URL determina o idioma, sem redirecionamento automático.
 
-- `/`: apresentação, destaques, sobre, experiências, pesquisa e contato.
-- `/projetos/`: catálogo com filtros.
-- `/projetos/tinyflow-edgenids/`: estudo de caso de pesquisa em cibersegurança.
-- `/projetos/enem-runner/`: jogo e acessibilidade.
-- `404.html`: página para configurar como resposta de erro na hospedagem futura.
+## Temas e acessibilidade
 
-## Verificação no navegador
+**System / Light / Dark** (ou **Sistema / Claro / Escuro**). Escolhas explícitas persistem em localStorage e são aplicadas antes do CSS. Sistema acompanha o dispositivo, inclusive mudanças em tempo real. Se o armazenamento estiver bloqueado, o seletor continua funcionando na página atual.
 
-O arquivo `tests/browser.html` verifica as quatro páginas de conteúdo e a página 404 em 320, 390, 768 e 1440 pixels, nos dois temas. Verifica também menu móvel, Escape, foco, filtros, persistência de tema e ausência de documentos pessoais ou recursos removidos por HTTP. Para reproduzir com o servidor local ativo:
+Menu móvel operável por teclado, Escape com retorno de foco, link para pular ao conteúdo, foco visível, textos alternativos e respeito a movimento reduzido. Imagens conservam as cores originais nos dois temas.
+
+## Documentos públicos
+
+Os PDFs em `public/assets/documents/` são versões revisadas, em inglês e português:
+
+- Currículo de uma página, com formação, experiências, pesquisa e habilidades.
+- Resumo acadêmico de duas páginas, baseado no histórico emitido em 31/08/2026, com notas até 2026/1. **Não é o histórico oficial.** Mantém disciplinas, notas, NSG e equivalências; omite identificadores pessoais.
+
+Para atualizá-los, edite `src/data/documents.json`, gere novamente e revise visualmente cada página. Essa etapa editorial usa Python e ReportLab; não é requisito do build web:
+
+```bash
+python3 -m venv /tmp/portfolio-docs-env
+/tmp/portfolio-docs-env/bin/pip install reportlab
+/tmp/portfolio-docs-env/bin/python scripts/generate-documents.py
+npm run check
+```
+
+Nunca copie automaticamente currículo bruto, histórico original, carta pessoal ou credenciais para `public/`.
+
+## Verificação
+
+`npm run check` executa dez testes: links, âncoras, saída pública, limites factuais, ordem das seções, alternância de idiomas, metadados e preferências de tema.
+
+Com o servidor ativo, a revisão de interface pode ser reproduzida:
 
 ```bash
 cp tests/browser.html dist/__browser-check.html
 ```
 
-Abra `http://localhost:4321/__browser-check.html` e aguarde o resultado `passed`. O teste deve ser servido na mesma origem do portfólio. Depois execute `npm run build` para remover o arquivo temporário da saída antes de rodar `npm run check` ou preparar uma publicação.
+Abra `http://localhost:4321/__browser-check.html`. O teste cobre dez páginas em 320, 390, 768 e 1440 px, nos dois temas, além de menu, idioma, PDFs, persistência e recursos privados. Aguarde `passed`. Após testar, `npm run build` remove o arquivo temporário. Evite editar `src/` durante o teste se estiver usando `npm run dev`, pois o rebuild remove o harness.
 
-A revisão atual passou nas 188 verificações dessa página e nos oito testes Node, com inspeção visual de desktop e celular nos temas claro e escuro. Essas verificações não substituem uma auditoria completa de acessibilidade ou testes em outros navegadores.
-
-## Temas
-
-No cabeçalho, selecione **Sistema**, **Claro** ou **Escuro**. O padrão acompanha o sistema operacional. Uma escolha explícita é salva localmente no navegador e restaurada antes do CSS para evitar uma troca visível de paleta no carregamento. Voltar a Sistema remove essa preferência e acompanha mudanças do dispositivo em tempo real.
-
-O seletor funciona mesmo quando o navegador bloqueia o armazenamento; nesse caso, a escolha vale apenas para a página atual. A paleta usa variáveis em `src/styles.css`, preservando as cores originais dos recursos visuais. O script `src/theme.js` concentra o comportamento e sincroniza alterações entre abas.
+A revisão atual passou nas **347 verificações do Chromium** e nos **dez testes Node**. Revisão visual feita em desktop e celular nos dois temas. PDFs renderizados para conferir paginação, legibilidade e conteúdo. Os testes não substituem uma auditoria completa de acessibilidade em vários navegadores.
 
 ## Conteúdo e continuidade
 
-- A pesquisa de detecção de enxames de abelhas junto à VALE foi recém-iniciada, sem implementação ou resultados. Aparece apenas como atividade na trajetória; não possui card, ilustração de solução, estudo de caso ou página própria.
-- As métricas e limitações de TinyFlow são contextualizadas por configuração.
-- Enem Runner é um trabalho coletivo. A imagem foi extraída do artigo fornecido por Gabriel (figura 2, página 4).
-- Diagramas SVG são ilustrações conceituais; não são fotos de dispositivos ou capturas de experimentos reais.
-- `personalContext/` é material interno e está no `.gitignore`. A construção copia somente `public/` e os recursos explicitamente definidos.
-- O contexto e as pendências editoriais estão em `CONTEXTO_PROJETO.md`; as orientações para agentes estão em `AGENTS.md`.
+- VALE aparece apenas como pesquisa recém-iniciada, sem implementação ou resultados.
+- Trabalhos em equipe são identificados como coletivos. Protótipos não são apresentados como produtos em produção.
+- Resultados de TinyFlow são vinculados à configuração correta; embeddings embarcados são pré-computados.
+- Enem Runner relata testes com pessoas vendadas, não validação concluída com pessoas cegas ou com baixa visão.
+- Git local na branch `main`, sem remoto ou push. `personalContext/` e `dist/` estão ignorados.
 
-O repositório Git local foi inicializado na branch `main`, usando a identidade Git já configurada. O primeiro commit preserva a primeira versão; as revisões seguintes registram a evolução. Nenhum remoto foi configurado nem houve envio ao GitHub. Documentos pessoais e `dist/` ficam fora do histórico.
-
-Inglês, currículo público revisado, demais projetos, domínio e publicação ficam para próximas etapas.
-
-Quando houver domínio, `SITE_URL=https://seu-dominio.example npm run build` gera URLs canônicas e sitemap. Configure a hospedagem para publicar apenas `dist/`, servir os diretórios como páginas e usar `404.html` com status HTTP 404. O endereço acima é ilustrativo.
+Hospedagem e domínio serão definidos posteriormente. Quando houver domínio, `SITE_URL=https://seu-dominio.example npm run build` gera URLs canônicas, hreflang e sitemap. Publique apenas `dist/` e configure a página 404 com status HTTP apropriado.

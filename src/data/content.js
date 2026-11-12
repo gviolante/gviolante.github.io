@@ -1,0 +1,73 @@
+/** Textos de interface e narrativa. Inglês é o idioma principal. */
+export const languages = ['en', 'pt'];
+export const homeUrl = (lang) => lang === 'pt' ? '/pt/' : '/';
+export const copy = {
+  en: {
+    locale: 'en', ogLocale: 'en_US', nav: ['Home', 'About', 'Projects', 'Papers', 'Skills', 'Contact'],
+    skip: 'Skip to content', navigation: 'Main navigation', theme: 'Color theme', themes: ['System', 'Light', 'Dark'], language: 'View in Portuguese', top: 'Back to top',
+    title: 'Gabriel Violante — AI, curiosity & real-world problems',
+    description: 'Computer Science student at UFMG. Bringing ambitious ideas to life with artificial intelligence, driven by problems that matter in the real world.',
+    eyebrow: 'COMPUTER SCIENCE · UFMG', intro: 'Curious by nature. A problem solver by choice.',
+    hero: 'I use artificial intelligence to bring ambitious ideas to life and solve problems that matter to people and the world.',
+    email: 'Drop me an e-mail', resume: 'View résumé', location: 'Belo Horizonte, Brazil', portrait: 'Pixel-art portrait of Gabriel Violante, smiling and wearing glasses.',
+    aboutLabel: '01 / THE PERSON BEHIND THE CODE', aboutTitle: 'Curiosity, with a purpose.',
+    about: [
+      'I’m Gabriel, a Computer Science student at the Federal University of Minas Gerais (UFMG). I’m drawn to difficult problems, especially when solving them can make a tangible difference in someone’s life.',
+      'Artificial intelligence is how I explore that curiosity: a way to turn ambitious ideas into useful solutions. Today, I work as a Machine Learning researcher at the Computer Vision and Robotics Laboratory, exploring TinyML on embedded devices.',
+      'My path has taken me through cybersecurity research, software development, process automation and accessible games. What connects it all is the desire to understand a problem deeply, build something thoughtful and see it work beyond the screen.',
+    ],
+    background: 'A little of my journey', journey: [
+      ['Now', 'Machine Learning research', 'Computer Vision and Robotics Laboratory · TinyML and embedded devices.'],
+      ['Software', 'From processes to products', 'Development and integrations at LEVTY; earlier experience at PI Júnior and InspEasy.'],
+      ['Research', 'Security at the network edge', 'Machine learning and resource-constrained systems at DCC/UFMG.'],
+      ['New chapter', 'Research with VALE', 'Recently joined a study on bee swarm detection with TinyML on ESP32. No implementation or results yet.'],
+    ],
+    projectsLabel: '02 / IDEAS IN PRACTICE', projectsTitle: 'Things I’ve helped build.', projectsIntro: 'Applied AI, accessible play and tools made for real use.', github: 'View on GitHub', caseStudy: 'Read case study', allProjects: 'More on GitHub',
+    papersLabel: '03 / QUESTIONS WORTH EXPLORING', papersTitle: 'Research & publications.', papersIntro: 'Experiments, shared knowledge and the details behind the results.', pdf: 'Read paper', pdfLanguage: 'PDF in Portuguese · SBC Open Library', academic: 'Bachelors Academic Background', academicNote: 'Public academic summary · grades through 2026/1 · PDF',
+    skillsLabel: '04 / MY TOOLBOX', skillsTitle: 'Tools for the next problem.', skillsIntro: 'Technologies I use across research, development and experiments.',
+    skillGroups: [
+      ['01', 'Programming languages', ['Python', 'C / C++', 'JavaScript', 'SQL', 'SystemVerilog']],
+      ['02', 'Machine learning', ['TensorFlow', 'PyTorch', 'Scikit-learn', 'Keras', 'TinyML']],
+      ['03', 'Frameworks & platforms', ['Django', 'Bootstrap', 'Unity / C#', 'Google Apps Script', 'Arduino']],
+      ['04', 'Agents & AI tools', ['Codex', 'Claude Code', 'Gemini CLI', 'Cursor']],
+      ['05', 'Development tools', ['Git / GitHub', 'Docker', 'Linux', 'LaTeX']],
+      ['06', 'Languages', ['Portuguese · native', 'English · advanced', 'Japanese · basic']],
+    ],
+    contactLabel: '05 / LET’S CONNECT', contactTitle: 'Have a real problem\nin mind?', contactText: 'Looking for someone curious to join your team, explore a research question or bring an idea to life? I’d love to hear from you.', copy: 'Copy e-mail', copied: 'E-mail copied!', copyError: 'Could not copy. Please use the e-mail link.', footer: 'Made with curiosity. Built with purpose.',
+    back: 'Back to portfolio', notFound: 'This page took a different path.', notFoundText: 'The page you’re looking for isn’t here. Let’s head back to the portfolio.', related: 'The full story', research: 'Research', role: 'Contribution', period: 'Year',
+  },
+  pt: {
+    locale: 'pt-BR', ogLocale: 'pt_BR', nav: ['Início', 'Sobre', 'Projetos', 'Artigos', 'Habilidades', 'Contato'],
+    skip: 'Pular para o conteúdo', navigation: 'Navegação principal', theme: 'Tema de cores', themes: ['Sistema', 'Claro', 'Escuro'], language: 'View in English', top: 'Voltar ao topo',
+    title: 'Gabriel Violante — IA, curiosidade e problemas reais',
+    description: 'Estudante de Ciência da Computação na UFMG. Uso inteligência artificial para dar vida a ideias ambiciosas e resolver problemas do mundo real.',
+    eyebrow: 'CIÊNCIA DA COMPUTAÇÃO · UFMG', intro: 'Curioso por natureza. Movido por problemas.',
+    hero: 'Uso inteligência artificial para dar vida a ideias ambiciosas e resolver problemas que importam para as pessoas e para o mundo.',
+    email: 'Me envie um e-mail', resume: 'Ver currículo', location: 'Belo Horizonte, Brasil', portrait: 'Retrato em pixel-art de Gabriel Violante, sorrindo e usando óculos.',
+    aboutLabel: '01 / A PESSOA POR TRÁS DO CÓDIGO', aboutTitle: 'Curiosidade com propósito.',
+    about: [
+      'Sou o Gabriel, estudante de Ciência da Computação na Universidade Federal de Minas Gerais (UFMG). Gosto de problemas difíceis, especialmente quando resolvê-los pode fazer uma diferença concreta na vida de alguém.',
+      'A inteligência artificial é uma forma de explorar essa curiosidade: transformar ideias ambiciosas em soluções úteis. Hoje, atuo como pesquisador de Machine Learning no Laboratório de Visão Computacional e Robótica, trabalhando com TinyML aplicado a dispositivos embarcados.',
+      'Minha trajetória passa por pesquisa em cibersegurança, desenvolvimento de software, automação de processos e jogos acessíveis. O que conecta essas experiências é a vontade de entender um problema a fundo, construir com cuidado e ver a solução funcionar além da tela.',
+    ],
+    background: 'Um pouco da minha trajetória', journey: [
+      ['Agora', 'Pesquisa em Machine Learning', 'Laboratório de Visão Computacional e Robótica · TinyML e dispositivos embarcados.'],
+      ['Software', 'De processos a produtos', 'Desenvolvimento e integrações na LEVTY; experiências anteriores na PI Júnior e InspEasy.'],
+      ['Pesquisa', 'Segurança na borda da rede', 'Aprendizado de máquina e sistemas com recursos limitados no DCC/UFMG.'],
+      ['Novo ciclo', 'Pesquisa junto à VALE', 'Ingressei recentemente em um estudo de detecção de enxames de abelhas com TinyML em ESP32. Ainda sem implementação ou resultados para apresentar.'],
+    ],
+    projectsLabel: '02 / IDEIAS NA PRÁTICA', projectsTitle: 'Coisas que ajudei a construir.', projectsIntro: 'IA aplicada, jogos acessíveis e ferramentas para uso real.', github: 'Ver no GitHub', caseStudy: 'Conhecer o projeto', allProjects: 'Mais no GitHub',
+    papersLabel: '03 / PERGUNTAS QUE VALEM A PESQUISA', papersTitle: 'Pesquisa e publicações.', papersIntro: 'Experimentos, conhecimento compartilhado e os detalhes por trás dos resultados.', pdf: 'Ler artigo', pdfLanguage: 'PDF em português · SBC Open Library', academic: 'Histórico acadêmico da graduação', academicNote: 'Resumo acadêmico público · notas até 2026/1 · PDF',
+    skillsLabel: '04 / MINHAS FERRAMENTAS', skillsTitle: 'Recursos para o próximo problema.', skillsIntro: 'Tecnologias que uso em pesquisa, desenvolvimento e experimentos.',
+    skillGroups: [
+      ['01', 'Linguagens de programação', ['Python', 'C / C++', 'JavaScript', 'SQL', 'SystemVerilog']],
+      ['02', 'Aprendizado de máquina', ['TensorFlow', 'PyTorch', 'Scikit-learn', 'Keras', 'TinyML']],
+      ['03', 'Frameworks e plataformas', ['Django', 'Bootstrap', 'Unity / C#', 'Google Apps Script', 'Arduino']],
+      ['04', 'Agentes e ferramentas de IA', ['Codex', 'Claude Code', 'Gemini CLI', 'Cursor']],
+      ['05', 'Ferramentas de desenvolvimento', ['Git / GitHub', 'Docker', 'Linux', 'LaTeX']],
+      ['06', 'Idiomas', ['Português · nativo', 'Inglês · avançado', 'Japonês · básico']],
+    ],
+    contactLabel: '05 / VAMOS CONVERSAR', contactTitle: 'Tem um problema real\nem mente?', contactText: 'Procura alguém curioso para integrar seu time, explorar uma questão de pesquisa ou dar vida a uma ideia? Vou gostar de conversar.', copy: 'Copiar e-mail', copied: 'E-mail copiado!', copyError: 'Não foi possível copiar. Use o link de e-mail.', footer: 'Feito com curiosidade e propósito.',
+    back: 'Voltar ao portfólio', notFound: 'Esta página tomou outro caminho.', notFoundText: 'A página que você procura não está aqui. Vamos voltar ao portfólio.', related: 'A história completa', research: 'Pesquisa', role: 'Contribuição', period: 'Ano',
+  },
+};

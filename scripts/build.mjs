@@ -1,7 +1,7 @@
 import { cp, mkdir, rm, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { projects } from '../src/data/projects.js';
+import { studies } from '../src/data/projects.js';
 import { homePage, catalogPage, projectPage, notFoundPage } from '../src/templates.js';
 
 export const projectRoot = fileURLToPath(new URL('../', import.meta.url));
@@ -20,18 +20,21 @@ export async function build({ outDir = outputRoot, siteUrl = process.env.SITE_UR
   await cp(path.join(projectRoot, 'src/styles.css'), path.join(outDir, 'assets/styles.css'));
   await cp(path.join(projectRoot, 'src/client.js'), path.join(outDir, 'assets/client.js'));
   await cp(path.join(projectRoot, 'src/theme.js'), path.join(outDir, 'assets/theme.js'));
-  const options = { siteUrl };
-  const pages = [
-    ['index.html', homePage(options)],
-    ['projetos/index.html', catalogPage(options)],
-    ...projects.map((project) => [`projetos/${project.slug}/index.html`, projectPage(project, options)]),
-    ['404.html', notFoundPage(options)],
-  ];
+  const pages = ['en', 'pt'].flatMap(lang => {
+    const options = { siteUrl, lang };
+    const prefix = lang === 'pt' ? 'projetos' : 'projects';
+    return [
+      [lang === 'pt' ? 'pt/index.html' : 'index.html', homePage(options)],
+      [`${prefix}/index.html`, catalogPage(options)],
+      ...studies.map(project => [`${prefix}/${project.slug}/index.html`, projectPage(project, options)]),
+      [lang === 'pt' ? 'pt/404.html' : '404.html', notFoundPage(options)],
+    ];
+  });
   for (const [file, html] of pages) {
     await mkdir(path.dirname(path.join(outDir, file)), { recursive: true });
     await writeFile(path.join(outDir, file), html);
   }
-  const routes = ['/', '/projetos/', ...projects.map((project) => `/projetos/${project.slug}/`)];
+  const routes = pages.filter(([file]) => file.endsWith('index.html')).map(([file]) => `/${file.replace('index.html', '')}`);
   if (siteUrl) {
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${routes.map((route) => `<url><loc>${new URL(route, siteUrl).href}</loc></url>`).join('')}</urlset>\n`;
     await writeFile(path.join(outDir, 'sitemap.xml'), sitemap);

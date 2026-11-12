@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520" fill="none">
+<rect width="800" height="520" fill="#e4e9db"/>
+<pattern id="g" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" stroke="#244f3b" stroke-opacity=".07"/></pattern><rect width="800" height="520" fill="url(#g)"/>
+<path d="M210 260H590" stroke="#527844" stroke-width="2" stroke-dasharray="7 7"/>
+<g transform="translate(114 174)"><rect x="10" y="-10" width="122" height="164" rx="10" fill="#f5f4ec" stroke="#b0bcae"/><rect width="122" height="164" rx="10" fill="#f5f4ec" stroke="#527844" stroke-width="2"/><path d="M28 43H91M28 62H91M28 81H73M28 119H59" stroke="#527844" stroke-width="5" stroke-linecap="round"/></g>
+<rect x="326" y="186" width="148" height="148" rx="30" fill="#244f3b"/><path d="M365 260L400 218L435 260L400 302Z" stroke="#d2e7a4" stroke-width="2"/><path d="M365 260H435M400 218V302" stroke="#d2e7a4" stroke-width="2"/><circle cx="400" cy="260" r="11" fill="#d2e7a4"/>
+<circle cx="628" cy="260" r="65" fill="#f5f4ec" stroke="#527844" stroke-width="2"/><circle cx="628" cy="243" r="17" stroke="#244f3b" stroke-width="4"/><path d="M595 286C595 256 661 256 661 286" stroke="#244f3b" stroke-width="4" stroke-linecap="round"/>
+<text x="400" y="402" text-anchor="middle" fill="#244f3b" font-family="monospace" font-size="16" letter-spacing="4">EANTEROS</text>
+</svg>
