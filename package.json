@@ -1,0 +1,15 @@
+{
+  "name": "gabriel-violante-portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Portfólio de Gabriel Violante — ideias ambiciosas, impacto real.",
+  "engines": { "node": ">=22.8" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/serve.mjs --watch",
+    "preview": "node scripts/serve.mjs",
+    "test": "node --test --test-isolation=none tests/*.test.mjs",
+    "check": "npm run build && npm test"
+  }
+}

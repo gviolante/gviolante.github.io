@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" fill="none">
+  <defs><pattern id="dots" width="25" height="25" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#648e7b" opacity=".35"/></pattern></defs>
+  <path fill="#173e31" d="M0 0h640v480H0z"/><path fill="url(#dots)" d="M0 0h640v480H0z"/>
+  <g stroke="#719b7c" stroke-width="1.5"><path d="m105 155 150 85-150 85M255 240h130l150-85m-150 85 150 85M105 155v170M535 155v170"/><circle cx="320" cy="240" r="140" opacity=".3" stroke-dasharray="4 7"/></g>
+  <g fill="#234c3a" stroke="#80a482"><circle cx="105" cy="155" r="26"/><circle cx="105" cy="325" r="26"/><circle cx="535" cy="155" r="26"/><circle cx="535" cy="325" r="26"/></g>
+  <g stroke="#c5deaf" stroke-width="2"><path d="M94 155h22m-11-11v22M95 318h20v14H95zM526 155l6 6 12-14M525 325h20m-10-10v20"/></g>
+  <rect x="245" y="172" width="150" height="136" rx="8" fill="#c9e5a3"/>
+  <rect x="255" y="182" width="130" height="116" rx="3" stroke="#456447"/>
+  <path d="m279 248 15-13 14 8 19-27 15 16 19-8" stroke="#224a35" stroke-width="3"/>
+  <g font-family="monospace" text-anchor="middle"><text x="320" y="277" fill="#224a35" font-size="13">TinyFlow</text><text x="105" y="389" fill="#b6c8b3" font-size="10" letter-spacing="2">TRÁFEGO</text><text x="535" y="389" fill="#b6c8b3" font-size="10" letter-spacing="2">DETECÇÃO</text></g>
+  <text x="34" y="41" fill="#b6c8b3" font-family="monospace" font-size="10" letter-spacing="2">INTELIGÊNCIA NA BORDA DA REDE</text>
+  <text x="34" y="445" fill="#b6c8b3" font-family="monospace" font-size="10" letter-spacing="2">EMBEDDINGS → MODELOS LEVES</text>
+</svg>

@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+personalContext/
+.DS_Store
+*.log
+.cache/
+.aws/
+coverage/
