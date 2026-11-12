@@ -1,6 +1,6 @@
 # Gabriel Violante — portfólio
 
-Primeira versão local do portfólio, centrada em inteligência artificial aplicada a problemas reais. Inclui página inicial, catálogo com filtros, três páginas de projeto, publicações e contato.
+Portfólio local centrado em inteligência artificial aplicada a problemas reais. A capa destaca Gabriel Violante com uma descrição breve, inspirada na hierarquia da abertura do Ninito. Inclui catálogo com filtros, duas páginas de projeto, publicações, trajetória e contato.
 
 ## Executar
 
@@ -36,6 +36,7 @@ src/
   templates.js        Componentes e páginas HTML
   styles.css          Estilos e adaptações para telas menores
   client.js           Menu, filtros e cópia de e-mail
+  theme.js            Tema claro, escuro ou automático, com preferência salva
 public/
   assets/images/      Diagramas SVG e imagem do Enem Runner
   assets/papers/      Somente os dois artigos selecionados
@@ -44,6 +45,7 @@ scripts/
   serve.mjs           Servidor local restrito à saída pública
 tests/
   site.test.mjs       Links, âncoras, conteúdo e limites da publicação
+  theme.test.mjs      Preferência de tema e casos de armazenamento indisponível
   browser.html       Verificações de comportamento e responsividade
 dist/                 Saída gerada; não editar diretamente
 ```
@@ -58,14 +60,13 @@ Astro era a recomendação inicial, mas o registro npm não estava acessível ne
 
 - `/`: apresentação, destaques, sobre, experiências, pesquisa e contato.
 - `/projetos/`: catálogo com filtros.
-- `/projetos/deteccao-de-abelhas/`: pesquisa em andamento junto à VALE.
 - `/projetos/tinyflow-edgenids/`: estudo de caso de pesquisa em cibersegurança.
 - `/projetos/enem-runner/`: jogo e acessibilidade.
 - `404.html`: página para configurar como resposta de erro na hospedagem futura.
 
 ## Verificação no navegador
 
-O arquivo `tests/browser.html` verifica as cinco páginas principais em 320, 390, 768 e 1440 pixels; menu móvel, Escape, foco, filtros e ausência de documentos pessoais por HTTP. Para reproduzir com o servidor local ativo:
+O arquivo `tests/browser.html` verifica as quatro páginas de conteúdo e a página 404 em 320, 390, 768 e 1440 pixels, nos dois temas. Verifica também menu móvel, Escape, foco, filtros, persistência de tema e ausência de documentos pessoais ou recursos removidos por HTTP. Para reproduzir com o servidor local ativo:
 
 ```bash
 cp tests/browser.html dist/__browser-check.html
@@ -73,17 +74,25 @@ cp tests/browser.html dist/__browser-check.html
 
 Abra `http://localhost:4321/__browser-check.html` e aguarde o resultado `passed`. O teste deve ser servido na mesma origem do portfólio. Depois execute `npm run build` para remover o arquivo temporário da saída antes de rodar `npm run check` ou preparar uma publicação.
 
-A sessão inicial passou nas 77 verificações dessa página e nos quatro testes Node, com inspeção visual de desktop e celular. Essas verificações não substituem uma auditoria completa de acessibilidade ou testes em outros navegadores.
+A revisão atual passou nas 188 verificações dessa página e nos oito testes Node, com inspeção visual de desktop e celular nos temas claro e escuro. Essas verificações não substituem uma auditoria completa de acessibilidade ou testes em outros navegadores.
+
+## Temas
+
+No cabeçalho, selecione **Sistema**, **Claro** ou **Escuro**. O padrão acompanha o sistema operacional. Uma escolha explícita é salva localmente no navegador e restaurada antes do CSS para evitar uma troca visível de paleta no carregamento. Voltar a Sistema remove essa preferência e acompanha mudanças do dispositivo em tempo real.
+
+O seletor funciona mesmo quando o navegador bloqueia o armazenamento; nesse caso, a escolha vale apenas para a página atual. A paleta usa variáveis em `src/styles.css`, preservando as cores originais dos recursos visuais. O script `src/theme.js` concentra o comportamento e sincroniza alterações entre abas.
 
 ## Conteúdo e continuidade
 
-- A pesquisa de detecção de abelhas é apresentada como em andamento. Não há resultados de campo ou modalidade de sensor presumidos.
+- A pesquisa de detecção de enxames de abelhas junto à VALE foi recém-iniciada, sem implementação ou resultados. Aparece apenas como atividade na trajetória; não possui card, ilustração de solução, estudo de caso ou página própria.
 - As métricas e limitações de TinyFlow são contextualizadas por configuração.
 - Enem Runner é um trabalho coletivo. A imagem foi extraída do artigo fornecido por Gabriel (figura 2, página 4).
 - Diagramas SVG são ilustrações conceituais; não são fotos de dispositivos ou capturas de experimentos reais.
 - `personalContext/` é material interno e está no `.gitignore`. A construção copia somente `public/` e os recursos explicitamente definidos.
 - O contexto e as pendências editoriais estão em `CONTEXTO_PROJETO.md`; as orientações para agentes estão em `AGENTS.md`.
 
-O ambiente desta sessão tem `.git` reservado e somente leitura; o repositório Git não foi inicializado. A publicação também não foi iniciada. Inglês, currículo público revisado, demais projetos e domínio ficam para próximas etapas.
+O repositório Git local foi inicializado na branch `main`, usando a identidade Git já configurada. O primeiro commit preserva a primeira versão; as revisões seguintes registram a evolução. Nenhum remoto foi configurado nem houve envio ao GitHub. Documentos pessoais e `dist/` ficam fora do histórico.
+
+Inglês, currículo público revisado, demais projetos, domínio e publicação ficam para próximas etapas.
 
 Quando houver domínio, `SITE_URL=https://seu-dominio.example npm run build` gera URLs canônicas e sitemap. Configure a hospedagem para publicar apenas `dist/`, servir os diretórios como páginas e usar `404.html` com status HTTP 404. O endereço acima é ilustrativo.
