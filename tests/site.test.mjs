@@ -43,9 +43,11 @@ test('documentos pessoais e arquivos de desenvolvimento não entram na publicaç
 });
 
 test('projetos preservam o estágio e as limitações das pesquisas', async () => {
-  const bees = await readFile(path.join(outputRoot, 'projetos/deteccao-de-abelhas/index.html'), 'utf8');
-  assert.match(bees, /Pesquisa em andamento/);
-  assert.match(bees, /ainda não um resultado demonstrado/);
+  const home = await readFile(path.join(outputRoot, 'index.html'), 'utf8');
+  assert.match(home, /<h1 id="hero-title">Gabriel<br>Violante/);
+  assert.match(home, /Ainda sem implementação ou resultados para apresentar/);
+  assert.doesNotMatch(home, /href="\/projetos\/deteccao-de-abelhas/);
+  await assert.rejects(stat(path.join(outputRoot, 'projetos/deteccao-de-abelhas/index.html')), { code: 'ENOENT' });
   const tinyflow = await readFile(path.join(outputRoot, 'projetos/tinyflow-edgenids/index.html'), 'utf8');
   assert.match(tinyflow, /resultados de modelos distintos/);
   assert.match(tinyflow, /embeddings pré-computados/);

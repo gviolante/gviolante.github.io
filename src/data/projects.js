@@ -8,30 +8,6 @@ export const profile = {
 
 export const projects = [
   {
-    slug: 'deteccao-de-abelhas',
-    number: '01',
-    title: 'Inteligência embarcada.\nProteção em campo.',
-    shortTitle: 'Detecção de abelhas com TinyML',
-    category: 'pesquisa',
-    categoryLabel: 'IA aplicada',
-    status: 'Pesquisa em andamento',
-    context: 'Iniciação científica junto à VALE',
-    tags: ['TinyML', 'ESP32', 'Segurança em campo'],
-    summary: 'Investigar como um modelo de IA embarcado em ESP32 pode detectar abelhas e ajudar a prevenir acidentes em expedições de campo.',
-    role: 'Pesquisador de iniciação científica',
-    period: 'Em andamento',
-    visual: 'bees',
-    question: 'Como levar inteligência a campo para ajudar a proteger pessoas?',
-    sections: [
-      { title: 'Um problema do mundo real', text: 'A presença de abelhas pode representar um risco durante expedições de campo. A pesquisa parte desse problema concreto: investigar uma forma de detecção que possa contribuir para a prevenção de acidentes.' },
-      { title: 'A ideia em desenvolvimento', text: 'Na iniciação científica junto à VALE, trabalho no desenvolvimento de um modelo TinyML embarcado em ESP32. O objetivo é aproximar a capacidade de detecção do ambiente em que ela é necessária, em um dispositivo com recursos limitados.' },
-      { title: 'Meu papel', text: 'Minha atuação está voltada ao desenvolvimento do modelo embarcado. A pesquisa conecta aprendizado de máquina, restrições de hardware e uma aplicação diretamente relacionada à segurança das pessoas.' },
-      { title: 'Onde estamos', text: 'A pesquisa está em andamento. Resultados, método de aquisição dos dados e avaliações em campo serão apresentados conforme o trabalho avançar. A prevenção de acidentes é o objetivo da solução, ainda não um resultado demonstrado.' },
-    ],
-    takeaway: 'É essa conexão entre um desafio técnico e a vida das pessoas que me move a pesquisar.',
-    links: [],
-  },
-  {
     slug: 'tinyflow-edgenids',
     number: '02',
     title: 'Pequenos modelos.\nUma rede mais protegida.',
@@ -93,7 +69,7 @@ export const projects = [
 ];
 
 export const experiences = [
-  { label: 'Pesquisa atual', place: 'Iniciação científica junto à VALE', text: 'TinyML em ESP32 para detecção de abelhas e prevenção de acidentes em expedições de campo.' },
+  { label: 'Pesquisa recém-iniciada', place: 'Iniciação científica junto à VALE', text: 'Acabei de ingressar em uma pesquisa sobre detecção de enxames de abelhas com TinyML em ESP32. Ainda sem implementação ou resultados para apresentar.' },
   { label: 'Engenharia de software', place: 'LEVTY', text: 'Desenvolvimento de sistemas e integrações, conectando processos, pessoas e tecnologia.' },
   { label: 'Pesquisa', place: 'DCC / UFMG', text: 'Aprendizado de máquina, cibersegurança e inteligência em dispositivos com recursos limitados.' },
   { label: 'Construção de sistemas', place: 'PI Júnior & InspEasy', text: 'Experiências com automação de processos, integração de sistemas e software para o contexto industrial.' },

@@ -19,6 +19,7 @@ export async function build({ outDir = outputRoot, siteUrl = process.env.SITE_UR
   await cp(path.join(projectRoot, 'public'), outDir, { recursive: true });
   await cp(path.join(projectRoot, 'src/styles.css'), path.join(outDir, 'assets/styles.css'));
   await cp(path.join(projectRoot, 'src/client.js'), path.join(outDir, 'assets/client.js'));
+  await cp(path.join(projectRoot, 'src/theme.js'), path.join(outDir, 'assets/theme.js'));
   const options = { siteUrl };
   const pages = [
     ['index.html', homePage(options)],
