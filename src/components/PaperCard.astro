@@ -5,7 +5,7 @@ import ExternalLink from './ExternalLink.astro';
 const { paper, lang } = Astro.props;
 const p = paper[lang], t = copy[lang];
 ---
-<article class="paper-card">
+<article class="paper-card" data-reveal>
   <div class="paper-index"><div class="conference-logo"><img src={`/assets/images/${paper.logo}`} alt={`${paper.venue} ${paper.year}`} width="180" height="90" loading="lazy" /></div><span class="paper-role">{p.role}</span></div>
   <div class="paper-copy">
     <p class="paper-venue">{paper.year} · {p.venue}</p>

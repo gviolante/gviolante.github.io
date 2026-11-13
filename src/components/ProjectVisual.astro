@@ -1,0 +1,20 @@
+---
+const { project, alt } = Astro.props;
+const asset = name => `/assets/images/${name}`;
+---
+{project.artwork?.kind === 'game' ? (
+  <>
+    <span class="game-identity" aria-hidden="true">
+      <img class="game-title" src={asset(project.artwork.logo)} alt="" width="3520" height="1540" loading="lazy" />
+      <span class="game-characters">
+        {project.artwork.characters.map(name => <img src={asset(name)} alt="" width="320" height="320" loading="lazy" />)}
+      </span>
+    </span>
+    <img class="game-screen" src={asset(project.image)} alt={alt} width="260" height="555" loading="lazy" />
+  </>
+) : (
+  <>
+    <img src={asset(project.image)} alt={alt} width={project.imageWidth || 800} height={project.imageHeight || 520} loading="lazy" />
+    {project.artwork?.icon && <img class="project-emblem" src={asset(project.artwork.icon)} alt="" width="512" height="512" loading="lazy" aria-hidden="true" />}
+  </>
+)}

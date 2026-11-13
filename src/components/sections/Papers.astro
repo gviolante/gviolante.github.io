@@ -9,10 +9,11 @@ import Icon from '../Icon.astro';
 const { lang } = Astro.props;
 const t = copy[lang];
 ---
-<section id="papers" class="section papers-section"><div class="container">
+<section id="papers" class="section papers-section">
+  <div class="section-atmosphere" aria-hidden="true"><span></span></div><div class="container">
   <SectionHeading label={t.papersLabel} title={t.papersTitle} intro={t.papersIntro} />
   <div class="papers-list">{papers.map(paper => <PaperCard paper={paper} lang={lang} />)}</div>
-  {documentLinks.academic && <div class="academic-link"><Icon name="graduation" /><div>
+  {documentLinks.academic && <div class="academic-link" data-reveal><Icon name="graduation" /><div>
     <ExternalLink class="text-link" href={documentLinks.academic}>{t.academic} <span aria-hidden="true">↗</span></ExternalLink>
     <p>{t.academicNote}</p>
   </div></div>}

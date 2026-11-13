@@ -8,6 +8,7 @@ const { lang } = Astro.props;
 const t = copy[lang];
 ---
 <section id="projects" class="section container">
+  <div class="section-atmosphere" aria-hidden="true"><span></span></div>
   <SectionHeading label={t.projectsLabel} title={t.projectsTitle} intro={t.projectsIntro} />
   <div class="project-grid">{projects.map(project => <ProjectCard project={project} lang={lang} />)}</div>
   <ExternalLink class="section-more text-link" href={`${profile.github}?tab=repositories`}>{t.allProjects} <span aria-hidden="true">↗</span></ExternalLink>

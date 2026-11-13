@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
-  <rect width="800" height="520" fill="#e4e9db"/>
-  <rect x="66" y="85" width="375" height="350" rx="18" fill="#243c31"/>
-  <g fill="#d2e7a4"><circle cx="94" cy="112" r="5"/><circle cx="114" cy="112" r="5" opacity=".6"/><circle cx="134" cy="112" r="5" opacity=".3"/></g>
-  <path d="m161 170-35 35 35 35m65-70 35 35-35 35m-25-80-20 90" fill="none" stroke="#d2e7a4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-  <g stroke="#90a58a" stroke-width="7" stroke-linecap="round"><path d="M110 290h88m22 0h80M135 320h100m20 0h120M135 350h48m20 0h70M110 380h115"/></g>
-  <g stroke="#527844" stroke-width="3" fill="none"><path d="m596 112-85 96 170 0zM511 208l40 98 130-98m-85-96 50 225M551 306l95 31"/></g>
-  <g stroke="#244f3b" stroke-width="3" fill="#d2e7a4"><circle cx="596" cy="112" r="22"/><circle cx="511" cy="208" r="22"/><circle cx="681" cy="208" r="22"/><circle cx="551" cy="306" r="22"/><circle cx="646" cy="337" r="22"/></g>
-  <g fill="#fafaf5" stroke="#9eaf91" stroke-width="2"><rect x="487" y="397" width="44" height="38" rx="6"/><rect x="543" y="397" width="44" height="38" rx="6"/><rect x="599" y="397" width="44" height="38" rx="6"/><rect x="655" y="397" width="44" height="38" rx="6"/></g>
-  <g fill="#244f3b" font-family="monospace" font-size="17" text-anchor="middle"><text x="509" y="422">1</text><text x="565" y="422">2</text><text x="621" y="422">3</text><text x="677" y="422">5</text></g>
+  <rect width="800" height="520" fill="#211a35"/>
+  <rect x="66" y="85" width="375" height="350" rx="18" fill="#171222"/>
+  <g fill="#705496"><circle cx="94" cy="112" r="5"/><circle cx="114" cy="112" r="5" opacity=".6"/><circle cx="134" cy="112" r="5" opacity=".3"/></g>
+  <path d="m161 170-35 35 35 35m65-70 35 35-35 35m-25-80-20 90" fill="none" stroke="#705496" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <g stroke="#9381af" stroke-width="7" stroke-linecap="round"><path d="M110 290h88m22 0h80M135 320h100m20 0h120M135 350h48m20 0h70M110 380h115"/></g>
+  <g stroke="#9c80c7" stroke-width="3" fill="none"><path d="m596 112-85 96 170 0zM511 208l40 98 130-98m-85-96 50 225M551 306l95 31"/></g>
+  <g stroke="#c3a5f4" stroke-width="3" fill="#705496"><circle cx="596" cy="112" r="22"/><circle cx="511" cy="208" r="22"/><circle cx="681" cy="208" r="22"/><circle cx="551" cy="306" r="22"/><circle cx="646" cy="337" r="22"/></g>
+  <g fill="#29203b" stroke="#76618f" stroke-width="2"><rect x="487" y="397" width="44" height="38" rx="6"/><rect x="543" y="397" width="44" height="38" rx="6"/><rect x="599" y="397" width="44" height="38" rx="6"/><rect x="655" y="397" width="44" height="38" rx="6"/></g>
+  <g fill="#c3a5f4" font-family="monospace" font-size="17" text-anchor="middle"><text x="509" y="422">1</text><text x="565" y="422">2</text><text x="621" y="422">3</text><text x="677" y="422">5</text></g>
 </svg>

@@ -90,10 +90,10 @@ try {
   assert(doc.documentElement.dataset.theme === 'dark' && doc.querySelector('#theme-select').value === 'dark', 'Tema persiste entre páginas');
   doc = await load('/projetos/', 390);
   assert(doc.documentElement.dataset.theme === 'dark', 'Tema persiste após recarregar');
-  assert(frame.contentWindow.getComputedStyle(doc.body).backgroundColor === 'rgb(20, 36, 29)', 'CSS aplica fundo escuro');
+  assert(frame.contentWindow.getComputedStyle(doc.body).backgroundColor === 'rgb(14, 11, 24)', 'CSS aplica fundo escuro');
   chooseTheme('light');
   assert(doc.documentElement.dataset.theme === 'light', 'Seletor retorna ao tema claro');
-  assert(frame.contentWindow.getComputedStyle(doc.body).backgroundColor === 'rgb(245, 244, 236)', 'CSS restaura paleta clara');
+  assert(frame.contentWindow.getComputedStyle(doc.body).backgroundColor === 'rgb(246, 244, 251)', 'CSS restaura paleta clara');
   chooseTheme('system');
   assert(localStorage.getItem('portfolio-theme') === null, 'Sistema remove preferência explícita');
   assert(doc.documentElement.dataset.theme === (frame.contentWindow.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'), 'Modo sistema acompanha preferência do navegador');

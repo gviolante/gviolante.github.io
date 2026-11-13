@@ -10,6 +10,7 @@ Node.js **22.23.4 ou superior**. Versões das dependências fixadas no lockfile.
 npm ci
 npm run dev      # Astro: http://localhost:4321, atualização automática
 npm run check    # Build de produção + testes Node
+npm run test:browser # Chromium: layout, interação, movimento e capturas
 npm run build    # Gera dist/
 npm run preview  # Serve o dist/ já construído, sem reconstruir
 ```
@@ -26,6 +27,7 @@ src/components/           Cards, cabeçalho, links e seções
 src/styles.css            Paleta, temas e responsividade
 src/icons.js              SVGs locais
 src/client.js             Menu, âncoras, idioma e cópia de e-mail
+src/motion.js             GSAP/ScrollTrigger: entradas e efeitos de rolagem
 src/theme.js              Preferência de tema, executada antes do CSS
 public/                   Somente favicon e imagens selecionadas
 archive/                  PDFs legados; nunca publicados
@@ -34,6 +36,8 @@ astro.config.mjs          Build estático e domínio opcional
 ```
 
 O Astro substitui o gerador manual de HTML. Não há React, backend ou roteamento SPA. Conteúdo e links são entregues no HTML e funcionam sem JavaScript. A preferência de tema permanece em `src/theme.js`, incluída inline no cabeçalho para evitar troca visível de paleta no carregamento.
+
+A identidade usa roxo e azul-escuro, com uma versão clara em lavanda. O retrato permanece estático. Entradas de seções e cards, progresso de leitura, trajetória e fundos decorativos acompanham a rolagem nativa. GSAP ajusta os efeitos à tela e a `prefers-reduced-motion`, inclusive quando a preferência muda com uma animação em andamento. Foco por teclado termina a entrada do elemento focado.
 
 ## Rotas e destinos
 
@@ -51,13 +55,13 @@ Projetos, publicações, DOI e perfis abrem em nova guia. Currículos e históri
 
 `npm run check` verifica links/âncoras, idiomas, arquivos públicos, prioridades dos projetos, limites factuais e temas. O tema Sistema acompanha o dispositivo; escolhas explícitas persistem. O conteúdo respeita teclado e movimento reduzido.
 
-Com o build e o servidor de prévia ativos:
+`npm run test:browser` usa `playwright-core` somente no desenvolvimento e um Chromium já instalado, sem baixar navegador. Se necessário, indique o executável:
 
 ```bash
-cp tests/browser.html dist/__browser-check.html
+CHROMIUM_PATH=/caminho/do/chromium npm run test:browser
 ```
 
-Abra `http://localhost:4321/__browser-check.html` e aguarde `passed`. O teste percorre seis páginas em 320, 390, 768 e 1440 px, nos dois temas, além de verificar menu, idioma, imagens, links, persistência e recursos removidos. Um novo build remove o harness da publicação.
+O teste inicia uma prévia local temporária e percorre seis páginas em 320, 390, 768 e 1440 px, nos dois temas. Verifica menu, idioma, imagens, links, persistência, recursos removidos, retrato estático, entradas de cards, interrupção por movimento reduzido, teclado, retorno do histórico, redimensionamento e navegação sem JavaScript. O servidor e o harness temporários são removidos ao terminar. Capturas ficam em `/tmp/portfolio-astro-qa`, ou no diretório definido por `QA_OUTPUT_DIR`.
 
 ## Publicação e continuidade
 
