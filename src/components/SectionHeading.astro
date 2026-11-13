@@ -1,0 +1,8 @@
+---
+const { label, title, intro = '' } = Astro.props;
+---
+<div class="section-heading">
+  <p class="eyebrow">{label}</p>
+  <h2>{title}</h2>
+  {intro && <p class="section-intro">{intro}</p>}
+</div>

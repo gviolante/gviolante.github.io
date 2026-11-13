@@ -9,3 +9,5 @@ personalContext/
 .cache/
 .aws/
 coverage/
+
+.astro/

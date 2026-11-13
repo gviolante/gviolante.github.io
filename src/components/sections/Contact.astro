@@ -1,0 +1,16 @@
+---
+import { copy } from '../../data/content.js';
+import { profile } from '../../data/projects.js';
+import Icon from '../Icon.astro';
+import SocialLinks from '../SocialLinks.astro';
+const { lang } = Astro.props;
+const t = copy[lang];
+---
+<section id="contact" class="contact-section"><div class="container contact-inner">
+  <div><p class="eyebrow">{t.contactLabel}</p><h2>{t.contactTitle}</h2><p class="contact-description">{t.contactText}</p></div>
+  <div class="contact-actions">
+    <a class="contact-email" href={`mailto:${profile.email}`}><Icon name="mail" /><span>{profile.email}</span><span aria-hidden="true">↗</span></a>
+    <button class="copy-email" type="button" data-email={profile.email} data-success={t.copied} data-error={t.copyError} hidden><Icon name="copy" />{t.copy}</button>
+    <span class="copy-feedback" role="status"></span><SocialLinks />
+  </div>
+</div></section>

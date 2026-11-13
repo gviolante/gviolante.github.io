@@ -1,0 +1,12 @@
+---
+import { copy } from '../../data/content.js';
+import SectionHeading from '../SectionHeading.astro';
+import Icon from '../Icon.astro';
+const { lang } = Astro.props;
+const t = copy[lang];
+const icons = ['code', 'network', 'layers', 'terminal', 'tools', 'globe'];
+---
+<section id="skills" class="section container">
+  <SectionHeading label={t.skillsLabel} title={t.skillsTitle} intro={t.skillsIntro} />
+  <div class="skills-grid">{t.skillGroups.map(([, title, items], index) => <article class="skill-card"><span class="skill-symbol"><Icon name={icons[index]} /></span><h3>{title}</h3><ul>{items.map(item => <li>{item}</li>)}</ul></article>)}</div>
+</section>

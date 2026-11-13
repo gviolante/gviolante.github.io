@@ -1,0 +1,14 @@
+---
+import { copy } from '../../data/content.js';
+import { projects, profile } from '../../data/projects.js';
+import SectionHeading from '../SectionHeading.astro';
+import ProjectCard from '../ProjectCard.astro';
+import ExternalLink from '../ExternalLink.astro';
+const { lang } = Astro.props;
+const t = copy[lang];
+---
+<section id="projects" class="section container">
+  <SectionHeading label={t.projectsLabel} title={t.projectsTitle} intro={t.projectsIntro} />
+  <div class="project-grid">{projects.map(project => <ProjectCard project={project} lang={lang} />)}</div>
+  <ExternalLink class="section-more text-link" href={`${profile.github}?tab=repositories`}>{t.allProjects} <span aria-hidden="true">↗</span></ExternalLink>
+</section>

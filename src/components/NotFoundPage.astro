@@ -1,0 +1,9 @@
+---
+import { copy, homeUrl } from '../data/content.js';
+import BaseLayout from '../layouts/BaseLayout.astro';
+const { lang } = Astro.props;
+const t = copy[lang];
+---
+<BaseLayout lang={lang} title="404 — Gabriel Violante" description={t.notFoundText} alternatePath={lang === 'pt' ? '/404.html' : '/pt/404/'}>
+  <section class="container not-found"><p class="eyebrow">404</p><h1>{t.notFound}</h1><p>{t.notFoundText}</p><a class="button button-dark" href={homeUrl(lang)}>{t.back} →</a></section>
+</BaseLayout>

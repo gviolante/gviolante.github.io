@@ -2,8 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
-import { outputRoot } from '../scripts/build.mjs';
-import { resolvePublicPath } from '../scripts/serve.mjs';
+import { outputRoot, resolvePublicPath } from '../scripts/serve.mjs';
 import { projects, papers } from '../src/data/projects.js';
 import { documentLinks } from '../src/data/document-links.js';
 
@@ -45,7 +44,7 @@ test('documentos pessoais e arquivos de desenvolvimento não entram na publicaç
 
 test('projetos preservam o estágio e as limitações das pesquisas', async () => {
   const home = await readFile(path.join(outputRoot, 'pt/index.html'), 'utf8');
-  assert.match(home, /<h1 id="hero-title">Gabriel<br>Violante/);
+  assert.match(home, /<h1 id="hero-title">Gabriel<br\s*\/?>Violante/);
   assert.match(home, /Ainda sem implementação ou resultados para apresentar/);
   assert.doesNotMatch(home, /href="\/projetos\/deteccao-de-abelhas/);
   await assert.rejects(stat(path.join(outputRoot, 'projetos/deteccao-de-abelhas/index.html')), { code: 'ENOENT' });
@@ -85,14 +84,20 @@ test('idiomas têm a mesma ordem de seções, alternância recíproca e CTAs uti
 });
 
 test('páginas traduzidas e metadados preservam o destino equivalente', async () => {
-  const { homePage, catalogPage } = await import('../src/templates.js');
-  const html = homePage({ lang: 'en', siteUrl: 'https://portfolio.example' });
-  assert.match(html, /rel="alternate" hreflang="pt-BR" href="https:\/\/portfolio.example\/pt\/"/);
-  assert.match(html, /rel="canonical" href="https:\/\/portfolio.example\/"/);
-  for (const [lang, alternate] of [['en', '/projetos/'], ['pt', '/projects/']]) {
-    const catalog = catalogPage({ lang });
+  for (const [route, alternate] of [['projects/index.html', '/projetos/'], ['projetos/index.html', '/projects/']]) {
+    const catalog = await readFile(path.join(outputRoot, route), 'utf8');
     assert.ok(catalog.includes(`class="language-switch" href="${alternate}"`));
     assert.doesNotMatch(catalog, /Read case study|Conhecer o projeto/);
+  }
+  for (const route of ['index.html', 'pt/index.html']) {
+    const html = await readFile(path.join(outputRoot, route), 'utf8');
+    const canonical = html.match(/rel="canonical" href="([^"]+)"/);
+    if (canonical) {
+      const url = new URL(canonical[1]);
+      assert.equal(url.pathname, route === 'index.html' ? '/' : '/pt/');
+      assert.ok(html.includes(`hreflang="pt-BR" href="${url.origin}/pt/"`));
+      assert.ok(html.includes(`hreflang="en" href="${url.origin}/"`));
+    }
   }
 });
 

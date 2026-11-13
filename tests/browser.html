@@ -25,7 +25,7 @@ const load = async (path, width) => {
 };
 const initialPreference = localStorage.getItem('portfolio-theme');
 try {
-  const routes = ['/', '/pt/', '/projects/', '/projetos/', '/404.html', '/pt/404.html'];
+  const routes = ['/', '/pt/', '/projects/', '/projetos/', '/404.html', '/pt/404/'];
   for (const theme of ['light', 'dark']) {
     localStorage.setItem('portfolio-theme', theme);
     for (const width of [320, 390, 768, 1440]) {

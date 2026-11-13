@@ -1,0 +1,15 @@
+---
+import { copy } from '../data/content.js';
+import Icon from './Icon.astro';
+import ExternalLink from './ExternalLink.astro';
+const { project, lang } = Astro.props;
+const p = project[lang], t = copy[lang];
+---
+<article class="project-card">
+  <ExternalLink class={`project-image ${project.slug}`} href={project.href} aria-label={`${project.title} — GitHub`}><img src={`/assets/images/${project.image}`} alt={p.alt} width="800" height="520" loading="lazy" /></ExternalLink>
+  <div class="project-card-content">
+    <p class="eyebrow">{p.category}</p><h3>{project.title}</h3><p>{p.summary}</p>
+    <ul class="tags">{project.tags.map(tag => <li>{tag}</li>)}</ul>
+    <ExternalLink class="text-link" href={project.href}><Icon name="github" />{t.github} <span aria-hidden="true">↗</span></ExternalLink>
+  </div>
+</article>

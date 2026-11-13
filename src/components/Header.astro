@@ -1,0 +1,19 @@
+---
+import { copy, homeUrl } from '../data/content.js';
+const { lang, alternatePath } = Astro.props;
+const t = copy[lang];
+const sections = ['home', 'about', 'projects', 'papers', 'skills', 'contact'];
+---
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href={homeUrl(lang)} aria-label={`Gabriel Violante — ${t.nav[0]}`}>gv<span>.</span></a>
+    <nav id="site-nav" aria-label={t.navigation}>
+      {sections.map((id, i) => <a href={`${homeUrl(lang)}#${id}`}>{t.nav[i]}</a>)}
+    </nav>
+    <div class="header-controls">
+      <a class="language-switch" href={alternatePath} lang={lang === 'en' ? 'pt-BR' : 'en'} hreflang={lang === 'en' ? 'pt-BR' : 'en'} aria-label={t.language}>{lang === 'en' ? 'PT' : 'EN'}<span aria-hidden="true"> ↗</span></a>
+      <label class="theme-control" hidden><span aria-hidden="true">◐</span><span class="sr-only">{t.theme}</span><select id="theme-select">{['system', 'light', 'dark'].map((theme, i) => <option value={theme}>{t.themes[i]}</option>)}</select></label>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden>Menu <span aria-hidden="true">＋</span></button>
+    </div>
+  </div>
+</header>

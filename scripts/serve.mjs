@@ -1,10 +1,8 @@
 import http from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
-import { watch } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { spawn } from 'node:child_process';
-import { build, outputRoot, projectRoot } from './build.mjs';
+export const outputRoot = path.resolve(fileURLToPath(new URL('../dist/', import.meta.url)));
 
 const mimeTypes = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8',
@@ -48,7 +46,7 @@ export function createServer(root = outputRoot) {
       response.end(request.method === 'HEAD' ? undefined : body);
     } catch {
       const portuguese = /^\/(?:pt|projetos)(?:\/|\?|$)/.test(request.url);
-      const body = await readFile(path.join(root, portuguese ? 'pt/404.html' : '404.html')).catch(() => Buffer.from('Page not found.'));
+      const body = await readFile(path.join(root, portuguese ? 'pt/404/index.html' : '404.html')).catch(() => Buffer.from('Page not found.'));
       response.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
       response.end(request.method === 'HEAD' ? undefined : body);
     }
@@ -56,37 +54,11 @@ export function createServer(root = outputRoot) {
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  await build();
   const server = createServer();
   const port = Number(process.env.PORT || 4321);
   server.on('error', (error) => { console.error(`Não foi possível iniciar o servidor: ${error.message}`); process.exit(1); });
   server.listen(port, '127.0.0.1', () => console.log(`Portfólio local: http://localhost:${port}\nCtrl+C para encerrar.`));
-  const watchers = [];
-  if (process.argv.includes('--watch')) {
-    let timer;
-    let building = false;
-    let pending = false;
-    const rebuild = () => {
-      if (building) { pending = true; return; }
-      building = true;
-      // Um processo novo lê módulos atualizados, sem cache de imports antigos.
-      const child = spawn(process.execPath, ['scripts/build.mjs'], { cwd: projectRoot, stdio: 'inherit' });
-      child.on('exit', (code) => {
-        building = false;
-        if (code === 0) console.log('Atualizado. Recarregue a página no navegador.');
-        if (pending) { pending = false; rebuild(); }
-      });
-      child.on('error', (error) => { building = false; console.error(error.message); });
-    };
-    for (const directory of ['src', 'public']) {
-      watchers.push(watch(path.join(projectRoot, directory), { recursive: true }, () => {
-        clearTimeout(timer);
-        timer = setTimeout(rebuild, 150);
-      }));
-    }
-    console.log('Acompanhando alterações em src/ e public/.');
-  }
-  const stop = () => { watchers.forEach((watcher) => watcher.close()); server.close(() => process.exit(0)); };
+  const stop = () => { server.close(() => process.exit(0)); };
   process.on('SIGINT', stop);
   process.on('SIGTERM', stop);
 }

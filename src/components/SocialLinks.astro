@@ -1,0 +1,9 @@
+---
+import { profile } from '../data/projects.js';
+import ExternalLink from './ExternalLink.astro';
+import Icon from './Icon.astro';
+---
+<div class="social-links">
+  <ExternalLink href={profile.github}><Icon name="github" />GitHub <span aria-hidden="true">↗</span></ExternalLink>
+  <ExternalLink href={profile.linkedin}><Icon name="linkedin" />LinkedIn <span aria-hidden="true">↗</span></ExternalLink>
+</div>

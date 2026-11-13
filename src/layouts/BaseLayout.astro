@@ -1,0 +1,43 @@
+---
+import { copy, homeUrl } from '../data/content.js';
+import Header from '../components/Header.astro';
+import themeScript from '../theme.js?raw';
+import '../styles.css';
+const { lang = 'en', title, description, alternatePath } = Astro.props;
+const t = copy[lang];
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : null;
+---
+<!doctype html>
+<html lang={t.locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f4ec" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={t.ogLocale} />
+    {canonical && <>
+      <link rel="canonical" href={canonical} />
+      <meta property="og:url" content={canonical} />
+      {['en', 'pt'].map(l => <link rel="alternate" hreflang={copy[l].locale} href={new URL(l === lang ? Astro.url.pathname : alternatePath, Astro.site).href} />)}
+    </>}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline set:html={themeScript} />
+  </head>
+  <body id="top">
+    <span id="external-note" class="sr-only">{t.newTab}</span>
+    <a class="skip-link" href="#content">{t.skip}</a>
+    <Header lang={lang} alternatePath={alternatePath} />
+    <main id="content"><slot /></main>
+    <footer class="site-footer container">
+      <a class="footer-name" href={homeUrl(lang)}>Gabriel Violante<span class="green-dot" aria-hidden="true"></span></a>
+      <p>{t.footer}</p><a href="#top">{t.top} ↑</a>
+    </footer>
+    <script>
+      import '../client.js';
+    </script>
+  </body>
+</html>
