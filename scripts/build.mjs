@@ -1,8 +1,7 @@
 import { cp, mkdir, rm, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { studies } from '../src/data/projects.js';
-import { homePage, catalogPage, projectPage, notFoundPage } from '../src/templates.js';
+import { homePage, catalogPage, notFoundPage } from '../src/templates.js';
 
 export const projectRoot = fileURLToPath(new URL('../', import.meta.url));
 export const outputRoot = path.join(projectRoot, 'dist');
@@ -15,8 +14,9 @@ export async function build({ outDir = outputRoot, siteUrl = process.env.SITE_UR
   }
   await rm(outDir, { recursive: true, force: true });
   await mkdir(path.join(outDir, 'assets'), { recursive: true });
-  // Copiar somente recursos explicitamente públicos; nunca a raiz do projeto.
-  await cp(path.join(projectRoot, 'public'), outDir, { recursive: true });
+  // Somente imagens selecionadas e favicon. PDFs legados não são distribuídos.
+  await cp(path.join(projectRoot, 'public/favicon.svg'), path.join(outDir, 'favicon.svg'));
+  await cp(path.join(projectRoot, 'public/assets/images'), path.join(outDir, 'assets/images'), { recursive: true });
   await cp(path.join(projectRoot, 'src/styles.css'), path.join(outDir, 'assets/styles.css'));
   await cp(path.join(projectRoot, 'src/client.js'), path.join(outDir, 'assets/client.js'));
   await cp(path.join(projectRoot, 'src/theme.js'), path.join(outDir, 'assets/theme.js'));
@@ -26,7 +26,6 @@ export async function build({ outDir = outputRoot, siteUrl = process.env.SITE_UR
     return [
       [lang === 'pt' ? 'pt/index.html' : 'index.html', homePage(options)],
       [`${prefix}/index.html`, catalogPage(options)],
-      ...studies.map(project => [`${prefix}/${project.slug}/index.html`, projectPage(project, options)]),
       [lang === 'pt' ? 'pt/404.html' : '404.html', notFoundPage(options)],
     ];
   });

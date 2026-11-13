@@ -4,7 +4,8 @@ import { readFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { outputRoot } from '../scripts/build.mjs';
 import { resolvePublicPath } from '../scripts/serve.mjs';
-import { projects, studies, papers } from '../src/data/projects.js';
+import { projects, papers } from '../src/data/projects.js';
+import { documentLinks } from '../src/data/document-links.js';
 
 async function filesIn(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -15,7 +16,7 @@ async function filesIn(directory) {
 test('toda página e recurso interno referenciado existe na saída pública', async () => {
   const files = await filesIn(outputRoot);
   const pages = files.filter((file) => file.endsWith('.html'));
-  assert.equal(pages.length, 2 * (studies.length + 3));
+  assert.equal(pages.length, 6);
   for (const page of pages) {
     const html = await readFile(page, 'utf8');
     assert.equal((html.match(/<h1[ >]/g) || []).length, 1, page);
@@ -39,7 +40,7 @@ test('toda página e recurso interno referenciado existe na saída pública', as
 test('documentos pessoais e arquivos de desenvolvimento não entram na publicação', async () => {
   const files = (await filesIn(outputRoot)).map((file) => path.relative(outputRoot, file));
   assert.ok(files.every((file) => !/personalContext|Historico|curriculo_geral|CONTEXTO|ideas\.md|package\.json|AGENTS|\.env/i.test(file)));
-  assert.deepEqual(files.filter((file) => file.endsWith('.pdf')).sort(), ['assets/documents/academic-background-en.pdf', 'assets/documents/academic-background-pt.pdf', 'assets/documents/resume-en.pdf', 'assets/documents/resume-pt.pdf', 'assets/papers/enem-runner.pdf', 'assets/papers/tinyflow-edgenids.pdf']);
+  assert.deepEqual(files.filter((file) => file.endsWith('.pdf')).sort(), []);
 });
 
 test('projetos preservam o estágio e as limitações das pesquisas', async () => {
@@ -48,11 +49,11 @@ test('projetos preservam o estágio e as limitações das pesquisas', async () =
   assert.match(home, /Ainda sem implementação ou resultados para apresentar/);
   assert.doesNotMatch(home, /href="\/projetos\/deteccao-de-abelhas/);
   await assert.rejects(stat(path.join(outputRoot, 'projetos/deteccao-de-abelhas/index.html')), { code: 'ENOENT' });
-  const tinyflow = await readFile(path.join(outputRoot, 'projetos/tinyflow-edgenids/index.html'), 'utf8');
-  assert.match(tinyflow, /resultados de modelos distintos/);
-  assert.match(tinyflow, /embeddings pré-computados/);
-  const game = await readFile(path.join(outputRoot, 'projetos/enem-runner/index.html'), 'utf8');
-  assert.match(game, /pessoas vendadas/);
+  assert.match(home, /embeddings pré-computados/);
+  assert.match(home, /pessoas vendadas/);
+  const projectsSection = home.split('<section id="projects"')[1].split('<section id="papers"')[0];
+  assert.doesNotMatch(projectsSection, /VALE/);
+
 });
 
 test('servidor restringe navegação à pasta pública', () => {
@@ -73,8 +74,9 @@ test('idiomas têm a mesma ordem de seções, alternância recíproca e CTAs uti
     assert.deepEqual([...nav.matchAll(/href="[^#"]+#([^"]+)"/g)].map(match => match[1]), ids);
     assert.match(html, new RegExp(`class="language-switch" href="${alternate}"`));
     assert.match(html, /class="button button-dark" href="mailto:gabriel\.violant@gmail\.com"/);
-    assert.ok(html.includes(`/assets/documents/resume-${lang}.pdf`));
-    assert.ok(html.includes(`/assets/documents/academic-background-${lang}.pdf`));
+    assert.ok(html.includes(documentLinks.resume[lang]));
+    if (documentLinks.academic) assert.ok(html.includes(documentLinks.academic));
+    else assert.doesNotMatch(html, /class="academic-link"/);
     assert.equal((html.match(/class="project-card"/g) || []).length, projects.length);
     assert.equal((html.match(/class="paper-card"/g) || []).length, papers.length);
     for (const p of projects) assert.ok(html.includes(p.href));
@@ -83,14 +85,43 @@ test('idiomas têm a mesma ordem de seções, alternância recíproca e CTAs uti
 });
 
 test('páginas traduzidas e metadados preservam o destino equivalente', async () => {
-  const { homePage, projectPage } = await import('../src/templates.js');
+  const { homePage, catalogPage } = await import('../src/templates.js');
   const html = homePage({ lang: 'en', siteUrl: 'https://portfolio.example' });
   assert.match(html, /rel="alternate" hreflang="pt-BR" href="https:\/\/portfolio.example\/pt\/"/);
   assert.match(html, /rel="canonical" href="https:\/\/portfolio.example\/"/);
-  for (const study of studies) {
-    const en = projectPage(study, { lang: 'en' });
-    assert.ok(en.includes(`href="/projetos/${study.slug}/"`));
-    assert.match(en, /<html lang="en">/);
-    assert.doesNotMatch(en, /O desafio|Construção coletiva|Conhecer o projeto/);
+  for (const [lang, alternate] of [['en', '/projetos/'], ['pt', '/projects/']]) {
+    const catalog = catalogPage({ lang });
+    assert.ok(catalog.includes(`class="language-switch" href="${alternate}"`));
+    assert.doesNotMatch(catalog, /Read case study|Conhecer o projeto/);
+  }
+});
+
+test('projetos seguem a prioridade e todos os recursos externos abrem em nova guia, sem download', async () => {
+  assert.deepEqual(projects.map(p => p.title), ['Eanter-OS', 'StrongerNotes', 'EnemRunner', 'Competitive-Programming', 'RPG-Sheet-Supros']);
+  for (const file of (await filesIn(outputRoot)).filter(f => f.endsWith('.html'))) {
+    const html = await readFile(file, 'utf8');
+    assert.doesNotMatch(html, /<a\b[^>]*\bdownload(?:=|\s|>)/i);
+    assert.doesNotMatch(html, /(?:href|src)="[^"]*(?:\.pdf|article\/download\/)/i);
+    assert.doesNotMatch(html, /Curious by nature|Curioso por natureza|PERSON BEHIND THE CODE|PESSOA POR TRÁS DO CÓDIGO|curiosidade e propósito/i);
+    for (const [tag] of html.matchAll(/<a\b[^>]*href="https:\/\/[^>]+>/g)) {
+      assert.match(tag, /target="_blank"/);
+      assert.match(tag, /rel="noopener noreferrer"/);
+      assert.match(tag, /aria-describedby="external-note"/);
+    }
+  }
+});
+
+test('artigos têm logos, DOI e destino oficial; páginas de detalhamento deixam de ser geradas', async () => {
+  assert.deepEqual(papers.map(p => p.href), [
+    'https://ieeexplore.ieee.org/document/11739938',
+    'https://sol.sbc.org.br/index.php/sbrc/article/view/42316',
+    'https://sol.sbc.org.br/index.php/sbgames_estendido/article/view/23798',
+  ]);
+  for (const paper of papers) {
+    assert.match(paper.doi, /^10\.\d{4,}\//);
+    assert.ok((await stat(path.join(outputRoot, 'assets/images', paper.logo))).isFile());
+  }
+  for (const prefix of ['projects', 'projetos']) for (const slug of ['tinyflow-edgenids', 'enem-runner']) {
+    await assert.rejects(stat(path.join(outputRoot, prefix, slug, 'index.html')), { code: 'ENOENT' });
   }
 });

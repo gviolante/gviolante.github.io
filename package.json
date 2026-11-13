@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Portfólio de Gabriel Violante — ideias ambiciosas, impacto real.",
+  "description": "Portfólio de Gabriel Violante — software e aprendizado de máquina.",
   "engines": { "node": ">=22.8" },
   "scripts": {
     "build": "node scripts/build.mjs",

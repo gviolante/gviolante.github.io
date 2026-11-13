@@ -8,7 +8,7 @@
 <script type="module">
 const results = [];
 const frame = document.querySelector('#page');
-const assert = (condition, message) => { if (!condition) throw new Error(message); results.push(message); };
+const assert = (condition, message) => { if (!condition) throw new Error(message); results.push(message); document.querySelector('#results').textContent = JSON.stringify({ status: 'running', total: results.length, last: message }); };
 const delay = () => new Promise(resolve => setTimeout(resolve, 80));
 let navigationCount = 0;
 const load = async (path, width) => {
@@ -25,7 +25,7 @@ const load = async (path, width) => {
 };
 const initialPreference = localStorage.getItem('portfolio-theme');
 try {
-  const routes = ['/', '/pt/', '/projects/', '/projetos/', '/projects/tinyflow-edgenids/', '/projetos/tinyflow-edgenids/', '/projects/enem-runner/', '/projetos/enem-runner/', '/404.html', '/pt/404.html'];
+  const routes = ['/', '/pt/', '/projects/', '/projetos/', '/404.html', '/pt/404.html'];
   for (const theme of ['light', 'dark']) {
     localStorage.setItem('portfolio-theme', theme);
     for (const width of [320, 390, 768, 1440]) {
@@ -34,7 +34,7 @@ try {
         assert(doc.documentElement.scrollWidth <= doc.documentElement.clientWidth + 1, `Sem overflow: ${theme} ${route} em ${width}px${doc.documentElement.scrollWidth > doc.documentElement.clientWidth + 1 ? JSON.stringify([...doc.querySelectorAll("main *")].filter(el => el.getBoundingClientRect().right > width + 1).map(el => ({tag:el.tagName,cls:el.className,right:el.getBoundingClientRect().right})).slice(0,8)) : ""}`);
         assert(doc.documentElement.dataset.theme === theme, `Tema ${theme}: ${route}`);
         assert(doc.querySelectorAll('h1').length === 1, `Título principal: ${route} em ${width}px`);
-        assert(doc.querySelector('main')?.textContent.trim().length > 100, `Conteúdo renderizado: ${route} em ${width}px`);
+        assert(Boolean(doc.querySelector('main h1')?.textContent.trim()) && Boolean(doc.querySelector('main p')?.textContent.trim()), `Conteúdo renderizado: ${route} em ${width}px`);
       }
     }
   }
@@ -58,9 +58,25 @@ try {
   assert(doc.documentElement.lang === 'pt-BR', 'Português declara idioma correto');
   assert(doc.querySelector('.language-switch').getAttribute('href').endsWith('/#papers'), 'Retorno ao inglês preserva seção');
   assert(doc.querySelector('#theme-select option[value="system"]').textContent === 'Sistema', 'Controle de tema traduzido');
-  for (const locale of ['en','pt']) for (const type of ['resume','academic-background']) {
-    const response = await fetch(`/assets/documents/${type}-${locale}.pdf`);
-    assert(response.ok && response.headers.get('content-type') === 'application/pdf', `PDF público disponível: ${type} ${locale}`);
+  for (const route of ['/', '/pt/']) {
+    doc = await load(route, 390);
+    const resume = doc.querySelector('.hero-actions a[href^="https://drive.google.com/"]');
+    assert(resume?.target === '_blank' && resume.pathname.endsWith('/view'), `Currículo abre visualizador em nova guia: ${route}`);
+    const transcript = doc.querySelector('.academic-link a');
+    assert(transcript?.target === '_blank' && transcript.href === 'https://drive.google.com/file/d/1YkdNL98nDzrrYCe3zcRNeONgaR9dzQGE/view?usp=sharing', `Histórico abre no Drive em nova guia: ${route}`);
+    assert(!doc.querySelector('a[download], a[href*="article/download/"], a[href$=".pdf"]'), `Sem download direto: ${route}`);
+    assert(doc.querySelectorAll('.project-card').length === 5, `Cinco projetos: ${route}`);
+    assert(doc.querySelectorAll('.conference-logo img').length === 3, `Três logos de conferências: ${route}`);
+    for (const link of doc.querySelectorAll('a[href^="https://"]')) {
+      assert(link.target === '_blank' && link.rel.includes('noopener'), `Link externo em nova guia: ${link.href}`);
+    }
+    const images = [...doc.querySelectorAll('img')];
+    await Promise.all(images.map(img => new Promise((resolve, reject) => {
+      const probe = new Image();
+      probe.onload = () => { assert(probe.naturalWidth > 0, `Imagem carregada: ${img.getAttribute('src')}`); resolve(); };
+      probe.onerror = () => reject(new Error(`Imagem inválida: ${img.src}`));
+      probe.src = img.src;
+    })));
   }
   const chooseTheme = (value) => {
     const select = doc.querySelector('#theme-select');
@@ -70,9 +86,9 @@ try {
   chooseTheme('dark');
   assert(doc.documentElement.dataset.theme === 'dark', 'Seletor aplica tema escuro');
   assert(localStorage.getItem('portfolio-theme') === 'dark', 'Escolha escura é salva');
-  doc = await load('/projetos/enem-runner/', 390);
+  doc = await load('/projetos/', 390);
   assert(doc.documentElement.dataset.theme === 'dark' && doc.querySelector('#theme-select').value === 'dark', 'Tema persiste entre páginas');
-  doc = await load('/projetos/enem-runner/', 390);
+  doc = await load('/projetos/', 390);
   assert(doc.documentElement.dataset.theme === 'dark', 'Tema persiste após recarregar');
   assert(frame.contentWindow.getComputedStyle(doc.body).backgroundColor === 'rgb(20, 36, 29)', 'CSS aplica fundo escuro');
   chooseTheme('light');
@@ -82,7 +98,7 @@ try {
   assert(localStorage.getItem('portfolio-theme') === null, 'Sistema remove preferência explícita');
   assert(doc.documentElement.dataset.theme === (frame.contentWindow.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'), 'Modo sistema acompanha preferência do navegador');
 
-  for (const url of ['/projetos/deteccao-de-abelhas/', '/assets/images/field-intelligence.svg', '/personalContext/HistoricoEscolar.pdf', '/ideas.md', '/CONTEXTO_PROJETO.md']) {
+  for (const url of ['/projetos/deteccao-de-abelhas/', '/projects/tinyflow-edgenids/', '/projetos/enem-runner/', '/assets/documents/resume-en.pdf', '/assets/papers/tinyflow-edgenids.pdf', '/assets/images/field-intelligence.svg', '/personalContext/HistoricoEscolar.pdf', '/ideas.md', '/CONTEXTO_PROJETO.md']) {
     assert((await fetch(url)).status === 404, `Recurso privado ou removido inacessível por HTTP: ${url}`);
   }
   document.body.dataset.state = 'passed';
