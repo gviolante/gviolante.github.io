@@ -62,14 +62,33 @@ try {
       await page.mouse.move(0, 0);
     }
 
-    await scrollTo(page, '.project-card');
-    await page.waitForFunction(() => {
-      const value = Number(document.querySelector('.project-card').style.opacity);
-      return value > 0 && value < 1;
+    // Percorrer a borda da tela com a roda detecta flashes que um salto de scroll omite.
+    await page.locator('.project-card').first().evaluate(el => {
+      scrollTo({ top: el.getBoundingClientRect().top + scrollY - innerHeight - 60, behavior: 'instant' });
+      window.revealSamples = [];
+      const sample = () => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < innerHeight && rect.bottom > 0) window.revealSamples.push(Number(getComputedStyle(el).opacity));
+        window.revealFrame = requestAnimationFrame(sample);
+      };
+      sample();
     });
-    check(true, 'Entrada dos projetos disparada pela rolagem');
-    await page.waitForFunction(() => [...document.querySelectorAll('.project-card')].every(el => el.style.opacity === ''));
-    check(await readable(page, '.project-card'), 'Projetos permanecem legíveis depois da entrada');
+    for (let step = 0; step < 8; step++) {
+      await page.mouse.wheel(0, 40);
+      await page.waitForTimeout(50);
+    }
+    await page.waitForFunction(() => document.querySelector('.project-card').style.opacity === '');
+    await page.mouse.wheel(0, -100);
+    await page.waitForTimeout(100);
+    await page.mouse.wheel(0, 100);
+    await page.waitForTimeout(100);
+    const samples = await page.evaluate(() => {
+      cancelAnimationFrame(window.revealFrame);
+      return window.revealSamples;
+    });
+    check(samples.some(value => value > 0 && value < 1), 'Entrada dos projetos disparada pela roda do mouse');
+    check(samples.every((value, index) => !index || value >= samples[index - 1] - 0.01), `Entrada não volta a ocultar conteúdo visível: ${samples.join(', ')}`);
+    check(await readable(page, '.project-card:first-child'), 'Projeto permanece legível depois da entrada');
     check(await page.locator('.reading-progress').evaluate(el => getComputedStyle(el).visibility === 'visible' && getComputedStyle(el).transform !== 'none'), 'Progresso acompanha a rolagem');
     await page.screenshot({ path: path.join(screenshots, `${width}-${theme}-projects.png`) });
 
@@ -86,7 +105,7 @@ try {
 
     await scrollTo(page, '.skill-card');
     await page.waitForFunction(() => Number(document.querySelector('.skill-card').style.opacity) > 0);
-    await page.waitForFunction(() => [...document.querySelectorAll('.skill-card')].every(el => el.style.opacity === ''));
+    await page.waitForFunction(() => [...document.querySelectorAll('.skill-card')].every(el => el.getBoundingClientRect().top >= innerHeight || el.style.opacity === ''));
     await page.screenshot({ path: path.join(screenshots, `${width}-${theme}-skills.png`) });
     // Foco durante a entrada do contato deve terminar a animação imediatamente.
     await scrollTo(page, '.contact-actions');
@@ -103,7 +122,11 @@ try {
     check(await readable(page, '[data-reveal]'), 'Conteúdo legível após restauração do histórico');
     await page.setViewportSize({ width: width === 390 ? 1440 : 390, height: 1000 });
     check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'Layout permanece válido após redimensionamento');
-    check(await readable(page, '[data-reveal]'), 'Redimensionamento não deixa conteúdo oculto');
+    await page.waitForFunction(() => [...document.querySelectorAll('[data-reveal]')].every(el => {
+      const rect = el.getBoundingClientRect();
+      return rect.top >= innerHeight || rect.bottom <= 0 || getComputedStyle(el).opacity === '1';
+    }));
+    check(true, 'Redimensionamento não deixa conteúdo visível oculto');
     await context.close();
     console.log(`Movimento, teclado, interrupção e capturas: ${width}px / ${theme}.`);
   }

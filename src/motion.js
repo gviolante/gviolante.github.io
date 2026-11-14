@@ -21,31 +21,21 @@ export function initMotion() {
     const desktop = context.conditions.desktop;
     root.dataset.motion = 'active';
     const pending = new Map();
-    const enterStates = new Set();
     const header = document.querySelector('.site-header');
     const progress = document.querySelector('.reading-progress');
     const hero = document.querySelector('.hero');
 
-    // Context.add registra também animações criadas posteriormente por callbacks.
-    context.add('reveal', element => {
-      if (enterStates.has(element) || element.contains(document.activeElement)) return;
-      enterStates.add(element);
+    // Preparar a entrada fora da tela evita ocultar um elemento que já apareceu.
+    document.querySelectorAll('[data-reveal]').forEach(element => {
+      if (element.getBoundingClientRect().top < innerHeight || element.contains(document.activeElement)) return;
       const animation = gsap.fromTo(element,
         { y: desktop ? 48 : 24, opacity: 0 },
         { y: 0, opacity: 1, duration: desktop ? 0.95 : 0.65, ease: 'power3.out',
           clearProps: 'transform,opacity',
+          scrollTrigger: { trigger: element, start: 'top 90%', once: true },
           onComplete: () => pending.delete(element),
         });
       pending.set(element, animation);
-    });
-
-    // Não esconder conteúdo acima da posição restaurada nem atrasar links de âncora.
-    document.querySelectorAll('[data-reveal]').forEach(element => {
-      if (element.getBoundingClientRect().top < innerHeight * 0.9) return;
-      ScrollTrigger.create({
-        trigger: element, start: 'top 90%', once: true,
-        onEnter: () => context.reveal(element),
-      });
     });
 
     let entrance;
