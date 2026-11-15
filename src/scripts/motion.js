@@ -53,12 +53,6 @@ export function initMotion() {
       onUpdate: self => header?.classList.toggle('is-scrolled', self.scroll() > 12),
     });
 
-    const journey = document.querySelector('.journey-list');
-    if (journey) gsap.fromTo('.journey-progress', { scaleY: 0 }, {
-      scaleY: 1, ease: 'none',
-      scrollTrigger: { trigger: journey, start: 'top 75%', end: 'bottom 65%', scrub: 0.4 },
-    });
-
     // Movimento vinculado ao scroll apenas em elementos decorativos.
     document.querySelectorAll('.section-rule').forEach(line => {
       gsap.fromTo(line, { scaleX: 0.2, opacity: 0.35 }, {

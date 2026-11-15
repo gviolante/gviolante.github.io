@@ -33,6 +33,13 @@ try {
         const doc = await load(route, width);
         assert(doc.documentElement.scrollWidth <= doc.documentElement.clientWidth + 1, `Sem overflow: ${theme} ${route} em ${width}px${doc.documentElement.scrollWidth > doc.documentElement.clientWidth + 1 ? JSON.stringify([...doc.querySelectorAll("main *")].filter(el => el.getBoundingClientRect().right > width + 1).map(el => ({tag:el.tagName,cls:el.className,right:el.getBoundingClientRect().right})).slice(0,8)) : ""}`);
         assert(doc.documentElement.dataset.theme === theme, `Tema ${theme}: ${route}`);
+        const shortcuts = [...doc.querySelectorAll('.quick-links a')];
+        assert(shortcuts.length === 4 && shortcuts.every(link => {
+          const rect = link.getBoundingClientRect();
+          return link.getAttribute('aria-label') && rect.left >= 0 && rect.right <= width && rect.top >= 0 && rect.bottom <= frame.contentWindow.innerHeight;
+        }), `Quatro atalhos acessíveis dentro da tela: ${theme} ${route} em ${width}px`);
+        const education = [...doc.querySelectorAll('.education-card')];
+        if (education.length) assert(education.length === 2 && education[1].getBoundingClientRect().top >= education[0].getBoundingClientRect().bottom, `Dois cards educacionais empilhados: ${route}`);
         const publications = [...doc.querySelectorAll('.publication-grid .project-card')];
         if (publications.length) {
           assert(publications.length === 3 && doc.querySelectorAll('.repository-grid .project-card').length === 5, `Três publicações e cinco repositórios: ${route}`);
@@ -69,8 +76,7 @@ try {
     doc = await load(route, 390);
     const resume = doc.querySelector('.hero-actions a[href^="https://drive.google.com/"]');
     assert(resume?.target === '_blank' && resume.pathname.endsWith('/view'), `Currículo abre visualizador em nova guia: ${route}`);
-    const transcript = doc.querySelector('.academic-link a');
-    assert(transcript?.target === '_blank' && transcript.href === 'https://drive.google.com/file/d/1YkdNL98nDzrrYCe3zcRNeONgaR9dzQGE/view?usp=sharing', `Histórico abre no Drive em nova guia: ${route}`);
+    assert(!doc.querySelector('.academic-link, a[href*="1YkdNL98nDzrrYCe3zcRNeONgaR9dzQGE"]'), `Histórico removido da publicação: ${route}`);
     assert(!doc.querySelector('a[download], a[href*="article/download/"], a[href$=".pdf"]'), `Sem download direto: ${route}`);
     assert(doc.querySelectorAll('.project-card').length === 8, `Oito cards em Projects: ${route}`);
     assert(doc.querySelectorAll('.conference-logo img').length === 3, `Três logos de conferências: ${route}`);

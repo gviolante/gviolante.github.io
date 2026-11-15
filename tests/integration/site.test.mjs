@@ -74,8 +74,7 @@ test('idiomas têm a mesma ordem de seções, alternância recíproca e CTAs uti
     assert.match(html, new RegExp(`class="language-option" href="${alternate}"`));
     assert.match(html, /class="button button-dark" href="mailto:gabriel\.violant@gmail\.com"/);
     assert.ok(html.includes(documentLinks.resume[lang]));
-    if (documentLinks.academic) assert.ok(html.includes(documentLinks.academic));
-    else assert.doesNotMatch(html, /class="academic-link"/);
+    assert.doesNotMatch(html, /academic-link|1YkdNL98nDzrrYCe3zcRNeONgaR9dzQGE/);
     assert.equal((html.match(/class="project-card"/g) || []).length, projects.length);
     assert.equal((html.match(/class="project-card publication-card"/g) || []).length, papers.length);
     for (const p of projects) assert.ok(html.includes(p.href));
@@ -153,13 +152,17 @@ test('publicações abrem a coleção unificada em ambas as páginas e idiomas',
 test('formação e contato usam os dados autorizados em ambos os idiomas', async () => {
   for (const [lang, route, average] of [['en', 'index.html', '90.71 / 100'], ['pt', 'pt/index.html', '90,71 / 100']]) {
     const html = await readFile(path.join(outputRoot, route), 'utf8');
-    const education = html.match(/<aside class="journey education".*?<\/aside>/s)[0];
-    assert.ok(education.includes(average));
-    assert.ok(education.includes('42 / 347'));
+    const education = html.match(/<aside class="education".*?<\/aside>/s)[0];
+    assert.ok(education.includes(average.split(' / ')[0]));
+    assert.ok(education.includes(lang === 'pt' ? '88,67' : '88.67'));
+    assert.equal((education.match(/class="education-card"/g) || []).length, 2);
+    assert.doesNotMatch(education, /42|347|ranking|classificação/i);
     assert.ok(education.includes('UFMG × EnterAI'));
     assert.ok(education.includes('COLTEC · UFMG'));
     assert.ok(education.includes('SBGames 2022'));
-    assert.ok(education.includes(documentLinks.resume[lang]));
+    assert.ok(education.includes(lang === 'pt' ? 'aos 17 anos' : 'at age 17'));
+    assert.ok(education.includes('education/dcc-ufmg.png'));
+    assert.ok(education.includes('education/coltec-ufmg.jpg'));
     assert.doesNotMatch(education, /LEVTY|VALE|2020.*2022|2020.*2023/);
     assert.match(html, /class="contact-box contact-phone" href="tel:\+5531995497868"/);
     assert.ok(html.includes('+55 (31) 99549-7868'));
@@ -180,5 +183,20 @@ test('autoria mantém ordem oficial, destaca Gabriel e sinaliza primeiro autor s
     });
     assert.ok(html.includes('/assets/images/conferences/iscc-2026.png'));
     assert.doesNotMatch(html, /iscc-2026\.webp/);
+  }
+});
+
+
+test('barra de atalhos mantém quatro destinos e currículo no idioma da página', async () => {
+  for (const route of ['index.html', 'pt/index.html', 'projects/index.html', 'projetos/index.html', '404.html', 'pt/404/index.html']) {
+    const html = await readFile(path.join(outputRoot, route), 'utf8');
+    const sidebar = html.match(/<nav class="quick-links".*?<\/nav>/s)[0];
+    const lang = route.startsWith('pt/') || route.startsWith('projetos/') ? 'pt' : 'en';
+    assert.deepEqual([...sidebar.matchAll(/href="([^"]+)"/g)].map(match => match[1]), [
+      'mailto:gabriel.violant@gmail.com', 'https://www.linkedin.com/in/gabriel-violante/',
+      'https://github.com/ViolanteGabriel', documentLinks.resume[lang],
+    ]);
+    assert.equal((sidebar.match(/<a[^>]*aria-label="[^"]+"/g) || []).length, 4);
+    assert.doesNotMatch(html, /1YkdNL98nDzrrYCe3zcRNeONgaR9dzQGE|Full academic background|Histórico escolar/);
   }
 });

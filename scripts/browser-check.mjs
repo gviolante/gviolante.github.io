@@ -96,6 +96,15 @@ try {
       await page.keyboard.press('Escape');
       check(await menu.evaluate(el => document.activeElement === el && el.getAttribute('aria-expanded') === 'false'), 'Escape fecha navegação e restaura foco');
     }
+    const shortcuts = page.locator('.quick-links a');
+    await page.keyboard.press('Tab');
+    await shortcuts.first().focus();
+    check(await shortcuts.first().evaluate(el => document.activeElement === el && getComputedStyle(el.querySelector('.quick-link-label')).visibility === 'visible'), 'Atalho exibe nome ao receber foco');
+    await page.keyboard.press('Tab');
+    check(await shortcuts.nth(1).evaluate(el => document.activeElement === el), 'Atalhos seguem ordem de teclado');
+    await shortcuts.last().focus();
+    check((await shortcuts.last().getAttribute('href')).includes(lang === 'pt' ? '1CSDInYQdPYxIjXckUCOBRk8YpJDLH9HA' : '1zY0MYdLbjIRQqSKV92SrKohusNhYEJae'), 'Currículo do atalho corresponde ao idioma atual');
+    await page.locator('.brand').focus();
     const art = page.locator('.hero-art');
     const portraitBefore = await page.locator('.hero-art img').boundingBox();
     if (width > 960) {
@@ -194,6 +203,7 @@ try {
     const plain = await noJS.newPage();
     await plain.goto(`${base}${route}`);
     check(await plain.locator('.project-card').count() === 8, 'Projetos presentes sem JS');
+    check(await plain.locator('.quick-links a').count() === 4, 'Atalhos presentes sem JS');
     check(await readable(plain, '[data-reveal], .hero-copy > *'), 'Conteúdo visível sem JS');
     check(await plain.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'Sem overflow sem JavaScript');
     await plain.locator('#site-nav a').nth(2).click();

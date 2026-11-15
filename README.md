@@ -26,7 +26,7 @@ src/
 ├── components/
 │   ├── pages/             Composição de Home, catálogo e erro; não cria rotas
 │   ├── sections/          Home, About, Projects, Skills e Contact
-│   ├── navigation/        Header e bandeiras de idioma
+│   ├── navigation/        Header, bandeiras de idioma e atalhos
 │   ├── cards/             Cards de projetos/artigos e suas imagens
 │   └── ui/                Links, ícones, títulos de seção e redes sociais
 ├── data/                  Conteúdo, traduções, projetos e links autorizados
@@ -38,6 +38,7 @@ public/
 └── assets/images/
     ├── profile/           Retrato selecionado
     ├── conferences/       Logos das conferências
+    ├── education/         Logos UFMG, DCC/UFMG e COLTEC/UFMG
     └── projects/          Imagens agrupadas por projeto
 scripts/
 ├── serve.mjs              Prévia local do build
@@ -58,17 +59,19 @@ Os arquivos de configuração permanecem na raiz. `README.md` é a entrada de le
 | --- | --- |
 | Textos e traduções | `src/data/content.js` |
 | Projetos, artigos e imagens dos cards | `src/data/projects.js` e `public/assets/images/projects/` ou `conferences/` |
-| Currículo e histórico no Drive | `src/data/document-links.js` |
+| Currículos no Drive | `src/data/document-links.js` |
 | Header e seleção de idioma | `src/components/navigation/` |
 | Aparência e animações | `src/styles/global.css` e `src/scripts/` |
 
 Imagens usam nomes em minúsculas, separados por hífen. Cada projeto tem sua própria pasta: `eanter-os`, `stronger-notes`, `enem-runner`, `competitive-programming` e `rpg-interactive-sheet`. Os banners de Eanter-OS e StrongerNotes combinam logos e capturas reais; o RPG usa a nova ficha como fundo do D20. As imagens substituídas ficam em `archive/images/`. O antigo `SignInPage.png` foi identificado como tela de cadastro e passou a `stronger-notes/sign-up.png`.
 
+A barra `QuickLinks.astro` oferece e-mail, LinkedIn, GitHub e currículo no idioma atual. Fica na lateral em telas largas e na parte inferior em telas menores, com área reservada ao final da página e nomes visíveis no hover/foco.
+
 O tema permanece em `src/theme.js` por ser a entrada executada antes do CSS; os demais comportamentos do navegador ficam em `src/scripts/`. Ferramentas executadas pelo desenvolvedor ficam em `scripts/`, na raiz.
 
 O Astro substitui o gerador manual de HTML. Não há React, backend ou roteamento SPA. Conteúdo e links são entregues no HTML e funcionam sem JavaScript. A preferência de tema permanece em `src/theme.js`, incluída inline no cabeçalho para evitar troca visível de paleta no carregamento.
 
-A identidade usa roxo e azul-escuro, com uma versão clara em lavanda. O retrato permanece estático. Entradas de seções e cards, progresso de leitura, trajetória e fundos decorativos acompanham a rolagem nativa. GSAP ajusta os efeitos à tela e a `prefers-reduced-motion`, inclusive quando a preferência muda com uma animação em andamento. Foco por teclado termina a entrada do elemento focado.
+A identidade usa roxo e azul-escuro, com uma versão clara em lavanda. O retrato permanece estático. Entradas de seções e cards, progresso de leitura e fundos decorativos acompanham a rolagem nativa. GSAP ajusta os efeitos à tela e a `prefers-reduced-motion`, inclusive quando a preferência muda com uma animação em andamento. Foco por teclado termina a entrada do elemento focado.
 
 ## Rotas e destinos
 
@@ -80,7 +83,7 @@ A identidade usa roxo e azul-escuro, com uma versão clara em lavanda. O retrato
 
 Projects apresenta primeiro os três trabalhos publicados (IEEE ISCC, SBRC e SBGames), depois os cinco repositórios, tanto na home quanto no catálogo. `ProjectCollection.astro` mantém essa composição compartilhada. A antiga âncora `#papers` continua levando às publicações dentro de Projects; não há seção nem item de menu Papers.
 
-Projetos, publicações, DOI e perfis abrem em nova guia. Currículos e histórico abrem os originais autorizados no Google Drive, conforme `src/data/document-links.js`. Gabriel administra as permissões dos arquivos. Não há downloads diretos nem páginas locais de artigos.
+Projetos, publicações, DOI e perfis abrem em nova guia. Currículos abrem os originais autorizados no Google Drive, conforme `src/data/document-links.js`. O histórico escolar completo não é mais oferecido na interface. Gabriel administra as permissões dos arquivos. Não há downloads diretos nem páginas locais de artigos.
 
 **Astro copia todo o conteúdo de `public/`.** Não colocar PDFs, documentos pessoais ou credenciais nessa pasta. Os PDFs revisados anteriores e seus dados ficam em `archive/`; o gerador opcional em `scripts/legacy/` também escreve nessa pasta. Consulte [archive/README.md](archive/README.md). `personalContext/`, `archive/` e os dados documentais legados não entram no build.
 
@@ -100,4 +103,4 @@ O teste inicia uma prévia local temporária e percorre seis páginas em 320, 39
 
 `SITE_URL=https://seu-dominio.example npm run build` gera canonical, hreflang e sitemap com o domínio. Sem domínio configurado, o sitemap fica vazio, sem URLs fictícias. Configure a hospedagem para retornar 404 real usando as páginas de erro.
 
-`CONTEXTO_PROJETO.md` registra fontes e decisões. Education apresenta UFMG e COLTEC com dados do currículo autorizado. A pesquisa recém-iniciada junto à VALE permanece somente no contexto interno, sem resultados publicados. Projetos coletivos e limites dos experimentos continuam explícitos. Não há push ou deploy automático.
+`CONTEXTO_PROJETO.md` registra fontes e decisões. Education apresenta dois cards com as logos e médias de UFMG/DCC (90,71/100) e COLTEC/UFMG (88,67/100), sem ranking. Os destaques usam o currículo e informações fornecidas por Gabriel. A pesquisa recém-iniciada junto à VALE permanece somente no contexto interno, sem resultados publicados. Projetos coletivos e limites dos experimentos continuam explícitos. Não há push ou deploy automático.

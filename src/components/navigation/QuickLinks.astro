@@ -1,0 +1,15 @@
+---
+import { copy } from '../../data/content.js';
+import { profile } from '../../data/projects.js';
+import { documentLinks } from '../../data/document-links.js';
+import ExternalLink from '../ui/ExternalLink.astro';
+import Icon from '../ui/Icon.astro';
+const { lang } = Astro.props;
+const t = copy[lang];
+---
+<nav class="quick-links" aria-label={t.shortcuts}>
+  <a href={`mailto:${profile.email}`} aria-label={t.email}><Icon name="mail" /><span class="quick-link-label" aria-hidden="true">{t.email}</span></a>
+  <ExternalLink href={profile.linkedin} aria-label="LinkedIn"><Icon name="linkedin" /><span class="quick-link-label" aria-hidden="true">LinkedIn</span></ExternalLink>
+  <ExternalLink href={profile.github} aria-label="GitHub"><Icon name="github" /><span class="quick-link-label" aria-hidden="true">GitHub</span></ExternalLink>
+  <ExternalLink href={documentLinks.resume[lang]} aria-label={t.resume}><Icon name="document" /><span class="quick-link-label" aria-hidden="true">{t.resume}</span></ExternalLink>
+</nav>

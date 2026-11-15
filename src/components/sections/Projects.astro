@@ -1,11 +1,9 @@
 ---
 import { copy } from '../../data/content.js';
 import { profile } from '../../data/projects.js';
-import { documentLinks } from '../../data/document-links.js';
 import SectionHeading from '../ui/SectionHeading.astro';
 import ProjectCollection from '../cards/ProjectCollection.astro';
 import ExternalLink from '../ui/ExternalLink.astro';
-import Icon from '../ui/Icon.astro';
 const { lang } = Astro.props;
 const t = copy[lang];
 ---
@@ -14,8 +12,4 @@ const t = copy[lang];
   <SectionHeading label={t.projectsLabel} title={t.projectsTitle} intro={t.projectsIntro} />
   <ProjectCollection lang={lang} />
   <ExternalLink class="section-more text-link" href={`${profile.github}?tab=repositories`}>{t.allProjects} <span aria-hidden="true">↗</span></ExternalLink>
-  {documentLinks.academic && <div class="academic-link" data-reveal><Icon name="graduation" /><div>
-    <ExternalLink class="text-link" href={documentLinks.academic}>{t.academic} <span aria-hidden="true">↗</span></ExternalLink>
-    <p>{t.academicNote}</p>
-  </div></div>}
 </section>
