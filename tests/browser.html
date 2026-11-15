@@ -57,7 +57,7 @@ try {
   doc = await load('/pt/#papers', 390);
   assert(doc.documentElement.lang === 'pt-BR', 'Português declara idioma correto');
   assert(doc.querySelector('.language-switch').getAttribute('href').endsWith('/#papers'), 'Retorno ao inglês preserva seção');
-  assert(doc.querySelector('#theme-select option[value="system"]').textContent === 'Sistema', 'Controle de tema traduzido');
+  assert(doc.querySelector('[data-theme-option="system"]').textContent.includes('Sistema'), 'Controle de tema traduzido');
   for (const route of ['/', '/pt/']) {
     doc = await load(route, 390);
     const resume = doc.querySelector('.hero-actions a[href^="https://drive.google.com/"]');
@@ -79,15 +79,13 @@ try {
     })));
   }
   const chooseTheme = (value) => {
-    const select = doc.querySelector('#theme-select');
-    select.value = value;
-    select.dispatchEvent(new frame.contentWindow.Event('change', { bubbles: true }));
+    doc.querySelector(`[data-theme-option="${value}"]`).click();
   };
   chooseTheme('dark');
   assert(doc.documentElement.dataset.theme === 'dark', 'Seletor aplica tema escuro');
   assert(localStorage.getItem('portfolio-theme') === 'dark', 'Escolha escura é salva');
   doc = await load('/projetos/', 390);
-  assert(doc.documentElement.dataset.theme === 'dark' && doc.querySelector('#theme-select').value === 'dark', 'Tema persiste entre páginas');
+  assert(doc.documentElement.dataset.theme === 'dark' && doc.querySelector('[data-theme-option="dark"]').getAttribute('aria-pressed') === 'true', 'Tema persiste entre páginas');
   doc = await load('/projetos/', 390);
   assert(doc.documentElement.dataset.theme === 'dark', 'Tema persiste após recarregar');
   assert(frame.contentWindow.getComputedStyle(doc.body).backgroundColor === 'rgb(14, 11, 24)', 'CSS aplica fundo escuro');

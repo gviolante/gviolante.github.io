@@ -38,7 +38,7 @@ export const copy = {
   },
   pt: {
     locale: 'pt-BR', ogLocale: 'pt_BR', nav: ['Início', 'Sobre', 'Projetos', 'Artigos', 'Habilidades', 'Contato'],
-    skip: 'Pular para o conteúdo', navigation: 'Navegação principal', theme: 'Tema de cores', themes: ['Sistema', 'Claro', 'Escuro'], language: 'View in English', top: 'Voltar ao topo',
+    skip: 'Pular para o conteúdo', navigation: 'Navegação principal', theme: 'Tema de cores', themes: ['Sistema', 'Claro', 'Escuro'], language: 'Ver em inglês', top: 'Voltar ao topo',
     title: 'Gabriel Violante — Software e Machine Learning',
     description: 'Estudante de Ciência da Computação na UFMG. Desenvolvimento de software, pesquisa em aprendizado de máquina e projetos.',
     eyebrow: 'CIÊNCIA DA COMPUTAÇÃO · UFMG',

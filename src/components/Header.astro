@@ -1,20 +1,32 @@
 ---
 import { copy, homeUrl } from '../data/content.js';
+import Icon from './Icon.astro';
 const { lang, alternatePath } = Astro.props;
 const t = copy[lang];
 const sections = ['home', 'about', 'projects', 'papers', 'skills', 'contact'];
 ---
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href={homeUrl(lang)} aria-label={`Gabriel Violante — ${t.nav[0]}`}>gv<span>.</span></a>
+    <a class="brand" href={homeUrl(lang)} aria-label={`Gabriel Violante — ${t.nav[0]}`}>g<span>v</span>.</a>
     <nav id="site-nav" aria-label={t.navigation}>
       {sections.map((id, i) => <a href={`${homeUrl(lang)}#${id}`}>{t.nav[i]}</a>)}
     </nav>
     <div class="header-controls">
-      <a class="language-switch" href={alternatePath} lang={lang === 'en' ? 'pt-BR' : 'en'} hreflang={lang === 'en' ? 'pt-BR' : 'en'} aria-label={t.language}>{lang === 'en' ? 'PT' : 'EN'}<span aria-hidden="true"> ↗</span></a>
-      <label class="theme-control" hidden><span aria-hidden="true">◐</span><span class="sr-only">{t.theme}</span><select id="theme-select">{['system', 'light', 'dark'].map((theme, i) => <option value={theme}>{t.themes[i]}</option>)}</select></label>
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden>Menu <span aria-hidden="true">＋</span></button>
+      <a class="language-switch" href={alternatePath} hreflang={lang === 'en' ? 'pt-BR' : 'en'} aria-label={t.language} title={t.language}>
+        <Icon name="globe" /><span>{lang === 'en' ? 'PT-BR' : 'EN'}</span>
+        <svg class="language-flag" viewBox="0 0 28 20" width="21" height="15" aria-hidden="true" focusable="false">
+          {lang === 'en' ? <><path fill="#16854b" d="M0 0h28v20H0z"/><path fill="#ffda44" d="m14 2 12 8-12 8L2 10Z"/><circle cx="14" cy="10" r="5" fill="#24489c"/><path d="M9.5 8.5q5-1 9 3" fill="none" stroke="#fff" stroke-width="1"/></> : <><path fill="#fff" d="M0 0h28v20H0z"/><path stroke="#bd3547" stroke-width="2" d="M0 1h28M0 4h28M0 7h28M0 10h28M0 13h28M0 16h28M0 19h28"/><path fill="#304979" d="M0 0h12v11H0z"/><path stroke="#fff" stroke-width="1.5" stroke-dasharray="1 3" d="M2 3h9M2 6h9M2 9h9"/></>}
+        </svg>
+      </a>
+      <details class="theme-control" hidden>
+        <summary title={t.theme}><span class="sr-only">{t.theme}</span><Icon name="sun" /><Icon name="moon" /></summary>
+        <div class="theme-options" role="group" aria-label={t.theme}>
+          <p>{t.theme}</p>
+          {['system', 'light', 'dark'].map((theme, i) => <button type="button" data-theme-option={theme} aria-pressed="false"><Icon name={['monitor', 'sun', 'moon'][i]} />{t.themes[i]}<span class="theme-check" aria-hidden="true">✓</span></button>)}
+        </div>
+      </details>
+      <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-nav" hidden><span></span><span></span><span></span></button>
     </div>
+    <div class="reading-progress" aria-hidden="true"></div>
   </div>
-  <div class="reading-progress" aria-hidden="true"></div>
 </header>

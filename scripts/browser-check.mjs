@@ -51,6 +51,36 @@ try {
     await page.waitForFunction(() => [...document.querySelectorAll('.hero-copy > *')].every(el => el.style.opacity === ''));
     check(await readable(page, '.hero-copy > *'), 'Capa legível após a entrada');
     await page.screenshot({ path: path.join(screenshots, `${width}-${theme}-home.png`) });
+    const themeSummary = page.locator('.theme-control summary');
+    await themeSummary.focus();
+    await page.keyboard.press('Enter');
+    check(await page.locator('.theme-control').evaluate(el => el.open), 'Teclado abre opções de tema');
+    await page.screenshot({ path: path.join(screenshots, `${width}-${theme}-theme.png`), animations: 'disabled' });
+    const otherTheme = theme === 'dark' ? 'light' : 'dark';
+    await page.locator(`[data-theme-option="${otherTheme}"]`).click();
+    check(await page.evaluate(value => document.documentElement.dataset.theme === value && localStorage.getItem('portfolio-theme') === value, otherTheme), 'Opção de tema aplica e salva a escolha');
+    check(await themeSummary.evaluate(el => document.activeElement === el), 'Escolha devolve foco ao controle');
+    check(await page.locator(`.theme-control summary .icon-${otherTheme === 'dark' ? 'moon' : 'sun'}`).isVisible(), 'Ícone acompanha o tema aplicado');
+    await themeSummary.click();
+    await page.keyboard.press('Escape');
+    check(await page.locator('.theme-control').evaluate(el => !el.open), 'Escape fecha opções de tema');
+    await themeSummary.click();
+    await page.locator('[data-theme-option="system"]').click();
+    check(await page.evaluate(value => document.documentElement.dataset.theme === value && localStorage.getItem('portfolio-theme') === null, theme), 'Sistema restaura a preferência do dispositivo');
+    check(await page.locator('.language-switch .icon-globe').isVisible() && await page.locator('.language-flag').isVisible(), 'Idioma exibe globo e bandeira');
+    if (width < 961) {
+      const menu = page.locator('.menu-toggle');
+      await menu.click();
+      await page.screenshot({ path: path.join(screenshots, `${width}-${theme}-menu.png`), animations: 'disabled' });
+      check(await page.locator('#site-nav').isVisible(), 'Menu móvel abre');
+      check(await page.locator('#site-nav a').first().evaluate(el => document.activeElement === el), 'Abertura permite percorrer a navegação com Tab');
+      await themeSummary.click();
+      check(await menu.getAttribute('aria-expanded') === 'false', 'Opções de tema fecham navegação móvel');
+      await page.keyboard.press('Escape');
+      await menu.click();
+      await page.keyboard.press('Escape');
+      check(await menu.evaluate(el => document.activeElement === el && el.getAttribute('aria-expanded') === 'false'), 'Escape fecha navegação e restaura foco');
+    }
     const art = page.locator('.hero-art');
     const portraitBefore = await page.locator('.hero-art img').boundingBox();
     if (width > 960) {

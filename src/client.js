@@ -7,6 +7,7 @@ if (menuToggle && navigation) {
   const setMenu = (open) => {
     menuToggle.setAttribute('aria-expanded', String(open));
     navigation.classList.toggle('is-open', open);
+    if (open) navigation.querySelector('a')?.focus({ preventScroll: true });
   };
   menuToggle.addEventListener('click', () => setMenu(menuToggle.getAttribute('aria-expanded') !== 'true'));
   navigation.addEventListener('click', (event) => { if (event.target.closest('a')) setMenu(false); });
@@ -14,6 +15,12 @@ if (menuToggle && navigation) {
     if (event.key === 'Escape' && menuToggle.getAttribute('aria-expanded') === 'true') { setMenu(false); menuToggle.focus(); }
   });
   matchMedia('(min-width: 961px)').addEventListener('change', event => { if (event.matches) setMenu(false); });
+  document.addEventListener('click', event => {
+    if (!event.target.closest('.site-header') || event.target.closest('.theme-control')) setMenu(false);
+  });
+  document.addEventListener('focusin', event => {
+    if (!event.target.closest('.site-header')) setMenu(false);
+  });
 }
 const languageSwitch = document.querySelector('.language-switch');
 const syncLanguageAnchor = () => {

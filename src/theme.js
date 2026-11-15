@@ -11,8 +11,9 @@
     document.documentElement.dataset.theme = theme;
     document.documentElement.dataset.themePreference = preference;
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#0e0b18' : '#f6f4fb');
-    const select = document.querySelector('#theme-select');
-    if (select) select.value = preference;
+    document.querySelectorAll('[data-theme-option]').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.themeOption === preference));
+    });
   }
 
   applyTheme();
@@ -24,17 +25,29 @@
     }
   });
   document.addEventListener('DOMContentLoaded', () => {
-    const select = document.querySelector('#theme-select');
-    if (!select) return;
-    select.closest('.theme-control').hidden = false;
-    select.value = preference;
-    select.addEventListener('change', () => {
-      preference = normalize(select.value);
+    const control = document.querySelector('.theme-control');
+    if (!control) return;
+    const summary = control.querySelector('summary');
+    control.hidden = false;
+    applyTheme();
+    control.querySelectorAll('[data-theme-option]').forEach(button => button.addEventListener('click', () => {
+      preference = normalize(button.dataset.themeOption);
       try {
         if (preference === 'system') localStorage.removeItem(storageKey);
         else localStorage.setItem(storageKey, preference);
       } catch { /* O controle continua funcionando nesta página. */ }
       applyTheme();
+      control.open = false;
+      summary.focus();
+    }));
+    document.addEventListener('click', event => {
+      if (!control.contains(event.target)) control.open = false;
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && control.open) {
+        control.open = false;
+        summary.focus();
+      }
     });
   });
 })();

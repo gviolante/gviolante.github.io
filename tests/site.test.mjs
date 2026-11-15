@@ -44,7 +44,7 @@ test('documentos pessoais e arquivos de desenvolvimento não entram na publicaç
 
 test('projetos preservam o estágio e as limitações das pesquisas', async () => {
   const home = await readFile(path.join(outputRoot, 'pt/index.html'), 'utf8');
-  assert.match(home, /<h1 id="hero-title">Gabriel<br\s*\/?>Violante/);
+  assert.match(home, /<h1 id="hero-title">Gabriel<br\s*\/?><span class="hero-surname">Violante<\/span>/);
   assert.match(home, /Ainda sem implementação ou resultados para apresentar/);
   assert.doesNotMatch(home, /href="\/projetos\/deteccao-de-abelhas/);
   await assert.rejects(stat(path.join(outputRoot, 'projetos/deteccao-de-abelhas/index.html')), { code: 'ENOENT' });
