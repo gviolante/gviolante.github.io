@@ -102,6 +102,6 @@ O teste inicia uma prévia local temporária e percorre seis páginas em 320, 39
 
 `SITE_URL=https://seu-dominio.example npm run build` gera canonical, hreflang e sitemap com o domínio. Sem domínio configurado, o sitemap fica vazio, sem URLs fictícias. Configure a hospedagem para retornar 404 real usando as páginas de erro.
 
-A preparação para o GitHub está documentada em [docs/github.md](docs/github.md). A exportação usa `.gitattributes` para selecionar os arquivos públicos e iniciar um histórico independente. O histórico do checkout de trabalho contém documentos antigos e não deve ser enviado ao repositório público.
+O fluxo do GitHub está documentado em [docs/github.md](docs/github.md). O histórico público preserva os commits de desenvolvimento, com documentos privados removidos de todas as revisões. O histórico original do checkout de trabalho não deve ser enviado sem essa filtragem. `.gitattributes` também permite exportar um ZIP dos arquivos públicos, mas esse ZIP não substitui os commits.
 
 O workflow do GitHub executa `npm ci` e `npm run check` em Node 24. Não há push ou deploy automático. A configuração atual espera hospedagem na raiz do domínio; publicação em um subdiretório precisa de ajuste prévio.

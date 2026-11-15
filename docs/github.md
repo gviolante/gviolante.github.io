@@ -1,26 +1,21 @@
 # Preparação para o GitHub
 
-## Origem pública limpa
+## Histórico público
 
-O repositório de trabalho local contém documentos pessoais antigos no histórico. **Não faça push desse histórico.** Excluir arquivos do último commit ou adicionar regras ao `.gitignore` não remove versões anteriores.
+O repositório público preserva os commits de desenvolvimento, suas mensagens, autoria, datas e ordem. Documentos pessoais, contexto interno e materiais legados foram removidos de todas as revisões antes do envio. Commits que passaram a ter diff vazio foram mantidos para registrar as etapas do trabalho.
 
-`.gitattributes` exclui documentos, contexto interno e ferramentas legadas de `git archive`. Essa regra vale para a exportação, **não para `git push`**. A exportação deve ser o ponto de partida de um repositório novo, sem copiar a pasta `.git` original.
+A filtragem muda os identificadores dos commits. O histórico original permanece no checkout de trabalho local; **não envie esse histórico sem filtrá-lo**. `.gitignore` e `.gitattributes` não removem arquivos de commits antigos.
 
-Depois de salvar e commitar as alterações locais:
+## Continuidade
 
-```bash
-git archive --format=zip --output=/tmp/portfolio-github.zip HEAD
-```
+- Faça as mudanças funcionais em commits separados, preservando o registro do progresso.
+- Se trabalhar no checkout público, use o fluxo normal de commit e push. Não adicione materiais pessoais.
+- Se partir do checkout local que contém documentos privados, filtre uma cópia nova com `git-filter-repo`, preservando commits vazios com `--prune-empty never --prune-degenerate never`.
+- Remova todas as versões e caminhos antigos de `archive/`, `personalContext/`, `AGENTS.md`, `CONTEXTO_PROJETO.md`, `ideas.md`, `docs/ideas.md`, `src/data/documents.json`, `scripts/generate-documents.py`, `scripts/legacy/`, `public/assets/documents/` e `public/assets/papers/`, além de PDFs e arquivos de ambiente privados.
+- Confira a correspondência de commits e a ausência dos arquivos privados em todo o histórico. Compare a árvore final com a versão pública esperada e execute `npm run check`.
+- Atualizações posteriores devem avançar a branch pública normalmente. Se houver divergência, investigue antes de substituir qualquer histórico remoto.
 
-Extraia o ZIP em uma pasta nova. Confira os arquivos, execute `npm ci` e `npm run check` nessa pasta e inicialize um histórico independente:
-
-```bash
-git init -b main
-git add .
-git commit -m "Initial public portfolio"
-```
-
-Somente essa pasta limpa deve receber o remoto do GitHub. A criação do repositório remoto, sua visibilidade e o primeiro push ficam para a etapa de publicação.
+`git archive`, com as exclusões de `.gitattributes`, continua útil para gerar um ZIP dos arquivos públicos. **O ZIP não preserva commits e não deve substituir o histórico do repositório.**
 
 ## Verificação automática
 
