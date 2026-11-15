@@ -17,7 +17,7 @@ const t = copy[lang];
       <div class="education-cards">
       {t.education.map(item => <article class="education-card" data-reveal>
         <div class="education-card-header">
-          <div class:list={['education-logo', { 'education-logo-dcc': item.logo === 'dcc-ufmg.png' }]}><img src={`/assets/images/education/${item.logo}`} alt={item.institution} width={item.logoWidth} height={item.logoHeight} loading="lazy" /></div>
+          <div class="education-logo"><img src={`/assets/images/education/${item.logo}`} alt={item.institution} width={item.logoWidth} height={item.logoHeight} loading="lazy" /></div>
           <dl class="education-average"><dt>{t.overallAverage}</dt><dd>{item.average}<span> / 100</span></dd></dl>
         </div>
         <p class="eyebrow">{item.period}</p><h4>{item.degree}</h4><p class="education-institution">{item.institution}</p>

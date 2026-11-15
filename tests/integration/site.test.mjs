@@ -161,7 +161,7 @@ test('formação e contato usam os dados autorizados em ambos os idiomas', async
     assert.ok(education.includes('COLTEC · UFMG'));
     assert.ok(education.includes('SBGames 2022'));
     assert.ok(education.includes(lang === 'pt' ? 'aos 17 anos' : 'at age 17'));
-    assert.ok(education.includes('education/dcc-ufmg.png'));
+    assert.ok(education.includes('education/ufmg.png'));
     assert.ok(education.includes('education/coltec-ufmg.jpg'));
     assert.doesNotMatch(education, /LEVTY|VALE|2020.*2022|2020.*2023/);
     assert.match(html, /class="contact-box contact-phone" href="tel:\+5531995497868"/);

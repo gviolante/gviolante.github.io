@@ -46,10 +46,28 @@ try {
     const lang = theme === 'dark' ? 'pt' : 'en';
     const context = await browser.newContext({ viewport: { width, height: 1000 }, colorScheme: theme, reducedMotion: 'no-preference', hasTouch: width < 700 });
     const page = await context.newPage(); track(page);
+    await page.route('**/*.js', async route => {
+      await new Promise(resolve => setTimeout(resolve, 600));
+      await route.continue();
+    });
+    await page.addInitScript(() => {
+      window.heroOpacitySamples = [];
+      const sample = () => {
+        const elements = [...document.querySelectorAll('.hero-copy > *')];
+        if (elements.length) window.heroOpacitySamples.push(Math.min(...elements.map(el => Number(getComputedStyle(el).opacity))));
+        window.heroSampleFrame = requestAnimationFrame(sample);
+      };
+      requestAnimationFrame(sample);
+    });
     await page.goto(`${base}${lang === 'pt' ? '/pt/' : '/'}`);
     await page.waitForFunction(() => document.documentElement.dataset.motion === 'active');
     await page.waitForFunction(() => [...document.querySelectorAll('.hero-copy > *')].every(el => el.style.opacity === ''));
     check(await readable(page, '.hero-copy > *'), 'Capa legível após a entrada');
+    const heroSamples = await page.evaluate(() => {
+      cancelAnimationFrame(window.heroSampleFrame);
+      return window.heroOpacitySamples;
+    });
+    check(heroSamples.length > 5 && heroSamples.every(value => value === 1), 'Capa não pisca entre HTML inicial e carregamento tardio do JavaScript');
     await page.screenshot({ path: path.join(screenshots, `${width}-${theme}-home.png`) });
     const languageSummary = page.locator('.language-switch');
     check((await languageSummary.textContent()).includes(lang === 'pt' ? 'PT-BR' : 'EN'), 'Controle mostra o idioma atual');

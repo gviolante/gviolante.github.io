@@ -19,7 +19,7 @@ export const copy = {
     educationTitle: 'Education', overallAverage: 'Overall average', shortcuts: 'Quick links',
     education: [
       { period: '2024 — present', institution: 'UFMG · DCC', degree: 'B.Sc. in Computer Science',
-        logo: 'dcc-ufmg.png', logoWidth: 659, logoHeight: 465,
+        logo: 'ufmg.png', logoWidth: 860, logoHeight: 335,
         average: '90.71', description: 'Undergraduate studies with participation in study and competition groups, a junior enterprise and undergraduate research.',
         highlights: ['2nd place with the team at the UFMG × EnterAI Hackathon.', 'Software development at PI Júnior and research in machine learning for network security.'],
       },
@@ -60,7 +60,7 @@ export const copy = {
     educationTitle: 'Formação acadêmica', overallAverage: 'Média geral', shortcuts: 'Atalhos',
     education: [
       { period: '2024 — em andamento', institution: 'UFMG · DCC', degree: 'Bacharelado em Ciência da Computação',
-        logo: 'dcc-ufmg.png', logoWidth: 659, logoHeight: 465,
+        logo: 'ufmg.png', logoWidth: 860, logoHeight: 335,
         average: '90,71', description: 'Graduação com participação em grupos de estudo e competição, empresa júnior e iniciação científica.',
         highlights: ['2º lugar em equipe no Hackathon UFMG × EnterAI.', 'Desenvolvimento de software na PI Júnior e pesquisa em aprendizado de máquina para segurança de redes.'],
       },

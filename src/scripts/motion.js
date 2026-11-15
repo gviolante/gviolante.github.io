@@ -23,7 +23,6 @@ export function initMotion() {
     const pending = new Map();
     const header = document.querySelector('.site-header');
     const progress = document.querySelector('.reading-progress');
-    const hero = document.querySelector('.hero');
 
     // Preparar a entrada fora da tela evita ocultar um elemento que já apareceu.
     document.querySelectorAll('[data-reveal]').forEach(element => {
@@ -38,12 +37,7 @@ export function initMotion() {
       pending.set(element, animation);
     });
 
-    let entrance;
-    if (hero && scrollY < 40 && !location.hash) {
-      entrance = gsap.timeline({ defaults: { ease: 'power3.out', clearProps: 'transform,opacity' } })
-        .fromTo('.hero-copy > *', { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, stagger: 0.09 });
-    }
-
+    // A capa já está visível no HTML; não reiniciar sua opacidade após carregar o JS.
     if (progress) gsap.fromTo(progress, { scaleX: 0, autoAlpha: 1 }, {
       scaleX: 1, ease: 'none',
       scrollTrigger: { start: 0, end: 'max', scrub: 0.25 },
@@ -69,14 +63,12 @@ export function initMotion() {
 
     // Ao tabular, terminar entradas antes de mostrar o foco; nunca ocultá-lo.
     const showFocus = event => {
-      if (hero?.contains(event.target)) entrance?.progress(1);
       for (const [element, animation] of pending) {
         if (element.contains(event.target)) animation.progress(1);
       }
     };
     const refresh = () => ScrollTrigger.refresh();
     const finishForPrint = () => {
-      entrance?.progress(1);
       pending.forEach(animation => animation.progress(1));
     };
     document.addEventListener('focusin', showFocus);
