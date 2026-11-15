@@ -9,8 +9,12 @@ const t = copy[lang];
 <section id="contact" class="contact-section"><div class="container contact-inner">
   <div data-reveal><p class="eyebrow">{t.contactLabel}</p><h2>{t.contactTitle}</h2><p class="contact-description">{t.contactText}</p></div>
   <div class="contact-actions" data-reveal>
-    <a class="contact-email" href={`mailto:${profile.email}`}><Icon name="mail" /><span>{profile.email}</span><span aria-hidden="true">↗</span></a>
+    <div class="contact-methods">
+      <a class="contact-box contact-email" href={`mailto:${profile.email}`}><Icon name="mail" /><span><small>{t.email}</small>{profile.email}</span><span aria-hidden="true">↗</span></a>
+      <a class="contact-box contact-phone" href={profile.phoneHref}><Icon name="phone" /><span><small>{t.phone}</small>{profile.phone}</span><span aria-hidden="true">↗</span></a>
+      <SocialLinks />
+    </div>
     <button class="copy-email" type="button" data-email={profile.email} data-success={t.copied} data-error={t.copyError} hidden><Icon name="copy" />{t.copy}</button>
-    <span class="copy-feedback" role="status"></span><SocialLinks />
+    <span class="copy-feedback" role="status"></span>
   </div>
 </div></section>

@@ -2,6 +2,9 @@
 import { copy } from '../../data/content.js';
 import SectionHeading from '../ui/SectionHeading.astro';
 import SocialLinks from '../ui/SocialLinks.astro';
+import ExternalLink from '../ui/ExternalLink.astro';
+import Icon from '../ui/Icon.astro';
+import { documentLinks } from '../../data/document-links.js';
 const { lang } = Astro.props;
 const t = copy[lang];
 ---
@@ -11,11 +14,16 @@ const t = copy[lang];
       <div class="about-copy">{t.about.map(p => <p data-reveal>{p}</p>)}</div>
       <SocialLinks />
     </div>
-    <aside class="journey" aria-label={t.background}>
-      <h3 data-reveal>{t.background}</h3>
+    <aside class="journey education" aria-label={t.educationTitle}>
+      <h3 data-reveal><Icon name="graduation" />{t.educationTitle}</h3>
       <div class="journey-list"><div class="journey-track" aria-hidden="true"><span class="journey-progress"></span></div>
-      {t.journey.map(([label, title, text]) => <div class="journey-item" data-reveal><span class="eyebrow">{label}</span><h4>{title}</h4><p>{text}</p></div>)}
+      {t.education.map(item => <div class="journey-item" data-reveal>
+        <span class="eyebrow">{item.period}</span><h4>{item.institution}</h4><p>{item.degree}</p>
+        {item.metrics && <dl class="education-metrics">{item.metrics.map(([value, label]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}</dl>}
+        <ul class="education-highlights">{item.highlights.map(text => <li>{text}</li>)}</ul>
+      </div>)}
       </div>
+      <ExternalLink class="education-source text-link" href={documentLinks.resume[lang]}>{t.educationSource} <span aria-hidden="true">↗</span></ExternalLink>
     </aside>
   </div>
 </section>

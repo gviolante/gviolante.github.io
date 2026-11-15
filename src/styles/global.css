@@ -157,7 +157,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   width:16px;
   height:16px
 }
-.contact-email>span:first-of-type{
+.contact-box>span:first-of-type{
   flex:1;
   min-width:0
 }
@@ -576,6 +576,9 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   padding-top:8px
 }
 .journey h3{
+  display:flex;
+  align-items:center;
+  gap:10px;
   font-size:16px;
   font-weight:500;
   margin-bottom:30px
@@ -609,6 +612,46 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
 .journey-item p{
   font-size:13px;
   line-height:1.7
+}
+.education-metrics{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin:16px 0
+}
+.education-metrics > div{
+  display:flex;
+  flex-direction:column-reverse;
+  padding:10px 14px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--card)
+}
+.education-metrics dt{
+  font-size:11px;
+  color:var(--muted)
+}
+.education-metrics dd{
+  margin:0;
+  font-size:21px;
+  font-weight:600;
+  color:var(--accent)
+}
+.education-highlights{
+  padding-left:17px;
+  margin:12px 0 0;
+  color:var(--muted);
+  font-size:13px
+}
+.education-highlights li + li{
+  margin-top:6px
+}
+.education-highlights li::marker{
+  color:var(--accent)
+}
+.education-source{
+  margin-top:22px;
+  font-size:11px
 }
 /* Projetos: imagens e ações diretas */
 .project-grid{
@@ -808,12 +851,22 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   object-fit:contain
 }
 .paper-role{
-  font:11px ui-monospace,monospace;
+  font:600 12px/1.5 ui-monospace,monospace;
   color:var(--accent);
-  padding:5px 10px;
+  padding:7px 13px;
   border:1px solid var(--line);
   border-radius:4px;
   background:var(--card)
+}
+.paper-role.first-author{
+  background:var(--button);
+  border-color:var(--button);
+  color:var(--button-ink);
+  box-shadow:0 4px 18px var(--glow)
+}
+.paper-author-self{
+  color:var(--accent);
+  font-weight:700
 }
 .publication-card h3{
   font-size:22px;
@@ -867,7 +920,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
 .skill-card ul{
   display:flex;
   flex-wrap:wrap;
-  gap:7px 14px;
+  gap:8px;
   padding:0;
   list-style:none;
   margin:0
@@ -875,7 +928,12 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
 .skill-card li{
   font-size:13px;
   color:var(--muted);
-  line-height:1.8
+  line-height:1.8;
+  padding:5px 10px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:var(--soft);
+  transition:border-color .2s,background .2s,color .2s,translate .2s
 }
 /* Contato */
 .contact-section{
@@ -903,26 +961,64 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
 .contact-actions{
   min-width:0
 }
-.contact-email{
+.contact-methods{
+  display:grid;
+  gap:12px
+}
+.contact-box,.contact-actions .social-links a{
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  padding-block:20px;
-  border-bottom:1px solid var(--accent);
-  font-size:clamp(15px,1.6vw,23px);
-  letter-spacing:-.5px;
+  gap:14px;
+  padding:16px 18px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--card);
+  box-shadow:var(--shadow);
+  font-size:16px;
+  transition:border-color .2s,background .2s,translate .2s
+}
+.contact-box{
   overflow-wrap:anywhere
 }
-.copy-email{
-  display:block;
-  border:0;
-  background:transparent;
-  font-size:12px;
-  padding:15px 0
+.contact-box .icon,.contact-actions .social-links .icon{
+  color:var(--accent)
 }
-.copy-email span{
-  margin-left:10px
+.contact-box small{
+  display:block;
+  margin-bottom:3px;
+  font-size:11px;
+  color:var(--muted)
+}
+.contact-actions .social-links{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin:0
+}
+.contact-actions .social-links a{
+  padding:14px 12px;
+  gap:8px;
+  min-height:58px;
+  font-size:13px
+}
+.contact-actions .social-links a span:last-child{
+  margin-left:auto
+}
+.contact-box:focus-visible,.contact-actions .social-links a:focus-visible{
+  border-color:var(--accent)
+}
+.copy-email{
+  margin-top:14px;
+  padding:10px 14px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--card);
+  font-size:12px;
+  transition:border-color .2s,background .2s
+}
+.copy-email:hover{
+  border-color:var(--accent);
+  background:var(--soft)
 }
 .copy-feedback{
   display:block;
@@ -1082,9 +1178,6 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
     grid-template-columns:1fr 1fr;
     gap:35px
   }
-  .contact-email{
-    font-size:16px
-  }
   .site-footer{
     flex-wrap:wrap
   }
@@ -1194,7 +1287,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
     font-size:16px
   }
   .skill-card ul{
-    gap:6px 12px
+    gap:7px
   }
   .skill-card li{
     font-size:12px
@@ -1205,9 +1298,6 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   .contact-inner{
     grid-template-columns:1fr;
     gap:25px
-  }
-  .contact-email{
-    font-size:21px
   }
   .contact-description{
     font-size:15px
@@ -1243,9 +1333,6 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   }
   .skills-grid{
     grid-template-columns:1fr
-  }
-  .contact-email{
-    font-size:17px
   }
   .eyebrow{
     font-size:10px;
@@ -1352,6 +1439,17 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   color:var(--button-ink)
 }
 @media(hover:hover) and (pointer:fine){
+  .skill-card li:hover{
+    color:var(--accent);
+    border-color:var(--accent);
+    background:var(--card);
+    translate:0 -2px
+  }
+  .contact-box:hover,.contact-actions .social-links a:hover{
+    border-color:var(--accent);
+    background:var(--soft);
+    translate:0 -2px
+  }
   .project-card:hover{
     translate:0 -4px;
     border-color:var(--accent);
@@ -1368,7 +1466,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   }
 }
 @media(prefers-reduced-motion:reduce){
-  .project-card:hover,.social-links a:hover .icon{
+  .project-card:hover,.social-links a:hover .icon,.skill-card li:hover,.contact-box:hover,.contact-actions .social-links a:hover{
     translate:none
   }
   .project-image:hover img,.text-link:hover span,.theme-control summary:hover .icon{

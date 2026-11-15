@@ -100,4 +100,4 @@ O teste inicia uma prévia local temporária e percorre seis páginas em 320, 39
 
 `SITE_URL=https://seu-dominio.example npm run build` gera canonical, hreflang e sitemap com o domínio. Sem domínio configurado, o sitemap fica vazio, sem URLs fictícias. Configure a hospedagem para retornar 404 real usando as páginas de erro.
 
-`CONTEXTO_PROJETO.md` registra fontes e decisões. VALE permanece somente na trajetória, sem resultados. Projetos coletivos e limites dos experimentos continuam explícitos. Não há push ou deploy automático.
+`CONTEXTO_PROJETO.md` registra fontes e decisões. Education apresenta UFMG e COLTEC com dados do currículo autorizado. A pesquisa recém-iniciada junto à VALE permanece somente no contexto interno, sem resultados publicados. Projetos coletivos e limites dos experimentos continuam explícitos. Não há push ou deploy automático.

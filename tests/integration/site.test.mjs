@@ -45,7 +45,7 @@ test('documentos pessoais e arquivos de desenvolvimento não entram na publicaç
 test('projetos preservam o estágio e as limitações das pesquisas', async () => {
   const home = await readFile(path.join(outputRoot, 'pt/index.html'), 'utf8');
   assert.match(home, /<h1 id="hero-title">Gabriel<br\s*\/?><span class="hero-surname">Violante<\/span>/);
-  assert.match(home, /Ainda sem implementação ou resultados para apresentar/);
+  assert.doesNotMatch(home, /VALE/);
   assert.doesNotMatch(home, /href="\/projetos\/deteccao-de-abelhas/);
   await assert.rejects(stat(path.join(outputRoot, 'projetos/deteccao-de-abelhas/index.html')), { code: 'ENOENT' });
   assert.match(home, /embeddings pré-computados/);
@@ -146,5 +146,39 @@ test('publicações abrem a coleção unificada em ambas as páginas e idiomas',
     assert.ok(html.includes('projects/stronger-notes/progress-overview.png'));
     assert.ok(html.includes('projects/rpg-interactive-sheet/player-sheet.png'));
     assert.doesNotMatch(html, /overview\.svg|rpg-sheet-supros/);
+  }
+});
+
+
+test('formação e contato usam os dados autorizados em ambos os idiomas', async () => {
+  for (const [lang, route, average] of [['en', 'index.html', '90.71 / 100'], ['pt', 'pt/index.html', '90,71 / 100']]) {
+    const html = await readFile(path.join(outputRoot, route), 'utf8');
+    const education = html.match(/<aside class="journey education".*?<\/aside>/s)[0];
+    assert.ok(education.includes(average));
+    assert.ok(education.includes('42 / 347'));
+    assert.ok(education.includes('UFMG × EnterAI'));
+    assert.ok(education.includes('COLTEC · UFMG'));
+    assert.ok(education.includes('SBGames 2022'));
+    assert.ok(education.includes(documentLinks.resume[lang]));
+    assert.doesNotMatch(education, /LEVTY|VALE|2020.*2022|2020.*2023/);
+    assert.match(html, /class="contact-box contact-phone" href="tel:\+5531995497868"/);
+    assert.ok(html.includes('+55 (31) 99549-7868'));
+  }
+});
+
+test('autoria mantém ordem oficial, destaca Gabriel e sinaliza primeiro autor somente no SBRC', async () => {
+  for (const route of ['index.html', 'pt/index.html', 'projects/index.html', 'projetos/index.html']) {
+    const html = await readFile(path.join(outputRoot, route), 'utf8');
+    const cards = [...html.matchAll(/<article class="project-card publication-card".*?<\/article>/gs)].map(match => match[0]);
+    cards.forEach((card, index) => {
+      const authors = card.match(/<p class="paper-authors">(.*?)<\/p>/s)[1];
+      assert.equal((authors.match(/class="paper-author-self"/g) || []).length, 1);
+      assert.ok(authors.includes('<strong class="paper-author-self">Gabriel Violante</strong>'));
+      const authorText = authors.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&');
+      assert.equal(authorText, papers[index].authors.slice(0, -1).join(', ') + ' & ' + papers[index].authors.at(-1));
+      assert.equal(card.includes('class="paper-role first-author"'), index === 1);
+    });
+    assert.ok(html.includes('/assets/images/conferences/iscc-2026.png'));
+    assert.doesNotMatch(html, /iscc-2026\.webp/);
   }
 });
