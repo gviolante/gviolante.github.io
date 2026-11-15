@@ -71,7 +71,7 @@ O tema permanece em `src/theme.js` por ser a entrada executada antes do CSS; os 
 
 O Astro substitui o gerador manual de HTML. Não há React, backend ou roteamento SPA. Conteúdo e links são entregues no HTML e funcionam sem JavaScript. A preferência de tema permanece em `src/theme.js`, incluída inline no cabeçalho para evitar troca visível de paleta no carregamento.
 
-A identidade usa roxo e azul-escuro, com uma versão clara em lavanda. O retrato permanece estático. Entradas de seções e cards, progresso de leitura e fundos decorativos acompanham a rolagem nativa. GSAP ajusta os efeitos à tela e a `prefers-reduced-motion`, inclusive quando a preferência muda com uma animação em andamento. Foco por teclado termina a entrada do elemento focado.
+A identidade usa roxo e azul-escuro, com uma versão clara em lavanda. O retrato permanece estático. Entradas de seções e cards, progresso de leitura e fundos decorativos acompanham a rolagem nativa. GSAP ajusta os efeitos à tela e a `prefers-reduced-motion`, inclusive quando a preferência muda com uma animação em andamento. Foco por teclado termina a entrada do elemento focado. Os títulos de seção usam roxo e um traço decorativo, sem números. Em Sobre mim, sublinhados se desenham uma vez durante a entrada; ficam completos sem JavaScript ou com movimento reduzido.
 
 ## Rotas e destinos
 
@@ -103,4 +103,4 @@ O teste inicia uma prévia local temporária e percorre seis páginas em 320, 39
 
 `SITE_URL=https://seu-dominio.example npm run build` gera canonical, hreflang e sitemap com o domínio. Sem domínio configurado, o sitemap fica vazio, sem URLs fictícias. Configure a hospedagem para retornar 404 real usando as páginas de erro.
 
-`CONTEXTO_PROJETO.md` registra fontes e decisões. Education apresenta dois cards com as logos e médias de UFMG/DCC (90,71/100) e COLTEC/UFMG (88,67/100), sem ranking. Os destaques usam o currículo e informações fornecidas por Gabriel. A pesquisa recém-iniciada junto à VALE permanece somente no contexto interno, sem resultados publicados. Projetos coletivos e limites dos experimentos continuam explícitos. Não há push ou deploy automático.
+`CONTEXTO_PROJETO.md` registra fontes e decisões. Education apresenta dois cards com as logos e médias de UFMG/DCC (90,71/100) e COLTEC/UFMG (88,67/100), sem ranking. Os destaques usam o currículo e informações fornecidas por Gabriel. A pesquisa recém-iniciada junto à VALE permanece somente no contexto interno, sem resultados publicados. Os resumos destacam contribuições e projetos coletivos, sem extrapolar resultados. Fontes e limites dos experimentos ficam registrados em `CONTEXTO_PROJETO.md`. Não há push ou deploy automático.

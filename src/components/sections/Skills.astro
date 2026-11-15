@@ -8,6 +8,6 @@ const icons = ['code', 'network', 'layers', 'terminal', 'tools', 'globe'];
 ---
 <section id="skills" class="section container">
   <div class="section-atmosphere" aria-hidden="true"><span></span></div>
-  <SectionHeading label={t.skillsLabel} title={t.skillsTitle} intro={t.skillsIntro} />
+  <SectionHeading title={t.skillsTitle} intro={t.skillsIntro} />
   <div class="skills-grid">{t.skillGroups.map(([, title, items], index) => <article class="skill-card" data-reveal><span class="skill-symbol"><Icon name={icons[index]} /></span><h3>{title}</h3><ul>{items.map(item => <li>{item}</li>)}</ul></article>)}</div>
 </section>

@@ -8,8 +8,11 @@ const t = copy[lang];
 ---
 <section id="about" class="section about-section">
   <div class="container about-grid">
-    <div><SectionHeading label={t.aboutLabel} title={t.aboutTitle} />
-      <div class="about-copy">{t.about.map(p => <p data-reveal>{p}</p>)}</div>
+    <div><SectionHeading title={t.aboutTitle} />
+      <div class="about-copy">
+        <p class="about-intro" data-reveal>{t.aboutIntro.greeting} <span class="about-highlight">Gabriel</span>, <span class="about-highlight">{t.aboutIntro.role}</span> {t.aboutIntro.bridge} <a class="about-highlight" href="#projects">{t.aboutIntro.work}</a>.</p>
+        {t.about.map(p => <p data-reveal>{p}</p>)}
+      </div>
       <SocialLinks />
     </div>
     <aside class="education" aria-label={t.educationTitle}>

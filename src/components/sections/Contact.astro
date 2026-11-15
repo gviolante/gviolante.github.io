@@ -3,11 +3,12 @@ import { copy } from '../../data/content.js';
 import { profile } from '../../data/projects.js';
 import Icon from '../ui/Icon.astro';
 import SocialLinks from '../ui/SocialLinks.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
 const { lang } = Astro.props;
 const t = copy[lang];
 ---
 <section id="contact" class="contact-section"><div class="container contact-inner">
-  <div data-reveal><p class="eyebrow">{t.contactLabel}</p><h2>{t.contactTitle}</h2><p class="contact-description">{t.contactText}</p></div>
+  <SectionHeading title={t.contactTitle} intro={t.contactText} />
   <div class="contact-actions" data-reveal>
     <div class="contact-methods">
       <a class="contact-box contact-email" href={`mailto:${profile.email}`}><Icon name="mail" /><span><small>{t.email}</small>{profile.email}</span><span aria-hidden="true">↗</span></a>

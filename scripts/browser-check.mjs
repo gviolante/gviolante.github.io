@@ -134,6 +134,16 @@ try {
       await page.mouse.move(0, 0);
     }
 
+    await scrollTo(page, '.about-intro');
+    await page.waitForFunction(() => {
+      const progress = parseFloat(getComputedStyle(document.querySelector('.about-intro')).getPropertyValue('--underline-size'));
+      return progress > 0 && progress < 100;
+    });
+    check(true, 'Sublinhados se desenham ao chegar à apresentação');
+    await page.waitForFunction(() => document.querySelector('.about-intro').style.getPropertyValue('--underline-size') === '100%');
+    check(await readable(page, '.about-intro'), 'Apresentação permanece legível com sublinhados completos');
+    await page.screenshot({ path: path.join(screenshots, `${width}-${theme}-about.png`) });
+
     // Percorrer a borda da tela com a roda detecta flashes que um salto de scroll omite.
     await page.locator('.project-card').first().evaluate(el => {
       scrollTo({ top: el.getBoundingClientRect().top + scrollY - innerHeight - 60, behavior: 'instant' });
@@ -170,6 +180,7 @@ try {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.waitForFunction(() => document.documentElement.dataset.motion === 'reduced');
     check(await readable(page, '[data-reveal]'), 'Movimento reduzido restaura todos os conteúdos');
+    check(await page.locator('.about-highlight').first().evaluate(el => getComputedStyle(el).backgroundSize === '100% 2px'), 'Movimento reduzido mantém os sublinhados estáticos');
     check(await page.locator('.reading-progress').evaluate(el => getComputedStyle(el).visibility === 'hidden'), 'Movimento reduzido remove progresso animado');
     await page.screenshot({ path: path.join(screenshots, `${width}-${theme}-repositories.png`) });
     await page.emulateMedia({ reducedMotion: 'no-preference' });
@@ -223,6 +234,7 @@ try {
     check(await plain.locator('.project-card').count() === 8, 'Projetos presentes sem JS');
     check(await plain.locator('.quick-links a').count() === 4, 'Atalhos presentes sem JS');
     check(await readable(plain, '[data-reveal], .hero-copy > *'), 'Conteúdo visível sem JS');
+    check(await plain.locator('.about-highlight').first().evaluate(el => getComputedStyle(el).backgroundSize === '100% 2px'), 'Sublinhado visível sem JavaScript');
     check(await plain.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'Sem overflow sem JavaScript');
     await plain.locator('#site-nav a').nth(2).click();
     check(new URL(plain.url()).hash === '#projects', 'Navegação por seção funciona sem JS');

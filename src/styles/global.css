@@ -473,7 +473,11 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
 .hero .eyebrow{
   display:flex;
   align-items:center;
-  gap:10px
+  gap:10px;
+  font:500 13px/1.7 Arial,Helvetica,sans-serif;
+  letter-spacing:.02em;
+  text-transform:none;
+  max-width:510px
 }
 .hero h1{
   font-size:clamp(76px,9.3vw,134px);
@@ -587,16 +591,6 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   bottom:13%;
   font-size:20px
 }
-.art-note{
-  display:block;
-  text-align:right;
-  font:12px ui-monospace,monospace;
-  color:var(--muted);
-  margin:24px 24px 0 0
-}
-.art-note span{
-  color:var(--accent)
-}
 /* Seções */
 .section{
   padding-block:110px;
@@ -606,6 +600,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   margin-bottom:44px
 }
 .section-heading h2{
+  color:var(--accent);
   font-size:clamp(32px,3.5vw,48px);
   font-weight:500;
   letter-spacing:-1.7px;
@@ -631,6 +626,21 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
 }
 .about-copy p:first-child{
   color:var(--ink)
+}
+.about-copy .about-intro{
+  font-size:clamp(20px,2vw,25px);
+  line-height:1.65;
+  font-weight:500;
+  margin-top:0
+}
+.about-highlight{
+  background:linear-gradient(90deg,var(--accent),var(--accent-blue)) left bottom / var(--underline-size,100%) 2px no-repeat;
+  -webkit-box-decoration-break:clone;
+  box-decoration-break:clone;
+  padding-bottom:3px
+}
+a.about-highlight:hover,a.about-highlight:focus-visible{
+  color:var(--accent)
 }
 .social-links{
   display:flex;
@@ -1020,7 +1030,10 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   letter-spacing:-2px;
   margin:18px 0 24px
 }
-.contact-description{
+.contact-section .section-heading{
+  margin-bottom:0
+}
+.contact-section .section-intro{
   max-width:490px;
   font-size:15px;
   line-height:1.8
@@ -1293,10 +1306,6 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   .portrait-orbit{
     top:8%
   }
-  .art-note{
-    font-size:10px;
-    margin-top:13px
-  }
   .cross-one{
     top:10%
   }
@@ -1364,7 +1373,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
     grid-template-columns:1fr;
     gap:25px
   }
-  .contact-description{
+  .contact-section .section-intro{
     font-size:15px
   }
   .site-footer{
@@ -1417,6 +1426,9 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   }
 }
 @media print{
+  .about-intro{
+    --underline-size:100%!important
+  }
   .site-header,.site-footer,.hero-actions,.copy-email,.skip-link,.quick-links{
     display:none
   }
@@ -1454,17 +1466,12 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   box-shadow:0 10px 36px #08041120;
   border-color:color-mix(in srgb,var(--accent) 28%,var(--line))
 }
-.section-heading .eyebrow{
-  display:flex;
-  align-items:center;
-  gap:14px
-}
 .section-rule{
   display:inline-block;
-  height:1px;
+  height:3px;
   width:80px;
+  border-radius:3px;
   background:linear-gradient(90deg,var(--accent),var(--accent-blue));
-  opacity:.55;
   transform-origin:left center
 }
 .project-card:focus-within{

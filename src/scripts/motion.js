@@ -48,6 +48,13 @@ export function initMotion() {
     });
 
     // Movimento vinculado ao scroll apenas em elementos decorativos.
+    document.querySelectorAll('.about-intro').forEach(intro => {
+      if (intro.getBoundingClientRect().top < innerHeight) return;
+      gsap.fromTo(intro, { '--underline-size': '0%' }, {
+        '--underline-size': '100%', duration: 1.2, ease: 'power2.out',
+        scrollTrigger: { trigger: intro, start: 'top 80%', once: true },
+      });
+    });
     document.querySelectorAll('.section-rule').forEach(line => {
       gsap.fromTo(line, { scaleX: 0.2, opacity: 0.35 }, {
         scaleX: 1, opacity: 1, ease: 'none',

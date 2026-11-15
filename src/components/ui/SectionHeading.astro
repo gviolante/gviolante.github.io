@@ -1,8 +1,8 @@
 ---
-const { label, title, intro = '' } = Astro.props;
+const { title, intro = '' } = Astro.props;
 ---
 <div class="section-heading" data-reveal>
-  <p class="eyebrow">{label}<span class="section-rule" aria-hidden="true"></span></p>
+  <span class="section-rule" aria-hidden="true"></span>
   <h2>{title}</h2>
   {intro && <p class="section-intro">{intro}</p>}
 </div>

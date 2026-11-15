@@ -42,14 +42,14 @@ test('documentos pessoais e arquivos de desenvolvimento não entram na publicaç
   assert.deepEqual(files.filter((file) => file.endsWith('.pdf')).sort(), []);
 });
 
-test('projetos preservam o estágio e as limitações das pesquisas', async () => {
+test('projetos destacam contribuições sem ampliar o escopo das pesquisas', async () => {
   const home = await readFile(path.join(outputRoot, 'pt/index.html'), 'utf8');
   assert.match(home, /<h1 id="hero-title">Gabriel<br\s*\/?><span class="hero-surname">Violante<\/span>/);
   assert.doesNotMatch(home, /VALE/);
   assert.doesNotMatch(home, /href="\/projetos\/deteccao-de-abelhas/);
   await assert.rejects(stat(path.join(outputRoot, 'projetos/deteccao-de-abelhas/index.html')), { code: 'ENOENT' });
   assert.match(home, /embeddings pré-computados/);
-  assert.match(home, /pessoas vendadas/);
+  assert.match(home, /explorar acessibilidade visual/);
   const projectsSection = home.split('<section id="projects"')[1].split('<section id="skills"')[0];
   assert.doesNotMatch(projectsSection, /VALE/);
 
