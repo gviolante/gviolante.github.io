@@ -71,7 +71,7 @@ test('idiomas têm a mesma ordem de seções, alternância recíproca e CTAs uti
     assert.deepEqual([...html.matchAll(/<section id="([^"]+)"/g)].map(match => match[1]), ids);
     const nav = html.match(/<nav id="site-nav"[^>]*>(.*?)<\/nav>/s)[1];
     assert.deepEqual([...nav.matchAll(/href="[^#"]+#([^"]+)"/g)].map(match => match[1]), ids);
-    assert.match(html, new RegExp(`class="language-switch" href="${alternate}"`));
+    assert.match(html, new RegExp(`class="language-option" href="${alternate}"`));
     assert.match(html, /class="button button-dark" href="mailto:gabriel\.violant@gmail\.com"/);
     assert.ok(html.includes(documentLinks.resume[lang]));
     if (documentLinks.academic) assert.ok(html.includes(documentLinks.academic));
@@ -86,7 +86,7 @@ test('idiomas têm a mesma ordem de seções, alternância recíproca e CTAs uti
 test('páginas traduzidas e metadados preservam o destino equivalente', async () => {
   for (const [route, alternate] of [['projects/index.html', '/projetos/'], ['projetos/index.html', '/projects/']]) {
     const catalog = await readFile(path.join(outputRoot, route), 'utf8');
-    assert.ok(catalog.includes(`class="language-switch" href="${alternate}"`));
+    assert.ok(catalog.includes(`class="language-option" href="${alternate}"`));
     assert.doesNotMatch(catalog, /Read case study|Conhecer o projeto/);
   }
   for (const route of ['index.html', 'pt/index.html']) {

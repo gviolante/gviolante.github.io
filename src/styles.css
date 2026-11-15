@@ -281,6 +281,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   color:var(--accent)
 }
 .language-switch{
+  list-style:none;
   gap:8px;
   padding:8px 12px;
   font:11px ui-monospace,monospace;
@@ -295,14 +296,14 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   border-radius:3px;
   box-shadow:0 0 0 1px #00000012
 }
-.theme-control{
+.theme-control,.language-control{
   position:relative
 }
 .theme-control summary{
   width:44px;
   list-style:none
 }
-.theme-control summary::-webkit-details-marker{
+.theme-control summary::-webkit-details-marker,.language-switch::-webkit-details-marker{
   display:none
 }
 .theme-control summary .icon{
@@ -334,7 +335,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   font-size:11px;
   padding:6px 10px 8px
 }
-.theme-options button{
+.theme-options :is(button,a,.language-option){
   display:flex;
   align-items:center;
   gap:10px;
@@ -347,10 +348,10 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   font-size:13px;
   text-align:left
 }
-.theme-options button:hover,.theme-options button:focus-visible{
+.theme-options :is(button,a):hover,.theme-options :is(button,a):focus-visible{
   background:var(--soft)
 }
-.theme-options button[aria-pressed="true"]{
+.theme-options button[aria-pressed="true"],.language-option[aria-current="page"]{
   background:color-mix(in srgb,var(--accent) 12%,transparent);
   color:var(--accent)
 }
@@ -358,10 +359,10 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   margin-left:auto;
   visibility:hidden
 }
-[aria-pressed="true"] .theme-check{
+[aria-pressed="true"] .theme-check,[aria-current="page"] .theme-check{
   visibility:visible
 }
-.theme-control[open] .theme-options{
+.theme-control[open] .theme-options,.language-control[open] .theme-options{
   animation:header-panel .2s ease-out
 }
 .menu-toggle{

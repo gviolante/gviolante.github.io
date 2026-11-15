@@ -4,7 +4,7 @@ export const homeUrl = (lang) => lang === 'pt' ? '/pt/' : '/';
 export const copy = {
   en: {
     locale: 'en', ogLocale: 'en_US', nav: ['Home', 'About', 'Projects', 'Papers', 'Skills', 'Contact'],
-    skip: 'Skip to content', navigation: 'Main navigation', theme: 'Color theme', themes: ['System', 'Light', 'Dark'], language: 'View in Portuguese', top: 'Back to top',
+    skip: 'Skip to content', navigation: 'Main navigation', theme: 'Color theme', themes: ['System', 'Light', 'Dark'], language: 'Language', languageName: 'English', languageCode: 'EN', top: 'Back to top',
     title: 'Gabriel Violante — Software & Machine Learning',
     description: 'Computer Science student at UFMG. Software development, machine learning research and projects.',
     eyebrow: 'COMPUTER SCIENCE · UFMG',
@@ -38,7 +38,7 @@ export const copy = {
   },
   pt: {
     locale: 'pt-BR', ogLocale: 'pt_BR', nav: ['Início', 'Sobre', 'Projetos', 'Artigos', 'Habilidades', 'Contato'],
-    skip: 'Pular para o conteúdo', navigation: 'Navegação principal', theme: 'Tema de cores', themes: ['Sistema', 'Claro', 'Escuro'], language: 'Ver em inglês', top: 'Voltar ao topo',
+    skip: 'Pular para o conteúdo', navigation: 'Navegação principal', theme: 'Tema de cores', themes: ['Sistema', 'Claro', 'Escuro'], language: 'Idioma', languageName: 'Português', languageCode: 'PT-BR', top: 'Voltar ao topo',
     title: 'Gabriel Violante — Software e Machine Learning',
     description: 'Estudante de Ciência da Computação na UFMG. Desenvolvimento de software, pesquisa em aprendizado de máquina e projetos.',
     eyebrow: 'CIÊNCIA DA COMPUTAÇÃO · UFMG',

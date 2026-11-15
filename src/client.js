@@ -16,21 +16,34 @@ if (menuToggle && navigation) {
   });
   matchMedia('(min-width: 961px)').addEventListener('change', event => { if (event.matches) setMenu(false); });
   document.addEventListener('click', event => {
-    if (!event.target.closest('.site-header') || event.target.closest('.theme-control')) setMenu(false);
+    if (!event.target.closest('.site-header') || event.target.closest('.theme-control, .language-control')) setMenu(false);
   });
   document.addEventListener('focusin', event => {
     if (!event.target.closest('.site-header')) setMenu(false);
   });
 }
-const languageSwitch = document.querySelector('.language-switch');
+const languageControl = document.querySelector('.language-control');
+const languageLinks = document.querySelectorAll('.language-option[href]');
 const syncLanguageAnchor = () => {
-  if (!languageSwitch) return;
-  const url = new URL(languageSwitch.href);
-  url.hash = location.hash;
-  languageSwitch.href = url.href;
+  languageLinks.forEach(link => {
+    const url = new URL(link.href);
+    url.hash = location.hash;
+    link.href = url.href;
+  });
 };
 syncLanguageAnchor();
 window.addEventListener('hashchange', syncLanguageAnchor);
+if (languageControl) {
+  document.addEventListener('click', event => {
+    if (!languageControl.contains(event.target)) languageControl.open = false;
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && languageControl.open) {
+      languageControl.open = false;
+      languageControl.querySelector('summary').focus();
+    }
+  });
+}
 
 // Destaque acompanha a seção visível, sem interceptar navegação nativa.
 if ('IntersectionObserver' in window) {

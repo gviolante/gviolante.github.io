@@ -53,10 +53,10 @@ try {
   assert(doc.querySelector('.contact-email').getAttribute('href') === 'mailto:gabriel.violant@gmail.com', 'Contato aponta para o e-mail público');
 
   doc = await load('/#papers', 390);
-  assert(doc.querySelector('.language-switch').getAttribute('href').endsWith('/pt/#papers'), 'Troca de idioma preserva seção atual');
+  assert(doc.querySelector('[data-language="pt"]').getAttribute('href').endsWith('/pt/#papers'), 'Troca de idioma preserva seção atual');
   doc = await load('/pt/#papers', 390);
   assert(doc.documentElement.lang === 'pt-BR', 'Português declara idioma correto');
-  assert(doc.querySelector('.language-switch').getAttribute('href').endsWith('/#papers'), 'Retorno ao inglês preserva seção');
+  assert(doc.querySelector('[data-language="en"]').getAttribute('href').endsWith('/#papers'), 'Retorno ao inglês preserva seção');
   assert(doc.querySelector('[data-theme-option="system"]').textContent.includes('Sistema'), 'Controle de tema traduzido');
   for (const route of ['/', '/pt/']) {
     doc = await load(route, 390);

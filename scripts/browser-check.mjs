@@ -51,10 +51,25 @@ try {
     await page.waitForFunction(() => [...document.querySelectorAll('.hero-copy > *')].every(el => el.style.opacity === ''));
     check(await readable(page, '.hero-copy > *'), 'Capa legível após a entrada');
     await page.screenshot({ path: path.join(screenshots, `${width}-${theme}-home.png`) });
+    const languageSummary = page.locator('.language-switch');
+    check((await languageSummary.textContent()).includes(lang === 'pt' ? 'PT-BR' : 'EN'), 'Controle mostra o idioma atual');
+    await languageSummary.focus();
+    await page.keyboard.press('Enter');
+    check(await page.locator('.language-control').evaluate(el => el.open), 'Teclado abre seleção de idioma');
+    check(await page.locator('.language-option[aria-current="page"]').getAttribute('data-language') === lang, 'Dropdown marca o idioma atual');
+    await page.screenshot({ path: path.join(screenshots, `${width}-${theme}-language.png`), animations: 'disabled' });
+    check(await page.locator('.language-options').evaluate(el => {
+      const rect = el.getBoundingClientRect();
+      return rect.left >= 0 && rect.right <= innerWidth;
+    }), 'Seleção de idioma cabe na tela');
+    await page.keyboard.press('Escape');
+    check(await languageSummary.evaluate(el => document.activeElement === el && !el.parentElement.open), 'Escape fecha idiomas e restaura foco');
+    await languageSummary.click();
     const themeSummary = page.locator('.theme-control summary');
     await themeSummary.focus();
     await page.keyboard.press('Enter');
     check(await page.locator('.theme-control').evaluate(el => el.open), 'Teclado abre opções de tema');
+    check(await page.locator('.language-control').evaluate(el => !el.open), 'Abrir tema fecha idiomas');
     await page.screenshot({ path: path.join(screenshots, `${width}-${theme}-theme.png`), animations: 'disabled' });
     const otherTheme = theme === 'dark' ? 'light' : 'dark';
     await page.locator(`[data-theme-option="${otherTheme}"]`).click();
@@ -67,7 +82,7 @@ try {
     await themeSummary.click();
     await page.locator('[data-theme-option="system"]').click();
     check(await page.evaluate(value => document.documentElement.dataset.theme === value && localStorage.getItem('portfolio-theme') === null, theme), 'Sistema restaura a preferência do dispositivo');
-    check(await page.locator('.language-switch .icon-globe').isVisible() && await page.locator('.language-flag').isVisible(), 'Idioma exibe globo e bandeira');
+    check(await page.locator('.language-switch .icon-globe').isVisible() && await page.locator('.language-switch .language-flag').isVisible(), 'Idioma exibe globo e bandeira');
     if (width < 961) {
       const menu = page.locator('.menu-toggle');
       await menu.click();
@@ -169,6 +184,10 @@ try {
     await page.waitForFunction(() => document.documentElement.dataset.motion === 'reduced');
     check(await readable(page, '[data-reveal]'), 'Carregamento direto com movimento reduzido');
     check(await page.locator('.paper-card').first().evaluate(el => el.getBoundingClientRect().top < innerHeight), 'Âncora direta abre a seção correta');
+    await page.locator('.language-switch').click();
+    await page.locator('.language-option[href]').click();
+    await page.waitForURL(url => url.pathname === (lang === 'en' ? '/pt/' : '/') && url.hash === '#papers');
+    check(await page.locator('html').getAttribute('lang') === (lang === 'en' ? 'pt-BR' : 'en'), 'Troca pelo dropdown preserva a seção e aplica o idioma');
     await reduced.close();
 
     const noJS = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 900 } });
@@ -179,6 +198,9 @@ try {
     check(await plain.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'Sem overflow sem JavaScript');
     await plain.locator('#site-nav a').nth(3).click();
     check(new URL(plain.url()).hash === '#papers', 'Navegação por seção funciona sem JS');
+    await plain.locator('.language-switch').click();
+    await plain.locator('.language-option[href]').click();
+    check(await plain.locator('html').getAttribute('lang') === (lang === 'en' ? 'pt-BR' : 'en'), 'Seleção de idioma funciona sem JS');
     await noJS.close();
   }
   assert.deepEqual(errors, [], 'Nenhum erro JavaScript durante os cenários');
