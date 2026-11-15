@@ -50,7 +50,7 @@ test('projetos preservam o estágio e as limitações das pesquisas', async () =
   await assert.rejects(stat(path.join(outputRoot, 'projetos/deteccao-de-abelhas/index.html')), { code: 'ENOENT' });
   assert.match(home, /embeddings pré-computados/);
   assert.match(home, /pessoas vendadas/);
-  const projectsSection = home.split('<section id="projects"')[1].split('<section id="papers"')[0];
+  const projectsSection = home.split('<section id="projects"')[1].split('<section id="skills"')[0];
   assert.doesNotMatch(projectsSection, /VALE/);
 
 });
@@ -65,7 +65,7 @@ test('servidor restringe navegação à pasta pública', () => {
 });
 
 test('idiomas têm a mesma ordem de seções, alternância recíproca e CTAs utilizáveis', async () => {
-  const ids = ['home', 'about', 'projects', 'papers', 'skills', 'contact'];
+  const ids = ['home', 'about', 'projects', 'skills', 'contact'];
   for (const [lang, route, alternate] of [['en', 'index.html', '/pt/'], ['pt', 'pt/index.html', '/']]) {
     const html = await readFile(path.join(outputRoot, route), 'utf8');
     assert.deepEqual([...html.matchAll(/<section id="([^"]+)"/g)].map(match => match[1]), ids);
@@ -77,7 +77,7 @@ test('idiomas têm a mesma ordem de seções, alternância recíproca e CTAs uti
     if (documentLinks.academic) assert.ok(html.includes(documentLinks.academic));
     else assert.doesNotMatch(html, /class="academic-link"/);
     assert.equal((html.match(/class="project-card"/g) || []).length, projects.length);
-    assert.equal((html.match(/class="paper-card"/g) || []).length, papers.length);
+    assert.equal((html.match(/class="project-card publication-card"/g) || []).length, papers.length);
     for (const p of projects) assert.ok(html.includes(p.href));
     for (const p of papers) assert.ok(html.includes(p.href));
   }
@@ -102,7 +102,7 @@ test('páginas traduzidas e metadados preservam o destino equivalente', async ()
 });
 
 test('projetos seguem a prioridade e todos os recursos externos abrem em nova guia, sem download', async () => {
-  assert.deepEqual(projects.map(p => p.title), ['Eanter-OS', 'StrongerNotes', 'EnemRunner', 'Competitive-Programming', 'RPG-Sheet-Supros']);
+  assert.deepEqual(projects.map(p => p.title), ['Eanter-OS', 'StrongerNotes', 'EnemRunner', 'Competitive-Programming', 'RPG-Interective-Sheet']);
   for (const file of (await filesIn(outputRoot)).filter(f => f.endsWith('.html'))) {
     const html = await readFile(file, 'utf8');
     assert.doesNotMatch(html, /<a\b[^>]*\bdownload(?:=|\s|>)/i);
@@ -128,5 +128,23 @@ test('artigos têm logos, DOI e destino oficial; páginas de detalhamento deixam
   }
   for (const prefix of ['projects', 'projetos']) for (const slug of ['tinyflow-edgenids', 'enem-runner']) {
     await assert.rejects(stat(path.join(outputRoot, prefix, slug, 'index.html')), { code: 'ENOENT' });
+  }
+});
+
+
+test('publicações abrem a coleção unificada em ambas as páginas e idiomas', async () => {
+  for (const route of ['index.html', 'pt/index.html', 'projects/index.html', 'projetos/index.html']) {
+    const html = await readFile(path.join(outputRoot, route), 'utf8');
+    const titles = [...html.matchAll(/<h3[^>]*>(.*?)<\/h3>/gs)]
+      .map(match => match[1].replace(/<[^>]*>/g, '').replace(/&amp;/g, '&'));
+    const collection = titles.slice(titles.indexOf(papers[0].title), titles.indexOf(projects.at(-1).title) + 1);
+    assert.deepEqual(collection, [...papers, ...projects].map(item => item.title));
+    assert.doesNotMatch(html, /<section id="papers"|href="[^" ]*#papers"/);
+    assert.match(html, /<div id="papers" class="project-group">/);
+    for (const paper of papers) assert.ok(html.includes(`https://doi.org/${paper.doi}`));
+    assert.ok(html.includes('projects/eanter-os/agreement-recommendation.png'));
+    assert.ok(html.includes('projects/stronger-notes/progress-overview.png'));
+    assert.ok(html.includes('projects/rpg-interactive-sheet/player-sheet.png'));
+    assert.doesNotMatch(html, /overview\.svg|rpg-sheet-supros/);
   }
 });

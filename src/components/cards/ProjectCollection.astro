@@ -1,0 +1,16 @@
+---
+import { copy } from '../../data/content.js';
+import { papers, projects } from '../../data/projects.js';
+import PaperCard from './PaperCard.astro';
+import ProjectCard from './ProjectCard.astro';
+const { lang } = Astro.props;
+const t = copy[lang];
+---
+<div id="papers" class="project-group">
+  <p class="project-group-label eyebrow" data-reveal>{t.publishedResearch}</p>
+  <div class="project-grid publication-grid">{papers.map(paper => <PaperCard paper={paper} lang={lang} />)}</div>
+</div>
+<div class="project-group">
+  <p class="project-group-label eyebrow" data-reveal>{t.otherProjects}</p>
+  <div class="project-grid repository-grid">{projects.map(project => <ProjectCard project={project} lang={lang} />)}</div>
+</div>

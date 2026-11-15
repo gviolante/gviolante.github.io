@@ -1,15 +1,21 @@
 ---
 import { copy } from '../../data/content.js';
-import { projects, profile } from '../../data/projects.js';
+import { profile } from '../../data/projects.js';
+import { documentLinks } from '../../data/document-links.js';
 import SectionHeading from '../ui/SectionHeading.astro';
-import ProjectCard from '../cards/ProjectCard.astro';
+import ProjectCollection from '../cards/ProjectCollection.astro';
 import ExternalLink from '../ui/ExternalLink.astro';
+import Icon from '../ui/Icon.astro';
 const { lang } = Astro.props;
 const t = copy[lang];
 ---
 <section id="projects" class="section container">
   <div class="section-atmosphere" aria-hidden="true"><span></span></div>
   <SectionHeading label={t.projectsLabel} title={t.projectsTitle} intro={t.projectsIntro} />
-  <div class="project-grid">{projects.map(project => <ProjectCard project={project} lang={lang} />)}</div>
+  <ProjectCollection lang={lang} />
   <ExternalLink class="section-more text-link" href={`${profile.github}?tab=repositories`}>{t.allProjects} <span aria-hidden="true">↗</span></ExternalLink>
+  {documentLinks.academic && <div class="academic-link" data-reveal><Icon name="graduation" /><div>
+    <ExternalLink class="text-link" href={documentLinks.academic}>{t.academic} <span aria-hidden="true">↗</span></ExternalLink>
+    <p>{t.academicNote}</p>
+  </div></div>}
 </section>

@@ -2,7 +2,12 @@
 const { project, alt } = Astro.props;
 const asset = name => `/assets/images/${name}`;
 ---
-{project.artwork?.kind === 'game' ? (
+{project.artwork?.kind === 'app' ? (
+  <>
+    <img class="app-logo" src={asset(project.artwork.logo)} alt="" width={project.artwork.logoWidth} height={project.artwork.logoHeight} loading="lazy" aria-hidden="true" />
+    <img class="app-screen" src={asset(project.image)} alt={alt} width={project.imageWidth} height={project.imageHeight} loading="lazy" />
+  </>
+) : project.artwork?.kind === 'game' ? (
   <>
     <span class="game-identity" aria-hidden="true">
       <img class="game-title" src={asset(project.artwork.logo)} alt="" width="3520" height="1540" loading="lazy" />

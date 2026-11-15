@@ -1,6 +1,6 @@
 # Gabriel Violante — portfólio
 
-Portfólio em Astro, com inglês em `/` e português em `/pt/`. Seções: **Home → About → Projects → Papers → Skills → Contact**. Saída estática, CSS próprio e GSAP/ScrollTrigger para movimento.
+Portfólio em Astro, com inglês em `/` e português em `/pt/`. Seções: **Home → About → Projects → Skills → Contact**. Saída estática, CSS próprio e GSAP/ScrollTrigger para movimento.
 
 ## Desenvolvimento
 
@@ -25,7 +25,7 @@ src/
 ├── layouts/               Documento HTML e metadados compartilhados
 ├── components/
 │   ├── pages/             Composição de Home, catálogo e erro; não cria rotas
-│   ├── sections/          Home, About, Projects, Papers, Skills e Contact
+│   ├── sections/          Home, About, Projects, Skills e Contact
 │   ├── navigation/        Header e bandeiras de idioma
 │   ├── cards/             Cards de projetos/artigos e suas imagens
 │   └── ui/                Links, ícones, títulos de seção e redes sociais
@@ -62,7 +62,7 @@ Os arquivos de configuração permanecem na raiz. `README.md` é a entrada de le
 | Header e seleção de idioma | `src/components/navigation/` |
 | Aparência e animações | `src/styles/global.css` e `src/scripts/` |
 
-Imagens usam nomes em minúsculas, separados por hífen. Cada projeto tem sua própria pasta: `eanter-os`, `stronger-notes`, `enem-runner`, `competitive-programming` e `rpg-sheet-supros`. As capturas novas de Eanter-OS e StrongerNotes estão organizadas nessas pastas, mas ainda não substituem as ilustrações dos cards. O antigo `SignInPage.png` foi identificado como tela de cadastro e passou a `stronger-notes/sign-up.png`.
+Imagens usam nomes em minúsculas, separados por hífen. Cada projeto tem sua própria pasta: `eanter-os`, `stronger-notes`, `enem-runner`, `competitive-programming` e `rpg-interactive-sheet`. Os banners de Eanter-OS e StrongerNotes combinam logos e capturas reais; o RPG usa a nova ficha como fundo do D20. As imagens substituídas ficam em `archive/images/`. O antigo `SignInPage.png` foi identificado como tela de cadastro e passou a `stronger-notes/sign-up.png`.
 
 O tema permanece em `src/theme.js` por ser a entrada executada antes do CSS; os demais comportamentos do navegador ficam em `src/scripts/`. Ferramentas executadas pelo desenvolvedor ficam em `scripts/`, na raiz.
 
@@ -77,6 +77,8 @@ A identidade usa roxo e azul-escuro, com uma versão clara em lavanda. O retrato
 | `/` | `/pt/` | Página principal |
 | `/projects/` | `/projetos/` | Catálogo |
 | `/404.html` | `/pt/404/` | Página de erro |
+
+Projects apresenta primeiro os três trabalhos publicados (IEEE ISCC, SBRC e SBGames), depois os cinco repositórios, tanto na home quanto no catálogo. `ProjectCollection.astro` mantém essa composição compartilhada. A antiga âncora `#papers` continua levando às publicações dentro de Projects; não há seção nem item de menu Papers.
 
 Projetos, publicações, DOI e perfis abrem em nova guia. Currículos e histórico abrem os originais autorizados no Google Drive, conforme `src/data/document-links.js`. Gabriel administra as permissões dos arquivos. Não há downloads diretos nem páginas locais de artigos.
 

@@ -6,19 +6,21 @@ export const profile = {
   linkedin: 'https://www.linkedin.com/in/gabriel-violante/',
 };
 
-// Ordem definida por Gabriel. Pesquisas publicadas ficam em Papers.
+// Ordem definida por Gabriel. Os três trabalhos publicados precedem estes repositórios na interface.
 export const projects = [
   {
-    slug: 'eanteros', title: 'Eanter-OS', image: 'projects/eanter-os/overview.svg', tags: ['Python', 'React', 'RAG'],
+    slug: 'eanteros', title: 'Eanter-OS', image: 'projects/eanter-os/agreement-recommendation.png', imageWidth: 1916, imageHeight: 1079,
+    artwork: { kind: 'app', logo: 'projects/eanter-os/logo.png', logoWidth: 1493, logoHeight: 475 }, tags: ['Python', 'React', 'RAG'],
     href: 'https://github.com/ViolanteGabriel/Eanter-OS',
-    en: { category: 'Applied AI · team project', summary: 'Hackathon prototype for reviewing loan disputes with machine learning, document retrieval and human review.', alt: 'Conceptual illustration of document analysis and human review in Eanter-OS.' },
-    pt: { category: 'IA aplicada · projeto em equipe', summary: 'Protótipo de hackathon para análise de disputas de empréstimos com aprendizado de máquina, busca em documentos e revisão humana.', alt: 'Ilustração conceitual de análise de documentos e revisão humana no Eanter-OS.' },
+    en: { category: 'Applied AI · team project', summary: 'Hackathon prototype for reviewing loan disputes with machine learning, document retrieval and human review.', alt: 'Eanter-OS prototype screen with an agreement recommendation and documents for human review.' },
+    pt: { category: 'IA aplicada · projeto em equipe', summary: 'Protótipo de hackathon para análise de disputas de empréstimos com aprendizado de máquina, busca em documentos e revisão humana.', alt: 'Tela do protótipo Eanter-OS com recomendação de acordo e documentos para revisão humana.' },
   },
   {
-    slug: 'stronger-notes', title: 'StrongerNotes', image: 'projects/stronger-notes/overview.svg', tags: ['TypeScript', 'React', 'Fastify', 'MongoDB'],
+    slug: 'stronger-notes', title: 'StrongerNotes', image: 'projects/stronger-notes/progress-overview.png', imageWidth: 1912, imageHeight: 1075,
+    artwork: { kind: 'app', logo: 'projects/stronger-notes/logo.png', logoWidth: 1072, logoHeight: 334 }, tags: ['TypeScript', 'React', 'Fastify', 'MongoDB'],
     href: 'https://github.com/ViolanteGabriel/StrongerNotes',
-    en: { category: 'Web development · team project', summary: 'Workout tracking app with routines, sets, reps, weights and progress charts. Developed for a Software Engineering course.', alt: 'Conceptual illustration of a dumbbell, a workout log and a progress chart.' },
-    pt: { category: 'Desenvolvimento web · equipe', summary: 'Aplicação para organizar treinos, registrar séries, repetições e cargas, e acompanhar a evolução em gráficos. Trabalho de Engenharia de Software.', alt: 'Ilustração conceitual de um halter, um registro de treino e um gráfico de evolução.' },
+    en: { category: 'Web development · team project', summary: 'Workout tracking app with routines, sets, reps, weights and progress charts. Developed for a Software Engineering course.', alt: 'StrongerNotes progress dashboard with exercise records and strength progression charts.' },
+    pt: { category: 'Desenvolvimento web · equipe', summary: 'Aplicação para organizar treinos, registrar séries, repetições e cargas, e acompanhar a evolução em gráficos. Trabalho de Engenharia de Software.', alt: 'Painel de evolução do StrongerNotes, com registros de exercícios e gráficos de progressão de força.' },
   },
   {
     slug: 'enem-runner', title: 'EnemRunner', image: 'projects/enem-runner/main-screen.png', tags: ['Unity', 'C#', 'Game design'],
@@ -34,11 +36,11 @@ export const projects = [
     pt: { category: 'Algoritmos · estudo pessoal', summary: 'Exercícios de programação organizados por assunto e semana de treinamento. Inclui soluções, tentativas anteriores e exercícios incompletos.', alt: 'Logo do Codeforces, plataforma de programação competitiva.' },
   },
   {
-    slug: 'rpg-sheet', title: 'RPG-Sheet-Supros', image: 'projects/rpg-sheet-supros/combat.png', tags: ['JavaScript', 'PixiJS', 'RPG'],
-    artwork: { icon: 'projects/rpg-sheet-supros/d20.png' }, imageWidth: 1500, imageHeight: 1400,
-    href: 'https://github.com/ViolanteGabriel/RPG-Sheet-Supros',
-    en: { category: 'RPG tools · personal project', summary: 'Local character sheet with combat tracking, notes, backups and animated effects. Combat rules are specific to Supros and his campaign.', alt: 'RPG character sheet showing combat controls and the Godspeed effect.' },
-    pt: { category: 'Ferramentas de RPG · projeto pessoal', summary: 'Ficha local com controle de combate, anotações, backups e efeitos animados. As regras de combate são específicas do Supros e de sua campanha.', alt: 'Ficha de RPG com controles de combate e o efeito Godspeed.' },
+    slug: 'rpg-sheet', title: 'RPG-Interective-Sheet', image: 'projects/rpg-interactive-sheet/player-sheet.png', tags: ['JavaScript', 'PixiJS', 'RPG'],
+    artwork: { icon: 'projects/rpg-interactive-sheet/d20.png' }, imageWidth: 1915, imageHeight: 1080,
+    href: 'https://github.com/ViolanteGabriel/RPG-Sheet',
+    en: { category: 'RPG tools · personal project', summary: 'Local character sheet with combat tracking, notes, backups and animated effects. Combat rules are specific to Supros and his campaign.', alt: 'Kozuki character sheet with health, armor, weapons and combat abilities.' },
+    pt: { category: 'Ferramentas de RPG · projeto pessoal', summary: 'Ficha local com controle de combate, anotações, backups e efeitos animados. As regras de combate são específicas do Supros e de sua campanha.', alt: 'Ficha de Kozuki com vida, armadura, armas e habilidades de combate.' },
   },
 ];
 

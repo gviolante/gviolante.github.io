@@ -133,18 +133,18 @@ try {
     });
     check(samples.some(value => value > 0 && value < 1), 'Entrada dos projetos disparada pela roda do mouse');
     check(samples.every((value, index) => !index || value >= samples[index - 1] - 0.01), `Entrada não volta a ocultar conteúdo visível: ${samples.join(', ')}`);
-    check(await readable(page, '.project-card:first-child'), 'Projeto permanece legível depois da entrada');
+    check(await readable(page, '.publication-grid .project-card:first-child'), 'Projeto permanece legível depois da entrada');
     check(await page.locator('.reading-progress').evaluate(el => getComputedStyle(el).visibility === 'visible' && getComputedStyle(el).transform !== 'none'), 'Progresso acompanha a rolagem');
     await page.screenshot({ path: path.join(screenshots, `${width}-${theme}-projects.png`) });
 
     // Interromper uma animação ativa mudando a preferência do dispositivo.
-    await scrollTo(page, '.paper-card');
-    await page.waitForFunction(() => Number(document.querySelector('.paper-card').style.opacity) > 0 && Number(document.querySelector('.paper-card').style.opacity) < 1);
+    await scrollTo(page, '.repository-grid .project-card');
+    await page.waitForFunction(() => Number(document.querySelector('.repository-grid .project-card').style.opacity) > 0 && Number(document.querySelector('.repository-grid .project-card').style.opacity) < 1);
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.waitForFunction(() => document.documentElement.dataset.motion === 'reduced');
     check(await readable(page, '[data-reveal]'), 'Movimento reduzido restaura todos os conteúdos');
     check(await page.locator('.reading-progress').evaluate(el => getComputedStyle(el).visibility === 'hidden'), 'Movimento reduzido remove progresso animado');
-    await page.screenshot({ path: path.join(screenshots, `${width}-${theme}-papers.png`) });
+    await page.screenshot({ path: path.join(screenshots, `${width}-${theme}-repositories.png`) });
     await page.emulateMedia({ reducedMotion: 'no-preference' });
     await page.waitForFunction(() => document.documentElement.dataset.motion === 'active');
 
@@ -183,7 +183,7 @@ try {
     await page.goto(`${base}${route}#papers`);
     await page.waitForFunction(() => document.documentElement.dataset.motion === 'reduced');
     check(await readable(page, '[data-reveal]'), 'Carregamento direto com movimento reduzido');
-    check(await page.locator('.paper-card').first().evaluate(el => el.getBoundingClientRect().top < innerHeight), 'Âncora direta abre a seção correta');
+    check(await page.locator('.publication-card').first().evaluate(el => el.getBoundingClientRect().top < innerHeight), 'Âncora direta abre a seção correta');
     await page.locator('.language-switch').click();
     await page.locator('.language-option[href]').click();
     await page.waitForURL(url => url.pathname === (lang === 'en' ? '/pt/' : '/') && url.hash === '#papers');
@@ -193,11 +193,11 @@ try {
     const noJS = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 900 } });
     const plain = await noJS.newPage();
     await plain.goto(`${base}${route}`);
-    check(await plain.locator('.project-card').count() === 5, 'Projetos presentes sem JS');
+    check(await plain.locator('.project-card').count() === 8, 'Projetos presentes sem JS');
     check(await readable(plain, '[data-reveal], .hero-copy > *'), 'Conteúdo visível sem JS');
     check(await plain.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'Sem overflow sem JavaScript');
-    await plain.locator('#site-nav a').nth(3).click();
-    check(new URL(plain.url()).hash === '#papers', 'Navegação por seção funciona sem JS');
+    await plain.locator('#site-nav a').nth(2).click();
+    check(new URL(plain.url()).hash === '#projects', 'Navegação por seção funciona sem JS');
     await plain.locator('.language-switch').click();
     await plain.locator('.language-option[href]').click();
     check(await plain.locator('html').getAttribute('lang') === (lang === 'en' ? 'pt-BR' : 'en'), 'Seleção de idioma funciona sem JS');

@@ -3,7 +3,7 @@ export const languages = ['en', 'pt'];
 export const homeUrl = (lang) => lang === 'pt' ? '/pt/' : '/';
 export const copy = {
   en: {
-    locale: 'en', ogLocale: 'en_US', nav: ['Home', 'About', 'Projects', 'Papers', 'Skills', 'Contact'],
+    locale: 'en', ogLocale: 'en_US', nav: ['Home', 'About', 'Projects', 'Skills', 'Contact'],
     skip: 'Skip to content', navigation: 'Main navigation', theme: 'Color theme', themes: ['System', 'Light', 'Dark'], language: 'Language', languageName: 'English', languageCode: 'EN', top: 'Back to top',
     title: 'Gabriel Violante — Software & Machine Learning',
     description: 'Computer Science student at UFMG. Software development, machine learning research and projects.',
@@ -23,8 +23,8 @@ export const copy = {
       ['Research started', 'Research with VALE', 'Recently joined a study on bee swarm detection with TinyML on ESP32. No implementation or results yet.'],
     ],
     projectsLabel: '02', projectsTitle: 'Projects', projectsIntro: '', github: 'View on GitHub', allProjects: 'More on GitHub',
-    papersLabel: '03', papersTitle: 'Papers', papersIntro: '', publication: 'View publication', academic: 'Academic transcript', academicNote: 'View on Google Drive', newTab: 'Opens in a new tab',
-    skillsLabel: '04', skillsTitle: 'Skills', skillsIntro: '',
+    publishedResearch: 'Published research', otherProjects: 'Other projects', publication: 'View publication', academic: 'Academic transcript', academicNote: 'View on Google Drive', newTab: 'Opens in a new tab',
+    skillsLabel: '03', skillsTitle: 'Skills', skillsIntro: '',
     skillGroups: [
       ['01', 'Programming languages', ['Python', 'C / C++', 'JavaScript', 'SQL', 'SystemVerilog']],
       ['02', 'Machine learning', ['TensorFlow', 'PyTorch', 'Scikit-learn', 'Keras', 'TinyML']],
@@ -33,11 +33,11 @@ export const copy = {
       ['05', 'Development tools', ['Git / GitHub', 'Docker', 'Linux', 'LaTeX']],
       ['06', 'Languages', ['Portuguese · native', 'English · advanced', 'Japanese · basic']],
     ],
-    contactLabel: '05', contactTitle: 'Contact', contactText: 'For work, research or project inquiries, contact me by e-mail or LinkedIn.', copy: 'Copy e-mail', copied: 'E-mail copied!', copyError: 'Could not copy. Please use the e-mail link.', footer: 'Belo Horizonte, Brazil',
+    contactLabel: '04', contactTitle: 'Contact', contactText: 'For work, research or project inquiries, contact me by e-mail or LinkedIn.', copy: 'Copy e-mail', copied: 'E-mail copied!', copyError: 'Could not copy. Please use the e-mail link.', footer: 'Belo Horizonte, Brazil',
     back: 'Back to portfolio', notFound: 'Page not found', notFoundText: 'This address is unavailable.',
   },
   pt: {
-    locale: 'pt-BR', ogLocale: 'pt_BR', nav: ['Início', 'Sobre', 'Projetos', 'Artigos', 'Habilidades', 'Contato'],
+    locale: 'pt-BR', ogLocale: 'pt_BR', nav: ['Início', 'Sobre', 'Projetos', 'Habilidades', 'Contato'],
     skip: 'Pular para o conteúdo', navigation: 'Navegação principal', theme: 'Tema de cores', themes: ['Sistema', 'Claro', 'Escuro'], language: 'Idioma', languageName: 'Português', languageCode: 'PT-BR', top: 'Voltar ao topo',
     title: 'Gabriel Violante — Software e Machine Learning',
     description: 'Estudante de Ciência da Computação na UFMG. Desenvolvimento de software, pesquisa em aprendizado de máquina e projetos.',
@@ -57,8 +57,8 @@ export const copy = {
       ['Pesquisa iniciada', 'Pesquisa junto à VALE', 'Ingressei recentemente em um estudo de detecção de enxames de abelhas com TinyML em ESP32. Ainda sem implementação ou resultados para apresentar.'],
     ],
     projectsLabel: '02', projectsTitle: 'Projetos', projectsIntro: '', github: 'Ver no GitHub', allProjects: 'Mais no GitHub',
-    papersLabel: '03', papersTitle: 'Artigos', papersIntro: '', publication: 'Ver publicação', academic: 'Histórico escolar', academicNote: 'Visualizar no Google Drive', newTab: 'Abre em uma nova guia',
-    skillsLabel: '04', skillsTitle: 'Habilidades', skillsIntro: '',
+    publishedResearch: 'Pesquisas publicadas', otherProjects: 'Outros projetos', publication: 'Ver publicação', academic: 'Histórico escolar', academicNote: 'Visualizar no Google Drive', newTab: 'Abre em uma nova guia',
+    skillsLabel: '03', skillsTitle: 'Habilidades', skillsIntro: '',
     skillGroups: [
       ['01', 'Linguagens de programação', ['Python', 'C / C++', 'JavaScript', 'SQL', 'SystemVerilog']],
       ['02', 'Aprendizado de máquina', ['TensorFlow', 'PyTorch', 'Scikit-learn', 'Keras', 'TinyML']],
@@ -67,7 +67,7 @@ export const copy = {
       ['05', 'Ferramentas de desenvolvimento', ['Git / GitHub', 'Docker', 'Linux', 'LaTeX']],
       ['06', 'Idiomas', ['Português · nativo', 'Inglês · avançado', 'Japonês · básico']],
     ],
-    contactLabel: '05', contactTitle: 'Contato', contactText: 'Para oportunidades de trabalho, pesquisa ou projetos, entre em contato por e-mail ou LinkedIn.', copy: 'Copiar e-mail', copied: 'E-mail copiado!', copyError: 'Não foi possível copiar. Use o link de e-mail.', footer: 'Belo Horizonte, Brasil',
+    contactLabel: '04', contactTitle: 'Contato', contactText: 'Para oportunidades de trabalho, pesquisa ou projetos, entre em contato por e-mail ou LinkedIn.', copy: 'Copiar e-mail', copied: 'E-mail copiado!', copyError: 'Não foi possível copiar. Use o link de e-mail.', footer: 'Belo Horizonte, Brasil',
     back: 'Voltar ao portfólio', notFound: 'Página não encontrada', notFoundText: 'Este endereço não está disponível.',
   },
 };

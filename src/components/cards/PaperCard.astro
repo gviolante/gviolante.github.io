@@ -5,10 +5,13 @@ import ExternalLink from '../ui/ExternalLink.astro';
 const { paper, lang } = Astro.props;
 const p = paper[lang], t = copy[lang];
 ---
-<article class="paper-card" data-reveal>
-  <div class="paper-index"><div class="conference-logo"><img src={`/assets/images/${paper.logo}`} alt={`${paper.venue} ${paper.year}`} width="180" height="90" loading="lazy" /></div><span class="paper-role">{p.role}</span></div>
-  <div class="paper-copy">
-    <p class="paper-venue">{paper.year} · {p.venue}</p>
+<article class="project-card publication-card" data-reveal>
+  <ExternalLink class="project-image publication-image" href={paper.href} aria-label={`${paper.title} — ${t.publication}`}>
+    <span class="conference-logo"><img src={`/assets/images/${paper.logo}`} alt={`${paper.venue} ${paper.year}`} width="180" height="90" loading="lazy" /></span>
+    <span class="paper-role">{p.role}</span>
+  </ExternalLink>
+  <div class="project-card-content">
+    <p class="eyebrow" title={p.venue}>{paper.venue} · {paper.year}</p>
     <h3 lang={paper.publicationLanguage}><ExternalLink href={paper.href}>{paper.title}</ExternalLink></h3>
     <p>{p.summary}</p><p class="paper-authors">{paper.authors}</p>
     <div class="paper-actions">

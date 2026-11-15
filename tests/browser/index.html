@@ -33,6 +33,13 @@ try {
         const doc = await load(route, width);
         assert(doc.documentElement.scrollWidth <= doc.documentElement.clientWidth + 1, `Sem overflow: ${theme} ${route} em ${width}px${doc.documentElement.scrollWidth > doc.documentElement.clientWidth + 1 ? JSON.stringify([...doc.querySelectorAll("main *")].filter(el => el.getBoundingClientRect().right > width + 1).map(el => ({tag:el.tagName,cls:el.className,right:el.getBoundingClientRect().right})).slice(0,8)) : ""}`);
         assert(doc.documentElement.dataset.theme === theme, `Tema ${theme}: ${route}`);
+        const publications = [...doc.querySelectorAll('.publication-grid .project-card')];
+        if (publications.length) {
+          assert(publications.length === 3 && doc.querySelectorAll('.repository-grid .project-card').length === 5, `Três publicações e cinco repositórios: ${route}`);
+          const boxes = publications.map(card => card.getBoundingClientRect());
+          assert(doc.querySelector('.repository-grid').getBoundingClientRect().top > Math.max(...boxes.map(box => box.bottom)), `Repositórios abaixo das publicações: ${route}`);
+          if (width === 1440) assert(boxes.every(box => Math.abs(box.top - boxes[0].top) < 1 && Math.abs(box.width - boxes[0].width) < 1), `Três publicações com destaque equivalente: ${route}`);
+        }
         assert(doc.querySelectorAll('h1').length === 1, `Título principal: ${route} em ${width}px`);
         assert(Boolean(doc.querySelector('main h1')?.textContent.trim()) && Boolean(doc.querySelector('main p')?.textContent.trim()), `Conteúdo renderizado: ${route} em ${width}px`);
       }
@@ -65,8 +72,9 @@ try {
     const transcript = doc.querySelector('.academic-link a');
     assert(transcript?.target === '_blank' && transcript.href === 'https://drive.google.com/file/d/1YkdNL98nDzrrYCe3zcRNeONgaR9dzQGE/view?usp=sharing', `Histórico abre no Drive em nova guia: ${route}`);
     assert(!doc.querySelector('a[download], a[href*="article/download/"], a[href$=".pdf"]'), `Sem download direto: ${route}`);
-    assert(doc.querySelectorAll('.project-card').length === 5, `Cinco projetos: ${route}`);
+    assert(doc.querySelectorAll('.project-card').length === 8, `Oito cards em Projects: ${route}`);
     assert(doc.querySelectorAll('.conference-logo img').length === 3, `Três logos de conferências: ${route}`);
+    assert([...doc.querySelectorAll('.conference-logo img')].every(img => frame.contentWindow.getComputedStyle(img).objectFit === 'contain'), `Logos de conferências sem recorte: ${route}`);
     for (const link of doc.querySelectorAll('a[href^="https://"]')) {
       assert(link.target === '_blank' && link.rel.includes('noopener'), `Link externo em nova guia: ${link.href}`);
     }
