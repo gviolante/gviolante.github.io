@@ -1,9 +1,9 @@
 ---
 import { copy } from '../../data/content.js';
 import { projects, profile } from '../../data/projects.js';
-import SectionHeading from '../SectionHeading.astro';
-import ProjectCard from '../ProjectCard.astro';
-import ExternalLink from '../ExternalLink.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import ProjectCard from '../cards/ProjectCard.astro';
+import ExternalLink from '../ui/ExternalLink.astro';
 const { lang } = Astro.props;
 const t = copy[lang];
 ---

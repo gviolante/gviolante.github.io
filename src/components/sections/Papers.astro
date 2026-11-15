@@ -2,10 +2,10 @@
 import { copy } from '../../data/content.js';
 import { papers } from '../../data/projects.js';
 import { documentLinks } from '../../data/document-links.js';
-import SectionHeading from '../SectionHeading.astro';
-import PaperCard from '../PaperCard.astro';
-import ExternalLink from '../ExternalLink.astro';
-import Icon from '../Icon.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import PaperCard from '../cards/PaperCard.astro';
+import ExternalLink from '../ui/ExternalLink.astro';
+import Icon from '../ui/Icon.astro';
 const { lang } = Astro.props;
 const t = copy[lang];
 ---

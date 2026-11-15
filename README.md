@@ -20,20 +20,51 @@ Outra porta no desenvolvimento: `npm run dev -- --port 4322`. Para a prévia: `P
 ## Organização
 
 ```text
-src/data/                 Conteúdo e traduções, independentes da apresentação
-src/pages/                Rotas Astro, robots.txt e sitemap.xml
-src/layouts/              HTML e metadados compartilhados
-src/components/           Cards, cabeçalho, links e seções
-src/styles.css            Paleta, temas e responsividade
-src/icons.js              SVGs locais
-src/client.js             Menu, âncoras, idioma e cópia de e-mail
-src/motion.js             GSAP/ScrollTrigger: entradas e efeitos de rolagem
-src/theme.js              Preferência de tema, executada antes do CSS
-public/                   Somente favicon e imagens selecionadas
-archive/                  PDFs legados; nunca publicados
-scripts/                  Ferramentas de desenvolvimento
-astro.config.mjs          Build estático e domínio opcional
+src/
+├── pages/                 Rotas Astro em inglês/português, 404, robots e sitemap
+├── layouts/               Documento HTML e metadados compartilhados
+├── components/
+│   ├── pages/             Composição de Home, catálogo e erro; não cria rotas
+│   ├── sections/          Home, About, Projects, Papers, Skills e Contact
+│   ├── navigation/        Header e bandeiras de idioma
+│   ├── cards/             Cards de projetos/artigos e suas imagens
+│   └── ui/                Links, ícones, títulos de seção e redes sociais
+├── data/                  Conteúdo, traduções, projetos e links autorizados
+├── scripts/               JavaScript do navegador: interação e animações
+├── styles/global.css      Paleta, temas e responsividade
+└── theme.js               Tema aplicado antes do CSS
+public/
+├── favicon.svg
+└── assets/images/
+    ├── profile/           Retrato selecionado
+    ├── conferences/       Logos das conferências
+    └── projects/          Imagens agrupadas por projeto
+scripts/
+├── serve.mjs              Prévia local do build
+├── browser-check.mjs      Executa verificações no Chromium
+└── legacy/                Gerador opcional de documentos antigos
+tests/
+├── unit/                  Lógica isolada, como preferência de tema
+├── integration/           Páginas construídas, links e recursos publicados
+└── browser/               Harness HTML para verificação da interface
+docs/ideas.md             Pedido inicial e referências históricas
+archive/                  Dados, PDFs e imagens legados; fora da publicação
+personalContext/          Fontes pessoais locais; ignoradas pelo Git
 ```
+
+Os arquivos de configuração permanecem na raiz. `README.md` é a entrada de leitura; `AGENTS.md` orienta a manutenção e `CONTEXTO_PROJETO.md` registra decisões e fontes. `node_modules/`, `.astro/` e `dist/` são pastas geradas, ignoradas pelo Git.
+
+| Para alterar | Local |
+| --- | --- |
+| Textos e traduções | `src/data/content.js` |
+| Projetos, artigos e imagens dos cards | `src/data/projects.js` e `public/assets/images/projects/` ou `conferences/` |
+| Currículo e histórico no Drive | `src/data/document-links.js` |
+| Header e seleção de idioma | `src/components/navigation/` |
+| Aparência e animações | `src/styles/global.css` e `src/scripts/` |
+
+Imagens usam nomes em minúsculas, separados por hífen. Cada projeto tem sua própria pasta: `eanter-os`, `stronger-notes`, `enem-runner`, `competitive-programming` e `rpg-sheet-supros`. As capturas novas de Eanter-OS e StrongerNotes estão organizadas nessas pastas, mas ainda não substituem as ilustrações dos cards. O antigo `SignInPage.png` foi identificado como tela de cadastro e passou a `stronger-notes/sign-up.png`.
+
+O tema permanece em `src/theme.js` por ser a entrada executada antes do CSS; os demais comportamentos do navegador ficam em `src/scripts/`. Ferramentas executadas pelo desenvolvedor ficam em `scripts/`, na raiz.
 
 O Astro substitui o gerador manual de HTML. Não há React, backend ou roteamento SPA. Conteúdo e links são entregues no HTML e funcionam sem JavaScript. A preferência de tema permanece em `src/theme.js`, incluída inline no cabeçalho para evitar troca visível de paleta no carregamento.
 
@@ -49,7 +80,7 @@ A identidade usa roxo e azul-escuro, com uma versão clara em lavanda. O retrato
 
 Projetos, publicações, DOI e perfis abrem em nova guia. Currículos e histórico abrem os originais autorizados no Google Drive, conforme `src/data/document-links.js`. Gabriel administra as permissões dos arquivos. Não há downloads diretos nem páginas locais de artigos.
 
-**Astro copia todo o conteúdo de `public/`.** Não colocar PDFs, documentos pessoais ou credenciais nessa pasta. Os PDFs revisados anteriores ficam em `archive/`; o gerador opcional também escreve nessa pasta. `personalContext/`, `archive/` e os dados documentais legados não entram no build.
+**Astro copia todo o conteúdo de `public/`.** Não colocar PDFs, documentos pessoais ou credenciais nessa pasta. Os PDFs revisados anteriores e seus dados ficam em `archive/`; o gerador opcional em `scripts/legacy/` também escreve nessa pasta. Consulte [archive/README.md](archive/README.md). `personalContext/`, `archive/` e os dados documentais legados não entram no build.
 
 ## Verificação
 

@@ -1,7 +1,7 @@
 ---
-import { copy } from '../data/content.js';
-import Icon from './Icon.astro';
-import ExternalLink from './ExternalLink.astro';
+import { copy } from '../../data/content.js';
+import Icon from '../ui/Icon.astro';
+import ExternalLink from '../ui/ExternalLink.astro';
 import ProjectVisual from './ProjectVisual.astro';
 const { project, lang } = Astro.props;
 const p = project[lang], t = copy[lang];

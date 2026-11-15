@@ -1,8 +1,8 @@
 ---
-import { copy, homeUrl } from '../data/content.js';
-import { projects } from '../data/projects.js';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectCard from './ProjectCard.astro';
+import { copy, homeUrl } from '../../data/content.js';
+import { projects } from '../../data/projects.js';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../cards/ProjectCard.astro';
 const { lang } = Astro.props;
 const t = copy[lang];
 ---

@@ -15,7 +15,7 @@ if (!executablePath) throw new Error('Defina CHROMIUM_PATH com o caminho do Chro
 const screenshots = process.env.QA_OUTPUT_DIR || '/tmp/portfolio-astro-qa';
 await mkdir(screenshots, { recursive: true });
 const harness = path.join(outputRoot, '__browser-check.html');
-await cp(fileURLToPath(new URL('../tests/browser.html', import.meta.url)), harness);
+await cp(fileURLToPath(new URL('../tests/browser/index.html', import.meta.url)), harness);
 const server = createServer();
 server.listen(0, '127.0.0.1');
 await once(server, 'listening');

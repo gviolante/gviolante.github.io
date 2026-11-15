@@ -2,9 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
-import { outputRoot, resolvePublicPath } from '../scripts/serve.mjs';
-import { projects, papers } from '../src/data/projects.js';
-import { documentLinks } from '../src/data/document-links.js';
+import { outputRoot, resolvePublicPath } from '../../scripts/serve.mjs';
+import { projects, papers } from '../../src/data/projects.js';
+import { documentLinks } from '../../src/data/document-links.js';
 
 async function filesIn(directory) {
   const entries = await readdir(directory, { withFileTypes: true });

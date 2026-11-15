@@ -2,8 +2,8 @@
 import { copy } from '../../data/content.js';
 import { profile } from '../../data/projects.js';
 import { documentLinks } from '../../data/document-links.js';
-import Icon from '../Icon.astro';
-import ExternalLink from '../ExternalLink.astro';
+import Icon from '../ui/Icon.astro';
+import ExternalLink from '../ui/ExternalLink.astro';
 const { lang } = Astro.props;
 const t = copy[lang];
 ---
@@ -21,7 +21,7 @@ const t = copy[lang];
   <div class="hero-art">
     <div class="portrait-orbit" aria-hidden="true"></div>
     <span class="art-cross cross-one" aria-hidden="true">+</span><span class="art-cross cross-two" aria-hidden="true">+</span>
-    <img src="/assets/images/gabriel-pixel.png" width="1122" height="1402" alt={t.portrait} fetchpriority="high" />
+    <img src="/assets/images/profile/gabriel-pixel.png" width="1122" height="1402" alt={t.portrait} fetchpriority="high" />
     <span class="art-note" aria-hidden="true">hello, world<span>_</span></span>
   </div>
 </section>

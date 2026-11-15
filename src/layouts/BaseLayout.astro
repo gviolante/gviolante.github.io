@@ -1,8 +1,8 @@
 ---
 import { copy, homeUrl } from '../data/content.js';
-import Header from '../components/Header.astro';
+import Header from '../components/navigation/Header.astro';
 import themeScript from '../theme.js?raw';
-import '../styles.css';
+import '../styles/global.css';
 const { lang = 'en', title, description, alternatePath } = Astro.props;
 const t = copy[lang];
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : null;
@@ -37,8 +37,8 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : nu
       <p>{t.footer}</p><a href="#top">{t.top} ↑</a>
     </footer>
     <script>
-      import '../client.js';
-      import { initMotion } from '../motion.js';
+      import '../scripts/client.js';
+      import { initMotion } from '../scripts/motion.js';
       initMotion();
     </script>
   </body>
