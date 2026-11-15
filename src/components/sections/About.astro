@@ -10,7 +10,7 @@ const t = copy[lang];
   <div class="container about-grid">
     <div><SectionHeading title={t.aboutTitle} />
       <div class="about-copy">
-        <p class="about-intro" data-reveal>{t.aboutIntro.greeting} <span class="about-highlight">Gabriel</span>, <span class="about-highlight">{t.aboutIntro.role}</span> {t.aboutIntro.bridge} <a class="about-highlight" href="#projects">{t.aboutIntro.work}</a>.</p>
+        <p class="about-intro" data-reveal data-underline>{t.aboutIntro.greeting} <span class="text-highlight">Gabriel</span>, <span class="text-highlight">{t.aboutIntro.role}</span> {t.aboutIntro.bridge} <a class="text-highlight" href="#projects">{t.aboutIntro.work}</a>.</p>
         {t.about.map(p => <p data-reveal>{p}</p>)}
       </div>
       <SocialLinks />
@@ -21,7 +21,7 @@ const t = copy[lang];
       {t.education.map(item => <article class="education-card" data-reveal>
         <div class="education-card-header">
           <div class="education-logo"><img src={`/assets/images/education/${item.logo}`} alt={item.institution} width={item.logoWidth} height={item.logoHeight} loading="lazy" /></div>
-          <dl class="education-average"><dt>{t.overallAverage}</dt><dd>{item.average}<span> / 100</span></dd></dl>
+          <dl class="education-average"><dt>{t.overallAverage}</dt><dd><span class="text-highlight" data-underline>{item.average}</span><small> / 100</small></dd></dl>
         </div>
         <p class="eyebrow">{item.period}</p><h4>{item.degree}</h4><p class="education-institution">{item.institution}</p>
         <p>{item.description}</p>

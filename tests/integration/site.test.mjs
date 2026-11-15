@@ -175,8 +175,8 @@ test('autoria mantém ordem oficial, destaca Gabriel e sinaliza primeiro autor s
     const cards = [...html.matchAll(/<article class="project-card publication-card".*?<\/article>/gs)].map(match => match[0]);
     cards.forEach((card, index) => {
       const authors = card.match(/<p class="paper-authors">(.*?)<\/p>/s)[1];
-      assert.equal((authors.match(/class="paper-author-self"/g) || []).length, 1);
-      assert.ok(authors.includes('<strong class="paper-author-self">Gabriel Violante</strong>'));
+      assert.equal((authors.match(/class="paper-author-self text-highlight"/g) || []).length, 1);
+      assert.ok(authors.includes('<strong class="paper-author-self text-highlight" data-underline>Gabriel Violante</strong>'));
       const authorText = authors.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&');
       assert.equal(authorText, papers[index].authors.slice(0, -1).join(', ') + ' & ' + papers[index].authors.at(-1));
       assert.equal(card.includes('class="paper-role first-author"'), index === 1);

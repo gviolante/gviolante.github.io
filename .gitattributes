@@ -1,0 +1,10 @@
+# Exportação pública: não inclui documentos privados nem o histórico Git.
+archive export-ignore
+personalContext export-ignore
+AGENTS.md export-ignore
+CONTEXTO_PROJETO.md export-ignore
+docs/ideas.md export-ignore
+scripts/legacy export-ignore
+.env export-ignore
+.env.* export-ignore
+.env.example -export-ignore

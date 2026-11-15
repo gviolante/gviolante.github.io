@@ -633,13 +633,13 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   font-weight:500;
   margin-top:0
 }
-.about-highlight{
+.text-highlight{
   background:linear-gradient(90deg,var(--accent),var(--accent-blue)) left bottom / var(--underline-size,100%) 2px no-repeat;
   -webkit-box-decoration-break:clone;
   box-decoration-break:clone;
   padding-bottom:3px
 }
-a.about-highlight:hover,a.about-highlight:focus-visible{
+a.text-highlight:hover,a.text-highlight:focus-visible{
   color:var(--accent)
 }
 .social-links{
@@ -710,7 +710,7 @@ a.about-highlight:hover,a.about-highlight:focus-visible{
   line-height:1.3;
   color:var(--accent)
 }
-.education-average dd span{
+.education-average dd small{
   font-size:12px;
   font-weight:400;
   color:var(--muted)
@@ -1426,7 +1426,7 @@ a.about-highlight:hover,a.about-highlight:focus-visible{
   }
 }
 @media print{
-  .about-intro{
+  [data-underline]{
     --underline-size:100%!important
   }
   .site-header,.site-footer,.hero-actions,.copy-email,.skip-link,.quick-links{

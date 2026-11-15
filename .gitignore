@@ -11,3 +11,10 @@ personalContext/
 coverage/
 
 .astro/
+
+# Materiais locais: também impedir sua inclusão em um repositório público novo.
+archive/
+CONTEXTO_PROJETO.md
+AGENTS.md
+docs/ideas.md
+scripts/legacy/

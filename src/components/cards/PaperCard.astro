@@ -14,7 +14,7 @@ const p = paper[lang], t = copy[lang];
   <div class="project-card-content">
     <p class="eyebrow" title={p.venue}>{paper.venue} · {paper.year}</p>
     <h3 lang={paper.publicationLanguage}><ExternalLink href={paper.href}>{paper.title}</ExternalLink></h3>
-    <p>{p.summary}</p><p class="paper-authors">{paper.authors.map((author, index) => <>{index > 0 && (index === paper.authors.length - 1 ? ' & ' : ', ')}{author === profile.name ? <strong class="paper-author-self">{author}</strong> : author}</>)}</p>
+    <p>{p.summary}</p><p class="paper-authors">{paper.authors.map((author, index) => <>{index > 0 && (index === paper.authors.length - 1 ? ' & ' : ', ')}{author === profile.name ? <strong class="paper-author-self text-highlight" data-underline>{author}</strong> : author}</>)}</p>
     <div class="paper-actions">
       <ExternalLink class="text-link" href={paper.href}><Icon name="document" />{t.publication} <span aria-hidden="true">↗</span></ExternalLink>
       <ExternalLink class="paper-doi" href={`https://doi.org/${paper.doi}`}>DOI: {paper.doi} <span aria-hidden="true">↗</span></ExternalLink>

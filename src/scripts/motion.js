@@ -48,11 +48,11 @@ export function initMotion() {
     });
 
     // Movimento vinculado ao scroll apenas em elementos decorativos.
-    document.querySelectorAll('.about-intro').forEach(intro => {
-      if (intro.getBoundingClientRect().top < innerHeight) return;
-      gsap.fromTo(intro, { '--underline-size': '0%' }, {
+    document.querySelectorAll('[data-underline]').forEach(element => {
+      if (element.getBoundingClientRect().top < innerHeight) return;
+      gsap.fromTo(element, { '--underline-size': '0%' }, {
         '--underline-size': '100%', duration: 1.2, ease: 'power2.out',
-        scrollTrigger: { trigger: intro, start: 'top 80%', once: true },
+        scrollTrigger: { trigger: element, start: 'top 80%', once: true },
       });
     });
     document.querySelectorAll('.section-rule').forEach(line => {
