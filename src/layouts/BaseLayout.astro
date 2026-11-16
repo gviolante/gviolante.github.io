@@ -7,6 +7,7 @@ import '../styles/global.css';
 const { lang = 'en', title, description, alternatePath } = Astro.props;
 const t = copy[lang];
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : null;
+const socialImage = new URL('/assets/images/profile/portfolio-banner.png', Astro.site ?? 'https://gviolante.github.io').href;
 ---
 <!doctype html>
 <html lang={t.locale}>
@@ -20,6 +21,16 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : nu
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={t.ogLocale} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1731" />
+    <meta property="og:image:height" content="909" />
+    <meta property="og:image:alt" content="Gabriel Violante — Computer Science Student & Machine Learning Researcher" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content="Gabriel Violante — Computer Science Student & Machine Learning Researcher" />
     {canonical && <>
       <link rel="canonical" href={canonical} />
       <meta property="og:url" content={canonical} />
