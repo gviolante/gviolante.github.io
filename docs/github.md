@@ -33,11 +33,11 @@ A licença do código e as permissões de reutilização das imagens ainda não 
 
 ## GitHub Pages — gviolante
 
-Destino preparado: **https://gviolante.github.io**. O repositório atual é `gviolante/webPortifolio`; o site ainda não foi ativado.
+Destino preparado: **https://gviolante.github.io**. O repositório foi renomeado para `gviolante/gviolante.github.io`; a renomeação foi confirmada em 16/11/2026.
 
 Para ativar:
 
-1. Em **Settings → General → Repository name**, renomeie `webPortifolio` para `gviolante.github.io`. Isso preserva os commits.
+1. Renomeação para `gviolante.github.io` concluída, preservando os commits.
 2. No checkout público, atualize o remoto: `git remote set-url origin https://github.com/gviolante/gviolante.github.io.git`. Nunca configure um remoto de publicação no checkout privado.
 3. Em **Settings → Pages → Build and deployment → Source**, selecione **GitHub Actions**.
 4. Em **Actions → Deploy GitHub Pages → Run workflow**, selecione `main` e execute.
