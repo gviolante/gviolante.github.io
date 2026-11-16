@@ -7,7 +7,7 @@ import '../styles/global.css';
 const { lang = 'en', title, description, alternatePath } = Astro.props;
 const t = copy[lang];
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : null;
-const socialImage = new URL('/assets/images/profile/portfolio-banner.png', Astro.site ?? 'https://gviolante.github.io').href;
+const socialImage = new URL('/assets/images/portfolio_banner.png', Astro.site ?? 'https://gviolante.github.io').href;
 ---
 <!doctype html>
 <html lang={t.locale}>
