@@ -38,7 +38,7 @@
       } catch { /* O controle continua funcionando nesta página. */ }
       applyTheme();
       control.open = false;
-      summary.focus();
+      summary.focus({ preventScroll: true });
     }));
     document.addEventListener('click', event => {
       if (!control.contains(event.target)) control.open = false;
@@ -46,7 +46,7 @@
     document.addEventListener('keydown', event => {
       if (event.key === 'Escape' && control.open) {
         control.open = false;
-        summary.focus();
+        summary.focus({ preventScroll: true });
       }
     });
   });

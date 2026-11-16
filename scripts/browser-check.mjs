@@ -204,6 +204,31 @@ try {
     check(await readable(page, '.contact-actions'), 'Foco por teclado sempre visível');
     check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'Sem overflow durante o percurso');
 
+    for (const option of [otherTheme, theme, 'system', 'Escape']) {
+      const scrollBefore = await page.evaluate(() => scrollY);
+      // Cliques por coordenadas evitam a rolagem automática do locator do Playwright.
+      const summaryBox = await themeSummary.boundingBox();
+      await page.mouse.click(summaryBox.x + summaryBox.width / 2, summaryBox.y + summaryBox.height / 2);
+      if (option === 'Escape') {
+        await page.keyboard.press('Tab');
+        await page.keyboard.press('Escape');
+      } else {
+        const optionBox = await page.locator(`[data-theme-option="${option}"]`).boundingBox();
+        await page.mouse.click(optionBox.x + optionBox.width / 2, optionBox.y + optionBox.height / 2);
+      }
+      check(await page.evaluate(before => new Promise(resolve => {
+        const start = performance.now();
+        let stable = true;
+        const sample = now => {
+          stable &&= scrollY === before;
+          if (now - start < 600) requestAnimationFrame(sample);
+          else resolve(stable);
+        };
+        requestAnimationFrame(sample);
+      }), scrollBefore), `Tema ${option} mantém a posição da página durante toda a transição`);
+      check(await themeSummary.evaluate(el => document.activeElement === el && !el.parentElement.open), 'Fechar tema mantém foco acessível no controle');
+    }
+
     // Exercita o mesmo ciclo recebido em uma restauração do bfcache.
     await page.evaluate(() => {
       window.dispatchEvent(new PageTransitionEvent('pagehide', { persisted: true }));
