@@ -105,6 +105,7 @@ try {
   assert(frame.contentWindow.getComputedStyle(doc.body).backgroundColor === 'rgb(14, 11, 24)', 'CSS aplica fundo escuro');
   chooseTheme('light');
   assert(doc.documentElement.dataset.theme === 'light', 'Seletor retorna ao tema claro');
+  for (let i = 0; i < 20 && frame.contentWindow.getComputedStyle(doc.body).backgroundColor !== 'rgb(246, 244, 251)'; i++) await delay();
   assert(frame.contentWindow.getComputedStyle(doc.body).backgroundColor === 'rgb(246, 244, 251)', 'CSS restaura paleta clara');
   chooseTheme('system');
   assert(localStorage.getItem('portfolio-theme') === null, 'Sistema remove preferência explícita');

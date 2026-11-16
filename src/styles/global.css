@@ -1,6 +1,7 @@
 /* Paleta violeta: superfícies separadas por luminância e contraste. */
 :root{
   color-scheme:light;
+  --theme-transition:background-color .35s ease,color .35s ease,border-color .35s ease;
   --paper:#f6f4fb;
   --ink:#251b3e;
   --muted:#655c78;
@@ -39,6 +40,9 @@
 }
 *{
   box-sizing:border-box
+}
+:where(*),::before,::after{
+  transition:var(--theme-transition)
 }
 html{
   scroll-behavior:smooth;
@@ -225,7 +229,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   height:44px;
   color:var(--muted);
   border-radius:10px;
-  transition:background .2s,color .2s
+  transition:var(--theme-transition)
 }
 .quick-links a:hover,.quick-links a:focus-visible{
   background:var(--soft);
@@ -292,7 +296,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   background:color-mix(in srgb,var(--paper) 88%,transparent);
   backdrop-filter:blur(18px);
   box-shadow:0 8px 28px #08041108;
-  transition:box-shadow .25s,border-color .25s
+  transition:box-shadow .25s,var(--theme-transition)
 }
 .brand{
   font-weight:800;
@@ -316,7 +320,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   padding:10px 14px;
   border-radius:12px;
   color:var(--muted);
-  transition:color .2s,background .2s,box-shadow .2s
+  transition:box-shadow .2s,var(--theme-transition)
 }
 #site-nav a:hover,#site-nav a:focus-visible{
   color:var(--ink);
@@ -342,7 +346,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   background:var(--soft);
   color:var(--ink);
   cursor:pointer;
-  transition:background .2s,border-color .2s,color .2s
+  transition:var(--theme-transition)
 }
 .language-switch:hover,.theme-control summary:hover,.menu-toggle:hover{
   border-color:var(--accent);
@@ -375,7 +379,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   display:none
 }
 .theme-control summary .icon{
-  transition:transform .25s
+  transition:transform .25s,var(--theme-transition)
 }
 .theme-control summary:hover .icon{
   transform:rotate(-12deg)
@@ -445,7 +449,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   height:1.5px;
   border-radius:2px;
   background:currentColor;
-  transition:transform .2s,opacity .2s
+  transition:transform .2s,opacity .2s,var(--theme-transition)
 }
 .menu-toggle span:first-child{transform:translateY(-5px)}
 .menu-toggle span:last-child{transform:translateY(5px)}
@@ -512,7 +516,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   font-size:14px;
   font-weight:600;
   min-height:50px;
-  transition:background .2s,transform .2s
+  transition:transform .2s,var(--theme-transition)
 }
 .button-dark{
   background:var(--button);
@@ -532,7 +536,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
   min-height:36px
 }
 .text-link span{
-  transition:transform .2s
+  transition:transform .2s,var(--theme-transition)
 }
 .text-link:hover span{
   transform:translate(2px,-2px)
@@ -759,7 +763,7 @@ a.text-highlight:hover,a.text-highlight:focus-visible{
   box-shadow:var(--shadow);
   display:flex;
   flex-direction:column;
-  transition:translate .25s,border-color .25s,box-shadow .25s
+  transition:translate .25s,box-shadow .25s,var(--theme-transition)
 }
 .repository-grid .project-card:nth-child(-n+2){
   grid-column:span 3
@@ -775,7 +779,7 @@ a.text-highlight:hover,a.text-highlight:focus-visible{
   width:100%;
   height:100%;
   object-fit:cover;
-  transition:transform .4s
+  transition:transform .4s,var(--theme-transition)
 }
 .project-image.rpg-sheet img{
   object-position:left top
@@ -1010,7 +1014,7 @@ a.text-highlight:hover,a.text-highlight:focus-visible{
   border:1px solid var(--line);
   border-radius:6px;
   background:var(--soft);
-  transition:border-color .2s,background .2s,color .2s,translate .2s
+  transition:translate .2s,var(--theme-transition)
 }
 /* Contato */
 .contact-section{
@@ -1055,7 +1059,7 @@ a.text-highlight:hover,a.text-highlight:focus-visible{
   background:var(--card);
   box-shadow:var(--shadow);
   font-size:16px;
-  transition:border-color .2s,background .2s,translate .2s
+  transition:translate .2s,var(--theme-transition)
 }
 .contact-box{
   overflow-wrap:anywhere
@@ -1094,7 +1098,7 @@ a.text-highlight:hover,a.text-highlight:focus-visible{
   border-radius:8px;
   background:var(--card);
   font-size:12px;
-  transition:border-color .2s,background .2s
+  transition:var(--theme-transition)
 }
 .copy-email:hover{
   border-color:var(--accent);
@@ -1478,13 +1482,13 @@ a.text-highlight:hover,a.text-highlight:focus-visible{
   border-color:var(--accent)
 }
 .skill-card{
-  transition:border-color .25s,background .25s
+  transition:var(--theme-transition)
 }
 .skill-card:hover{
   border-color:var(--accent)
 }
 .skill-symbol{
-  transition:background .25s,color .25s
+  transition:var(--theme-transition)
 }
 .skill-card:hover .skill-symbol{
   background:var(--button);
@@ -1511,7 +1515,7 @@ a.text-highlight:hover,a.text-highlight:focus-visible{
     transform:scale(1.03)
   }
   .social-links a .icon{
-    transition:translate .2s
+    transition:translate .2s,var(--theme-transition)
   }
   .social-links a:hover .icon{
     translate:0 -2px
@@ -1591,7 +1595,7 @@ a.text-highlight:hover,a.text-highlight:focus-visible{
 }
 .social-links a{
   border-bottom:1px solid transparent;
-  transition:border-color .2s,color .2s
+  transition:var(--theme-transition)
 }
 .social-links a:hover{
   border-color:var(--accent)

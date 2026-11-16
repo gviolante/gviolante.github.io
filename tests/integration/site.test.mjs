@@ -190,8 +190,10 @@ test('autoria mantém ordem oficial, destaca Gabriel e sinaliza primeiro autor s
 test('barra de atalhos mantém quatro destinos e currículo no idioma da página', async () => {
   for (const route of ['index.html', 'pt/index.html', 'projects/index.html', 'projetos/index.html', '404.html', 'pt/404/index.html']) {
     const html = await readFile(path.join(outputRoot, route), 'utf8');
+    const brand = html.match(/<a class="brand"[^>]*href="([^"]+)"/)[1];
     const sidebar = html.match(/<nav class="quick-links".*?<\/nav>/s)[0];
     const lang = route.startsWith('pt/') || route.startsWith('projetos/') ? 'pt' : 'en';
+    assert.equal(brand, lang === 'pt' ? '/pt/#home' : '/#home');
     assert.deepEqual([...sidebar.matchAll(/href="([^"]+)"/g)].map(match => match[1]), [
       'mailto:gabriel.violant@gmail.com', 'https://www.linkedin.com/in/gabriel-violante/',
       'https://github.com/gviolante', documentLinks.resume[lang],

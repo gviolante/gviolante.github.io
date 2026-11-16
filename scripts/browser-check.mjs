@@ -90,7 +90,12 @@ try {
     check(await page.locator('.language-control').evaluate(el => !el.open), 'Abrir tema fecha idiomas');
     await page.screenshot({ path: path.join(screenshots, `${width}-${theme}-theme.png`), animations: 'disabled' });
     const otherTheme = theme === 'dark' ? 'light' : 'dark';
+    const backgroundBefore = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
     await page.locator(`[data-theme-option="${otherTheme}"]`).click();
+    check(await page.evaluate(() => document.body.getAnimations().some(animation =>
+      animation.transitionProperty === 'background-color' && animation.effect.getTiming().duration === 350)), 'Troca de tema interpola o fundo por 350 ms');
+    await page.waitForFunction(value => getComputedStyle(document.body).backgroundColor === (value === 'dark' ? 'rgb(14, 11, 24)' : 'rgb(246, 244, 251)'), otherTheme);
+    check(await page.evaluate(before => getComputedStyle(document.body).backgroundColor !== before, backgroundBefore), 'Transição termina na nova paleta');
     check(await page.evaluate(value => document.documentElement.dataset.theme === value && localStorage.getItem('portfolio-theme') === value, otherTheme), 'Opção de tema aplica e salva a escolha');
     check(await themeSummary.evaluate(el => document.activeElement === el), 'Escolha devolve foco ao controle');
     check(await page.locator(`.theme-control summary .icon-${otherTheme === 'dark' ? 'moon' : 'sun'}`).isVisible(), 'Ícone acompanha o tema aplicado');
@@ -213,6 +218,11 @@ try {
       return rect.top >= innerHeight || rect.bottom <= 0 || getComputedStyle(el).opacity === '1';
     }));
     check(true, 'Redimensionamento não deixa conteúdo visível oculto');
+    await scrollTo(page, '#contact');
+    const documentStart = await page.evaluate(() => performance.timeOrigin);
+    await page.locator('.brand').click();
+    await page.waitForFunction(() => Math.abs(scrollY - Math.max(0, document.querySelector('#home').offsetTop - parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop))) < 2);
+    check(await page.evaluate(start => performance.timeOrigin === start && location.hash === '#home' && getComputedStyle(document.documentElement).scrollBehavior === 'smooth', documentStart), 'Marca retorna ao topo suavemente sem recarregar');
     await context.close();
     console.log(`Movimento, teclado, interrupção e capturas: ${width}px / ${theme}.`);
   }
@@ -229,6 +239,12 @@ try {
     await page.locator('.language-option[href]').click();
     await page.waitForURL(url => url.pathname === (lang === 'en' ? '/pt/' : '/') && url.hash === '#papers');
     check(await page.locator('html').getAttribute('lang') === (lang === 'en' ? 'pt-BR' : 'en'), 'Troca pelo dropdown preserva a seção e aplica o idioma');
+    await page.locator('.brand').click();
+    await page.waitForFunction(() => Math.abs(scrollY - Math.max(0, document.querySelector('#home').offsetTop - parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop))) < 2);
+    check(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior === 'auto'), 'Marca respeita movimento reduzido');
+    await page.locator('.theme-control summary').click();
+    await page.locator('[data-theme-option="dark"]').click();
+    check(await page.evaluate(() => getComputedStyle(document.body).backgroundColor === 'rgb(14, 11, 24)' && document.body.getAnimations().length === 0), 'Movimento reduzido troca tema sem transição');
     await reduced.close();
 
     const noJS = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 900 } });
