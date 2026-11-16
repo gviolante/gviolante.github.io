@@ -194,7 +194,7 @@ test('barra de atalhos mantém quatro destinos e currículo no idioma da página
     const lang = route.startsWith('pt/') || route.startsWith('projetos/') ? 'pt' : 'en';
     assert.deepEqual([...sidebar.matchAll(/href="([^"]+)"/g)].map(match => match[1]), [
       'mailto:gabriel.violant@gmail.com', 'https://www.linkedin.com/in/gabriel-violante/',
-      'https://github.com/ViolanteGabriel', documentLinks.resume[lang],
+      'https://github.com/gviolante', documentLinks.resume[lang],
     ]);
     assert.equal((sidebar.match(/<a[^>]*aria-label="[^"]+"/g) || []).length, 4);
     assert.doesNotMatch(html, /1YkdNL98nDzrrYCe3zcRNeONgaR9dzQGE|Full academic background|Histórico escolar/);
