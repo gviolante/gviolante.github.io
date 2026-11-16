@@ -19,7 +19,7 @@ A filtragem muda os identificadores dos commits. O histórico original permanece
 
 ## Verificação automática
 
-O workflow `.github/workflows/check.yml` instala as dependências pelo lockfile e executa o build e os testes em pushes para `main` e pull requests. Usa Node 24, definido também em `.nvmrc`, e permissões de leitura. Não realiza deploy.
+O workflow `.github/workflows/check.yml` instala as dependências pelo lockfile e executa o build e os testes em pushes para `main` e pull requests. Usa Node 24, definido também em `.nvmrc`, e permissões de leitura. Não realiza deploy. O workflow separado `pages.yml` publica somente quando executado manualmente.
 
 Referências das ações: [checkout](https://github.com/actions/checkout) e [setup-node](https://github.com/actions/setup-node). A verificação visual continua disponível localmente com `npm run test:browser` e Chromium instalado.
 
@@ -30,3 +30,21 @@ O projeto gera arquivos estáticos em `dist/`. Defina `SITE_URL` com o domínio 
 As rotas e os assets usam caminhos a partir da raiz do domínio. Para GitHub Pages, isso atende um site de usuário (`usuario.github.io`) ou domínio próprio. Publicação sob `/nome-do-repositorio/` exige adaptar e testar os caminhos antes de ativar o deploy.
 
 A licença do código e as permissões de reutilização das imagens ainda não foram definidas pelo proprietário. Não presumir uma licença aberta para retratos, logos ou outros materiais.
+
+## GitHub Pages — gviolante
+
+Destino preparado: **https://gviolante.github.io**. O repositório atual é `gviolante/webPortifolio`; o site ainda não foi ativado.
+
+Para ativar:
+
+1. Em **Settings → General → Repository name**, renomeie `webPortifolio` para `gviolante.github.io`. Isso preserva os commits.
+2. No checkout público, atualize o remoto: `git remote set-url origin https://github.com/gviolante/gviolante.github.io.git`. Nunca configure um remoto de publicação no checkout privado.
+3. Em **Settings → Pages → Build and deployment → Source**, selecione **GitHub Actions**.
+4. Em **Actions → Deploy GitHub Pages → Run workflow**, selecione `main` e execute.
+5. Aguarde os jobs `build` e `deploy` e abra https://gviolante.github.io. Confira `/pt/`, `/projects/`, `/projetos/` e uma rota inexistente (404).
+
+O workflow exige o repositório e branch corretos, usa `SITE_URL=https://gviolante.github.io`, executa build e testes, e envia somente `dist/`. O job de publicação recebe as permissões de Pages e identidade necessárias. HTTPS é fornecido pelo GitHub no endereço `github.io`.
+
+Atualizações: envie commits pelo checkout público seguro e execute novamente **Run workflow**. Pushes e pull requests continuam apenas validando; publicação automática não foi ativada.
+
+Validação local equivalente: `SITE_URL=https://gviolante.github.io npm run check`.

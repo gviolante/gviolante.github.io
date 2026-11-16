@@ -48,7 +48,7 @@ tests/
 ├── integration/           Páginas construídas, links e recursos publicados
 └── browser/               Harness HTML para verificação da interface
 docs/github.md           Preparação do repositório e orientações de publicação
-.github/workflows/        Build e testes automáticos no GitHub
+.github/workflows/        Verificação automática e publicação manual no Pages
 .nvmrc                    Versão de Node usada no desenvolvimento e CI
 ```
 
@@ -104,4 +104,4 @@ O teste inicia uma prévia local temporária e percorre seis páginas em 320, 39
 
 O fluxo do GitHub está documentado em [docs/github.md](docs/github.md). O histórico público preserva os commits de desenvolvimento, com documentos privados removidos de todas as revisões. O histórico original do checkout de trabalho não deve ser enviado sem essa filtragem. `.gitattributes` também permite exportar um ZIP dos arquivos públicos, mas esse ZIP não substitui os commits.
 
-O workflow do GitHub executa `npm ci` e `npm run check` em Node 24. Não há push ou deploy automático. A configuração atual espera hospedagem na raiz do domínio; publicação em um subdiretório precisa de ajuste prévio.
+O workflow do GitHub executa `npm ci` e `npm run check` em Node 24. Não há push ou deploy automático. `pages.yml` prepara a publicação manual em `https://gviolante.github.io`; os passos para renomear o repositório e ativar o Pages estão em `docs/github.md`. A configuração atual espera hospedagem na raiz do domínio; publicação em um subdiretório precisa de ajuste prévio.
